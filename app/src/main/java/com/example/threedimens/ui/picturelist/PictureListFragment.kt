@@ -53,12 +53,6 @@ class PictureListFragment private constructor() : BaseFragment() {
             viewModel.refreshImages()
         }
         adapter.setOnLoadMoreListener({ viewModel.loadMoreImages() }, recyclerView)
-        adapter.setOnItemClickListener { adapter, view, position ->
-            val image = adapter.data[position] as? Image
-            image?.let {
-                PictureViewerActivity.startViewer(activity!!, view, image.url, it.type, position)
-            }
-        }
         viewModel.status.observe(this, Observer {
             when (it) {
                 LoadStatus.LOADING -> {
