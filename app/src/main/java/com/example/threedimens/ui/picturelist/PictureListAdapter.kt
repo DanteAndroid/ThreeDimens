@@ -15,7 +15,7 @@ import com.example.threedimens.utils.load
  * @author Du Wenyu
  * 2019-08-23
  */
-class PictureListAdapter(val onClick: (Image, View) -> Unit) :
+class PictureListAdapter(val onClick: (Image, View, Int) -> Unit) :
     PagedListAdapter<Image, PictureListAdapter.PictureHolder>(IMAGE_COMPARATOR) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PictureHolder {
         val view =
@@ -31,7 +31,7 @@ class PictureListAdapter(val onClick: (Image, View) -> Unit) :
         private val imageView = view.findViewById<ImageView>(R.id.image)
         fun bind(image: Image) {
             imageView.load(image.url)
-            imageView.setOnClickListener { onClick(image, itemView) }
+            imageView.setOnClickListener { onClick(image, itemView, adapterPosition) }
         }
     }
 

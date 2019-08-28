@@ -5,7 +5,7 @@
         android:layout_height="match_parent"
         tools:context=".ui.detail.PictureDetailFragment">
 
-    <com.ortiz.touchview.TouchImageView
+    <ImageView
             android:id="@+id/detailImage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

@@ -14,11 +14,12 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
     buildTypes {
         debug {
-            minifyEnabled true
-            shrinkResources true
+            minifyEnabled false
+            shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         release {
@@ -51,4 +52,5 @@ dependencies {
     implementation 'org.jsoup:jsoup:1.12.1'
     implementation 'moe.feng:AlipayZeroSdk:1.1'
     implementation 'com.github.MikeOrtiz:TouchImageView:2.2.0'
+
 }

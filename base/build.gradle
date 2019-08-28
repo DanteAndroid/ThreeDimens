@@ -59,7 +59,9 @@ dependencies {
     def room_version = "2.2.0-beta01"
     api "androidx.room:room-runtime:$room_version"
     api "androidx.room:room-ktx:$room_version"
-    api "androidx.paging:paging-runtime:2.1.0"
+    def paging_version = "2.1.0"
+    api "androidx.paging:paging-runtime:$paging_version"
+    api "androidx.paging:paging-runtime-ktx:$paging_version"
     // Network
     api 'com.squareup.retrofit2:retrofit:2.6.1'
     api 'com.squareup.okhttp3:logging-interceptor:4.1.0'

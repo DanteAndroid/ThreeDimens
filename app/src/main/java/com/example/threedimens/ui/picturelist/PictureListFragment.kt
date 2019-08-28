@@ -12,7 +12,6 @@ import com.example.base.base.BaseFragment
 import com.example.base.base.LoadStatus
 import com.example.threedimens.R
 import com.example.threedimens.data.ApiType
-import com.example.threedimens.data.Image
 import com.example.threedimens.ui.detail.PictureViewerActivity
 import com.example.threedimens.utils.InjectorUtils
 import kotlinx.android.synthetic.main.fragment_main.*
@@ -32,7 +31,10 @@ class PictureListFragment private constructor() : BaseFragment() {
         InjectorUtils.providePageViewModelFactory(apiType)
     }
 
-    private val adapter = PictureListAdapter()
+    private val adapter = PictureListAdapter {image, view, position->
+        PictureViewerActivity.startViewer(activity!!, view, image.url, image.type, position)
+
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,31 +54,24 @@ class PictureListFragment private constructor() : BaseFragment() {
         swipeRefresh.setOnRefreshListener {
             viewModel.refreshImages()
         }
-        adapter.setOnLoadMoreListener({ viewModel.loadMoreImages() }, recyclerView)
         viewModel.status.observe(this, Observer {
             when (it) {
                 LoadStatus.LOADING -> {
-                    // BaseAdapter 有loading，这里就不加了
-                    // swipeRefresh.isRefreshing = true
+                     swipeRefresh.isRefreshing = true
                 }
                 LoadStatus.ERROR -> {
                     swipeRefresh.isRefreshing = false
                     recyclerView.snackbar(R.string.load_fail)
-                    if (viewModel.isLoadMore()) {
-                        adapter.loadMoreFail()
-                    }
                 }
                 LoadStatus.DONE -> {
                     swipeRefresh.isRefreshing = false
-                    adapter.loadMoreComplete()
                 }
                 else -> {
                     swipeRefresh.isRefreshing = false
-                    adapter.loadMoreComplete()
                 }
             }
         })
-        viewModel.images.observe(this, Observer<List<Image>> {
+        viewModel.pagedImages.observe(this, Observer {
             if (it.isEmpty()) return@Observer
             println("apiType ${it?.first()?.type} ${it.size}")
             adapter.submitList(it)

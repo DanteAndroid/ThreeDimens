@@ -29,7 +29,8 @@ fun ImageView.load(url: String, loadOnlyFromCache: Boolean = false, onLoadingFin
     }
 
     val requestOptions = RequestOptions
-        .placeholderOf(R.drawable.placeholder)
+        .placeholderOf(R.drawable.loading_animation)
+        .error(R.drawable.ic_broken_image)
         .dontTransform()
         .onlyRetrieveFromCache(loadOnlyFromCache)
 

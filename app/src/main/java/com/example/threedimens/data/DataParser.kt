@@ -1,7 +1,5 @@
-package com.example.threedimens.net
+package com.example.threedimens.data
 
-import com.example.threedimens.data.ApiType
-import com.example.threedimens.data.Image
 import com.squareup.moshi.FromJson
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.ToJson
@@ -22,14 +20,18 @@ import java.util.*
  */
 object DataParser {
 
-    fun getImages(apiType: ApiType, call: Call<ResponseBody>): List<Image> {
-        return parseList(apiType, call.execute().body()!!.string())
+    fun getPagedImages(apiType: ApiType, call: Call<ResponseBody>): List<Image> {
+        return parseList(
+            apiType,
+            call.execute().body()?.string()
+        )
     }
 
     /**
      * 解析一级页面的所有图片
      */
-    fun parseList(apiType: ApiType, data: String): List<Image> {
+    fun parseList(apiType: ApiType, data: String?): List<Image> {
+        if (data == null) return emptyList()
         return when (apiType.site) {
             ApiType.Site.GANK -> {
                 parseGank(data, apiType)

@@ -6,7 +6,6 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:windowSharedElementsUseOverlay">false</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -21,6 +20,7 @@
     <style name="ViewerTheme" parent="AppTheme.NoActionBar">
         <item name="android:windowBackground">@color/dark_background</item>
         <item name="android:windowTranslucentNavigation">true</item>
+
     </style>
 
 </resources>

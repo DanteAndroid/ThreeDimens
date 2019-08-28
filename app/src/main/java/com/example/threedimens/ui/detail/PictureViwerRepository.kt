@@ -11,7 +11,6 @@ import com.example.threedimens.data.ImageDao
 class PictureViwerRepository(private val type: String, private val imageDao: ImageDao) {
 
     fun getImages(): LiveData<List<Image>> {
-        println("getImages ${imageDao.getImages(type).value?.size}")
         return imageDao.getImages(type)
     }
 }

@@ -2,10 +2,13 @@ package com.example.threedimens.ui.picturelist
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagedList
+import androidx.paging.toLiveData
 import com.blankj.utilcode.util.SPUtils
 import com.example.base.base.BaseStatusVM
 import com.example.base.base.LoadStatus
 import com.example.threedimens.data.Image
+import com.example.threedimens.utils.PAGE_SIZE_FROM_DB
 import kotlinx.coroutines.launch
 
 /**
@@ -15,15 +18,12 @@ class PictureListViewModel(private val repository: ImageRepository) : BaseStatus
 
     private var page = SPUtils.getInstance().getInt("page", 1)
 
-    val images: LiveData<List<Image>> = repository.getImages()
-
-    init {
-        refreshImages()
-    }
+    val pagedImages: LiveData<PagedList<Image>> = repository.getPagedImages()
+        .toLiveData(pageSize = PAGE_SIZE_FROM_DB, boundaryCallback = ImageBoundaryCallback(this))
 
     fun refreshImages() {
         viewModelScope.launch {
-            fetchImages(pageNum = 1)
+            fetchImages()
         }
     }
 
@@ -34,14 +34,13 @@ class PictureListViewModel(private val repository: ImageRepository) : BaseStatus
         }
     }
 
-    fun isLoadMore() = page > 1
 
-    private suspend fun fetchImages(pageNum: Int) {
+    private suspend fun fetchImages(pageNum: Int = 1) {
         try {
             setStatus(LoadStatus.LOADING)
             val result = repository.fetchImages(pageNum)
 
-            check(result.isNotEmpty()) { "No images in result" }
+            check(result.isNotEmpty()) { "No pagedImages in result" }
             println("fetch ${result.size} ${result.first()}")
             repository.insert(result)
             setStatus(LoadStatus.DONE)
