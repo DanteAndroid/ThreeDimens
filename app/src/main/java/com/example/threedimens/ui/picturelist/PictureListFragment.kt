@@ -31,7 +31,7 @@ class PictureListFragment private constructor() : BaseFragment() {
         InjectorUtils.providePageViewModelFactory(apiType)
     }
 
-    private val adapter = PictureListAdapter {image, view, position->
+    private val adapter = PictureListAdapter { image, view, position ->
         PictureViewerActivity.startViewer(activity!!, view, image.url, image.type, position)
 
     }
@@ -57,7 +57,7 @@ class PictureListFragment private constructor() : BaseFragment() {
         viewModel.status.observe(this, Observer {
             when (it) {
                 LoadStatus.LOADING -> {
-                     swipeRefresh.isRefreshing = true
+                    swipeRefresh.isRefreshing = true
                 }
                 LoadStatus.ERROR -> {
                     swipeRefresh.isRefreshing = false

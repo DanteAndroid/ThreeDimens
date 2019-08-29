@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.example.threedimens.widget.RatioImageView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/image"
-    android:layout_width="match_parent"
-    android:layout_height="220dp"
-    android:layout_margin="4dp"
-    android:scaleType="centerCrop"
-    tools:ignore="ContentDescription"
-    tools:src="@drawable/ic_menu_gallery" />
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/image"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:layout_margin="4dp"
+        android:scaleType="centerCrop"
+        tools:ignore="ContentDescription"
+        tools:src="@drawable/ic_menu_gallery" />
 

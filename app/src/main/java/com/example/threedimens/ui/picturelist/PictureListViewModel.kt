@@ -39,12 +39,8 @@ class PictureListViewModel(private val repository: ImageRepository) : BaseStatus
         try {
             setStatus(LoadStatus.LOADING)
             val result = repository.fetchImages(pageNum)
-
-            check(result.isNotEmpty()) { "No pagedImages in result" }
-            println("fetch ${result.size} ${result.first()}")
             repository.insert(result)
             setStatus(LoadStatus.DONE)
-            println("fetch insert ${result.size} ${result.first().type}")
 
         } catch (e: Exception) {
             e.printStackTrace()

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:app="http://schemas.android.com/apk/res-auto"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context=".ui.picturelist.PictureListFragment">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.picturelist.PictureListFragment">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swipeRefresh"
@@ -13,19 +13,14 @@
 
         <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingStart="4dp"
+                android:paddingTop="4dp"
+                android:paddingEnd="4dp"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:spanCount="2"
-                android:padding="6dp"
-                tools:listitem="@layout/picture_list_item"
-                android:layout_height="match_parent">
-        </androidx.recyclerview.widget.RecyclerView>
-
+                tools:listitem="@layout/picture_list_item" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-    <ImageView
-            android:id="@+id/test"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-        />
 </FrameLayout>
