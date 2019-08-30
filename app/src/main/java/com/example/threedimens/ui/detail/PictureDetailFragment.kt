@@ -12,6 +12,7 @@ import androidx.core.transition.doOnEnd
 import androidx.core.view.ViewCompat
 import com.example.base.base.BaseFragment
 import com.example.threedimens.R
+import com.example.threedimens.utils.UiUtil
 import com.example.threedimens.utils.load
 import kotlinx.android.synthetic.main.fragment_picture_detail.*
 
@@ -30,6 +31,7 @@ class PictureDetailFragment private constructor() : BaseFragment() {
 
     override fun initView() {
         ViewCompat.setTransitionName(detailImage, url)
+        detailImage.setOnClickListener { UiUtil.toggleSystemUI(it) }
         detailImage.load(url, true) {
             activity?.supportStartPostponedEnterTransition()
         }

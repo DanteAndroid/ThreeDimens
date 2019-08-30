@@ -2,10 +2,11 @@ package com.example.threedimens.ui.picturelist
 
 import androidx.paging.DataSource
 import com.example.threedimens.data.ApiType
+import com.example.threedimens.data.DataParser.getPagedImages
 import com.example.threedimens.data.Image
 import com.example.threedimens.data.ImageDao
-import com.example.threedimens.data.DataParser.getPagedImages
 import com.example.threedimens.net.NetManager
+import com.example.threedimens.utils.PAGE_SIZE_FROM_NET
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.withContext
 
@@ -23,7 +24,7 @@ class ImageRepository(private val apiType: ApiType, private val imageDao: ImageD
         return withContext(IO) {
             when (apiType.site) {
                 ApiType.Site.GANK -> {
-                    getPagedImages(apiType, NetManager.gankApi.get(20, page))
+                    getPagedImages(apiType, NetManager.gankApi.get(PAGE_SIZE_FROM_NET, page))
                 }
                 ApiType.Site.DOUBAN -> {
                     getPagedImages(apiType, NetManager.dbApi.get(apiType.path, page))
@@ -56,5 +57,4 @@ class ImageRepository(private val apiType: ApiType, private val imageDao: ImageD
             imageDao.delete(image)
         }
     }
-
 }

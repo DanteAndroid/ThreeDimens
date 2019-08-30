@@ -8,7 +8,7 @@ import com.example.threedimens.data.ImageDao
  * @author Du Wenyu
  * 2019-08-25
  */
-class PictureViwerRepository(private val type: String, private val imageDao: ImageDao) {
+class PictureViewerRepository(private val type: String, private val imageDao: ImageDao) {
 
     fun getImages(): LiveData<List<Image>> {
         return imageDao.getImages(type)

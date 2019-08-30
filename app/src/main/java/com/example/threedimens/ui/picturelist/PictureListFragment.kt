@@ -73,7 +73,7 @@ class PictureListFragment private constructor() : BaseFragment() {
         })
         viewModel.pagedImages.observe(this, Observer {
             if (it.isEmpty()) return@Observer
-            println("apiType ${it?.first()?.type} ${it.size}")
+            println("load type ${it?.first()?.type} ${it.size}")
             adapter.submitList(it)
         })
     }

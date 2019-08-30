@@ -8,7 +8,7 @@ import com.example.base.base.BaseStatusVM
  * @author Du Wenyu
  * 2019-08-25
  */
-class PictureViwerViewModel(private val repository: PictureViwerRepository) : BaseStatusVM() {
+class PictureViwerViewModel(private val repository: PictureViewerRepository) : BaseStatusVM() {
 
     private val _position: MutableLiveData<Int> = MutableLiveData()
     val position: LiveData<Int> = _position

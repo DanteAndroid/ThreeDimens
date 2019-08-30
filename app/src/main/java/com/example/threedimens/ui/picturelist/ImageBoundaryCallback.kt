@@ -10,19 +10,15 @@ import com.example.threedimens.data.Image
 class ImageBoundaryCallback(private val viewModel: PictureListViewModel) :
     PagedList.BoundaryCallback<Image>() {
 
-    override fun onItemAtFrontLoaded(itemAtFront: Image) {
-        super.onItemAtFrontLoaded(itemAtFront)
-    }
-
     override fun onItemAtEndLoaded(itemAtEnd: Image) {
         super.onItemAtEndLoaded(itemAtEnd)
-        println("Paging onItemAtEndLoaded ${Thread.currentThread().name} ")
+        println("load Paging onItemAtEndLoaded ${Thread.currentThread().name} ")
         viewModel.loadMoreImages()
     }
 
     override fun onZeroItemsLoaded() {
         super.onZeroItemsLoaded()
-        println("Paging onItemAtEndLoaded ${Thread.currentThread().name} ")
+        println("load  Paging onItemAtEndLoaded ${Thread.currentThread().name} ")
         viewModel.refreshImages()
     }
 
