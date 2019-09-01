@@ -3,28 +3,44 @@ package com.example.threedimens
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.navigateUp
+import androidx.navigation.ui.onNavDestinationSelected
+import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main_drawer.*
+import kotlinx.android.synthetic.main.app_bar_main_drawer.*
+import org.jetbrains.anko.toast
 
 class MainDrawerActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
 
+    private lateinit var appBarConfiguration: AppBarConfiguration
+    private lateinit var controller: NavController
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_drawer)
-        val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
-        val toggle = ActionBarDrawerToggle(
-            this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close
+        actionBar?.setHomeButtonEnabled(true)
+        actionBar?.setDisplayHomeAsUpEnabled(true)
+        setupDrawer()
+    }
+
+    private fun setupDrawer() {
+        controller = findNavController(R.id.navHostFragment)
+        appBarConfiguration = AppBarConfiguration(
+            setOf(R.id.picturesTabsFragment, R.id.postsTabsFragment),
+            drawer_layout
         )
-        drawer_layout.addDrawerListener(toggle)
-        toggle.syncState()
-        nav_view.setNavigationItemSelectedListener(this)
+        toolbar.setupWithNavController(controller, appBarConfiguration)
+        nav_view.setupWithNavController(controller)
+//        nav_view.setNavigationItemSelectedListener(this)
     }
 
 
@@ -43,19 +59,22 @@ class MainDrawerActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_settings -> true
-            else -> super.onOptionsItemSelected(item)
+        when (item.itemId) {
+            android.R.id.home -> onBackPressed()
         }
+        return item.onNavDestinationSelected(controller)
+                || super.onOptionsItemSelected(item)
     }
+
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.nav_beauty -> {
-                // Handle the camera action
-            }
-            R.id.nav_mz -> {
+            R.id.picturesTabsFragment -> {
+                toast("picturesTabsFragment")
 
+            }
+            R.id.postsTabsFragment -> {
+                toast("postsTabsFragment")
             }
             R.id.nav_favorite -> {
 
@@ -69,6 +88,12 @@ class MainDrawerActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
         }
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         drawerLayout.closeDrawer(GravityCompat.START)
-        return true
+        return item.onNavDestinationSelected(controller)
     }
+
+    override fun onSupportNavigateUp(): Boolean {
+        return controller.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
+
+
 }

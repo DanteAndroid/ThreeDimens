@@ -18,22 +18,35 @@ import com.example.threedimens.data.Image
 import com.example.threedimens.utils.InjectorUtils
 import kotlinx.android.synthetic.main.activity_viewer.*
 
-class PictureViewerActivity(override val layoutResId: Int = R.layout.activity_viewer) : BaseActivity() {
+class PictureViewerActivity(override val layoutResId: Int = R.layout.activity_viewer) :
+    BaseActivity() {
 
     companion object {
         private const val ARG_TYPE = "type"
-        private const val ARG_POSITION = "position"
+        private const val ARG_POSITION = "transPosition"
         private const val REQUEST_VIEW = 1
 
-        fun startViewer(activity: Activity, sharedView: View, url: String, type: String, position: Int) {
-            val intent = Intent(BaseApplication.instance(), PictureViewerActivity::class.java).apply {
-                putExtra(ARG_TYPE, type)
-                putExtra(ARG_POSITION, position)
-            }
+        fun startViewer(
+            activity: Activity,
+            sharedView: View,
+            url: String,
+            type: String,
+            position: Int
+        ) {
+            val intent =
+                Intent(BaseApplication.instance(), PictureViewerActivity::class.java).apply {
+                    putExtra(ARG_TYPE, type)
+                    putExtra(ARG_POSITION, position)
+                }
             val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
                 activity, sharedView, url
             )
-            ActivityCompat.startActivityForResult(activity, intent, REQUEST_VIEW, options.toBundle())
+            ActivityCompat.startActivityForResult(
+                activity,
+                intent,
+                REQUEST_VIEW,
+                options.toBundle()
+            )
 //            activity.startActivity(intent)
         }
     }
@@ -42,11 +55,11 @@ class PictureViewerActivity(override val layoutResId: Int = R.layout.activity_vi
     private var hasInit: Boolean = false
     private lateinit var type: String
 
-    private var position: Int = 0
-    private var currentPosition = position
+    private val transPosition: Int by lazy { intent!!.getIntExtra(ARG_POSITION, 0) }
+    private var currentPosition: Int = 0
 
     private val viewModel: PictureViwerViewModel by viewModels {
-        InjectorUtils.providePictureViwerViewModelFactory(type)
+        InjectorUtils.providePictureViewerViewModelFactory(type)
     }
 
     override fun enableBack(): Boolean = true
@@ -56,8 +69,7 @@ class PictureViewerActivity(override val layoutResId: Int = R.layout.activity_vi
         supportPostponeEnterTransition()
 
         type = intent!!.getStringExtra(ARG_TYPE)!!
-        position = intent!!.getIntExtra(ARG_POSITION, 0)
-        currentPosition = position
+        currentPosition = transPosition
 
         val adapter = DetailPagerAdapter(fragmentManager = supportFragmentManager)
 
@@ -70,7 +82,7 @@ class PictureViewerActivity(override val layoutResId: Int = R.layout.activity_vi
     private fun initViewPager(adapter: DetailPagerAdapter) {
         if (hasInit) return
         pager.adapter = adapter
-        pager.currentItem = position
+        pager.currentItem = transPosition
         pager.addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
@@ -86,22 +98,26 @@ class PictureViewerActivity(override val layoutResId: Int = R.layout.activity_vi
     }
 
     override fun supportFinishAfterTransition() {
-        if (position == currentPosition) {
+        if (transPosition == currentPosition) {
             super.supportFinishAfterTransition()
         } else {
             finish()
         }
     }
 
-    class DetailPagerAdapter(
+    inner class DetailPagerAdapter(
         private val images: MutableList<Image> = mutableListOf(),
         fragmentManager: FragmentManager
     ) :
         FragmentPagerAdapter(
             fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT
         ) {
-        override fun getItem(position: Int): Fragment =
-            PictureDetailFragment.newInstance(images[position].url)
+        override fun getItem(position: Int): Fragment {
+            return PictureDetailFragment.newInstance(
+                images[position].url,
+                transPosition == position
+            )
+        }
 
         override fun getCount(): Int = images.size
 

@@ -13,7 +13,7 @@ import retrofit2.http.Query
 interface DBApi {
 
     @Headers("User-Agent: $PC_USER_AGENT")
-    @GET("index.htm")
+    @GET("index")
     fun get(@Query("cid") type: String, @Query("pager_offset") page: Int): Call<ResponseBody>
 
     @GET("rank.htm")

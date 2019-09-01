@@ -4,6 +4,9 @@ import android.graphics.drawable.Drawable
 import android.widget.ImageView
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.load.model.GlideUrl
+import com.bumptech.glide.load.model.LazyHeaders
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
@@ -17,7 +20,9 @@ import com.example.threedimens.widget.GlideApp
 
 fun ImageView.load(
     url: String,
+    header: String = "",
     loadOnlyFromCache: Boolean = false,
+    animate: Boolean = false,
     onLoadingFinished: () -> Unit = {}
 ) {
     val listener = object : RequestListener<Drawable> {
@@ -44,14 +49,29 @@ fun ImageView.load(
     }
 
     val requestOptions = RequestOptions()
-        .placeholder(R.drawable.loading_animation)
         .error(R.drawable.placeholder)
         .dontTransform()
         .onlyRetrieveFromCache(loadOnlyFromCache)
+        .apply {
+            if (!animate) {
+                placeholder(R.drawable.loading_animation)
+            }
+        }
 
+    val glideUrl = GlideUrl(
+        url, LazyHeaders.Builder()
+            .addHeader("Referer", header)
+            .addHeader("User-Agent", PC_USER_AGENT)
+            .build()
+    )
     GlideApp.with(this)
-        .load(url)
+        .load(glideUrl)
         .apply(requestOptions)
         .listener(listener)
+        .apply {
+            if (!loadOnlyFromCache) {
+                transition(DrawableTransitionOptions.withCrossFade())
+            }
+        }
         .into(this)
 }

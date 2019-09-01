@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/nav_graph"
+        app:startDestination="@id/picturesTabsFragment">
+
+    <fragment
+            android:id="@+id/picturesTabsFragment"
+            android:name="com.example.threedimens.main.PicturesTabsFragment"
+            android:label="@string/nav_main" />
+
+    <fragment
+            android:id="@+id/postsTabsFragment"
+            android:name="com.example.threedimens.main.PostsTabsFragment"
+            android:label="@string/nav_mz">
+        <argument
+                android:name="apiType"
+                app:argType="com.example.threedimens.data.ApiType" />
+        <action
+                android:id="@+id/action_postsTabsFragment_to_pictureListFragment"
+                app:destination="@id/pictureListFragment" />
+    </fragment>
+    <fragment
+            android:id="@+id/postListFragment"
+            android:name="com.example.threedimens.ui.postlist.PostListFragment"
+            android:label="PostListFragment" />
+    <fragment
+            android:id="@+id/pictureListFragment"
+            android:name="com.example.threedimens.ui.picturelist.PictureListFragment"
+            android:label="fragment_picture_list"
+            tools:layout="@layout/fragment_picture_list">
+        <argument
+                android:name="apiType"
+                app:argType="com.example.threedimens.data.ApiType" />
+    </fragment>
+
+</navigation>

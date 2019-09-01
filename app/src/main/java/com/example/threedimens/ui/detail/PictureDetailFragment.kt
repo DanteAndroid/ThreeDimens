@@ -3,6 +3,8 @@ package com.example.threedimens.ui.detail
 
 import android.os.Build
 import android.os.Bundle
+import android.transition.ChangeBounds
+import android.transition.ChangeImageTransform
 import android.transition.Fade
 import android.transition.TransitionSet
 import android.view.LayoutInflater
@@ -21,6 +23,9 @@ class PictureDetailFragment private constructor() : BaseFragment() {
     private val url: String by lazy {
         arguments!!.getString(ARG_IMAGE)!!
     }
+    private val showTransition: Boolean by lazy {
+        arguments!!.getBoolean(ARG_TRANSITION, false)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,33 +37,43 @@ class PictureDetailFragment private constructor() : BaseFragment() {
     override fun initView() {
         ViewCompat.setTransitionName(detailImage, url)
         detailImage.setOnClickListener { UiUtil.toggleSystemUI(it) }
-        detailImage.load(url, true) {
+        if (showTransition) {
+            loadWithTransition()
+        } else {
+            detailImage.load(url, animate = true)
+        }
+    }
+
+    private fun loadWithTransition() {
+        detailImage.load(url, loadOnlyFromCache = true) {
             activity?.supportStartPostponedEnterTransition()
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             activity?.window?.sharedElementEnterTransition = TransitionSet()
-                .addTransition(android.transition.ChangeImageTransform())
-                .addTransition(android.transition.ChangeBounds())
-                .apply {
-                    doOnEnd { detailImage.load(url) }
-                }
+                .addTransition(ChangeImageTransform())
+                .addTransition(ChangeBounds())
             activity?.window?.enterTransition = Fade().apply {
                 excludeTarget(android.R.id.statusBarBackground, true)
                 excludeTarget(android.R.id.navigationBarBackground, true)
                 excludeTarget(R.id.action_bar_container, true)
+                doOnEnd {
+                    detailImage?.load(url)
+                }
             }
         } else {
-            detailImage.load(url)
+            detailImage.load(url, animate = true)
         }
     }
 
     companion object {
         private const val ARG_IMAGE = "image"
+        private const val ARG_TRANSITION = "position"
 
-        fun newInstance(imageUrl: String): PictureDetailFragment {
+        fun newInstance(imageUrl: String, showTransition: Boolean): PictureDetailFragment {
             return PictureDetailFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_IMAGE, imageUrl)
+                    putBoolean(ARG_TRANSITION, showTransition)
                 }
             }
         }

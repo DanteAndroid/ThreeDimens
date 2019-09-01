@@ -11,12 +11,18 @@ import java.util.*
  * 2019-08-23
  */
 @Keep
-@Entity
+@Entity(
+//    foreignKeys = [ForeignKey(
+//        entity = Post::class,
+//        parentColumns = ["postUrl"],
+//        childColumns = ["post"]
+//    )]
+)
 data class Image(
     val id: Int = 0,
     var type: String,
     @PrimaryKey val url: String,
     @Json(name = "publishedAt")
     val timestamp: Date? = null,
-    val title: String = ""
+    val post: String = ""
 )

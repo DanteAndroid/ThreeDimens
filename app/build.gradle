@@ -47,10 +47,11 @@ dependencies {
     kapt 'com.github.bumptech.glide:compiler:4.9.0'
     kapt 'com.squareup.moshi:moshi-kotlin-codegen:1.6.0'
     implementation project(':base')
-    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.49-androidx'
     implementation 'com.blankj:utilcodex:1.25.8'
     implementation 'org.jsoup:jsoup:1.12.1'
     implementation 'moe.feng:AlipayZeroSdk:1.1'
-    implementation 'com.github.MikeOrtiz:TouchImageView:2.2.0'
-
+//    implementation 'com.github.MikeOrtiz:TouchImageView:2.2.0'
+//    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.49-androidx'
+//    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0-beta-3'
+    implementation 'com.github.anrwatchdog:anrwatchdog:1.4.0'
 }

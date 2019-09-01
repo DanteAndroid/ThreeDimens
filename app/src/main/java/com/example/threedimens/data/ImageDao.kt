@@ -22,7 +22,7 @@ interface ImageDao {
     @Insert
     fun insert(image: Image)
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(image: List<Image>)
 
     @Delete

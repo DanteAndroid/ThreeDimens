@@ -68,7 +68,7 @@
     <string name="deep_clean">深度清理</string>
     <string name="app_info">应用信息</string>
     <string name="nav_a_zone">二次元图区</string>
-    <string name="nav_beauty">Gank 妹子</string>
+    <string name="nav_main">Gank 妹子</string>
     <string name="favorite">我的收藏</string>
     <string name="images_empty">啊哦，没有内容，赶快去收藏吧~</string>
     <string name="set_like_download">收藏时保存图片</string>
@@ -113,5 +113,7 @@
     <string name="cache_strategy">缓存策略</string>
     <string name="cache_strategy_summary">是否使用缓存以及何时清理缓存</string>
     <string name="got_it">知道了</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

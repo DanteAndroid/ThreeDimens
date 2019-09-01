@@ -5,8 +5,10 @@ import com.example.threedimens.data.ApiType
 import com.example.threedimens.data.AppDatabase
 import com.example.threedimens.ui.detail.PictureViewerRepository
 import com.example.threedimens.ui.picturelist.ImageRepository
-import com.example.threedimens.viewmodel.PageViewModelFactory
-import com.example.threedimens.viewmodel.PictureViwerViewModelFactory
+import com.example.threedimens.ui.postlist.PostRepository
+import com.example.threedimens.viewmodel.PictureViewerViewModelFactory
+import com.example.threedimens.viewmodel.PicturesViewModelFactory
+import com.example.threedimens.viewmodel.PostsViewModelFactory
 
 /**
  * @author Du Wenyu
@@ -14,23 +16,31 @@ import com.example.threedimens.viewmodel.PictureViwerViewModelFactory
  */
 object InjectorUtils {
 
-    fun providePageViewModelFactory(apiType: ApiType): PageViewModelFactory {
-        return PageViewModelFactory(provideImageRepository(apiType))
+    fun providePageViewModelFactory(apiType: ApiType): PicturesViewModelFactory {
+        return PicturesViewModelFactory(provideImageRepository(apiType))
     }
 
-    fun providePictureViwerViewModelFactory(type: String): PictureViwerViewModelFactory {
-        return PictureViwerViewModelFactory(providePictureViwerRepository(type))
+    fun providePostsViewModelFactory(apiType: ApiType): PostsViewModelFactory {
+        return PostsViewModelFactory(providePostRepository(apiType))
     }
 
-    fun provideImageRepository(apiType: ApiType): ImageRepository {
+    fun providePictureViewerViewModelFactory(type: String): PictureViewerViewModelFactory {
+        return PictureViewerViewModelFactory(providePictureViwerRepository(type))
+    }
+
+    private fun provideImageRepository(apiType: ApiType): ImageRepository {
         return ImageRepository(apiType, provideAppDatabase().imageDao())
     }
 
-    fun providePictureViwerRepository(type: String): PictureViewerRepository {
+    private fun providePostRepository(apiType: ApiType): PostRepository {
+        return PostRepository(apiType, provideAppDatabase().postDao())
+    }
+
+    private fun providePictureViwerRepository(type: String): PictureViewerRepository {
         return PictureViewerRepository(type, provideAppDatabase().imageDao())
     }
 
-    fun provideAppDatabase(): AppDatabase {
+    private fun provideAppDatabase(): AppDatabase {
         return AppDatabase.getInstance(BaseApplication.instance())
     }
 }

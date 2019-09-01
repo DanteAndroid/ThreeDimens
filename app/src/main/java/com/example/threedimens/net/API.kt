@@ -30,7 +30,7 @@ object API {
     val GANK_BASE = "http://gank.io/api/"
     val DB_BASE = "https://www.dbmeinv.com/"
     val A_BASE = "http://www.acg.fi/"
-    val MZ_BASE = "http://www.mzitu.com/"
+    val MZ_BASE = "https://www.mzitu.com/"
 
     //H API
     var H_BASE = "http://bww.yakexi.biz/pw/"

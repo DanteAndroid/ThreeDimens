@@ -5,11 +5,12 @@
 
     <group android:checkableBehavior="single">
         <item
-                android:id="@+id/nav_beauty"
+                android:id="@+id/picturesTabsFragment"
                 android:icon="@drawable/ic_menu_camera"
-                android:title="@string/nav_beauty"/>
+                android:checked="true"
+                android:title="@string/nav_main" />
         <item
-                android:id="@+id/nav_mz"
+                android:id="@+id/postsTabsFragment"
                 android:icon="@drawable/ic_menu_gallery"
                 android:title="@string/nav_mz"/>
         <item

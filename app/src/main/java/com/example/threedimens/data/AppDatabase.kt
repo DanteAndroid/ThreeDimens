@@ -11,10 +11,11 @@ import com.example.threedimens.utils.DATABASE_NAME
  * @author Du Wenyu
  * 2019-08-23
  */
-@Database(entities = [Image::class], version = 1, exportSchema = false)
+@Database(entities = [Image::class, Post::class], version = 1, exportSchema = false)
 @TypeConverters(RoomConverter::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun imageDao(): ImageDao
+    abstract fun postDao(): PostDao
 
     companion object {
         @Volatile
@@ -26,6 +27,7 @@ abstract class AppDatabase : RoomDatabase() {
                     context.applicationContext,
                     AppDatabase::class.java, DATABASE_NAME
                 )
+                    .fallbackToDestructiveMigration()
                     .build()
             }
         }

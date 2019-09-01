@@ -9,7 +9,7 @@ import com.example.threedimens.ui.detail.PictureViwerViewModel
  * @author Du Wenyu
  * 2019-08-23
  */
-class PictureViwerViewModelFactory(private val repository: PictureViewerRepository) :
+class PictureViewerViewModelFactory(private val repository: PictureViewerRepository) :
     ViewModelProvider.NewInstanceFactory() {
 
     @Suppress("UNCHECKED_CAST")

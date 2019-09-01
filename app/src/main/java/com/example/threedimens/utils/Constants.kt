@@ -22,7 +22,10 @@ package com.example.threedimens.utils
 const val DATABASE_NAME = "threedimens-db"
 const val PC_USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.95 Safari/537.36"
 
-const val POSITION = "position"
+const val VIEW_POSITION = "position"
+const val VIEW_PAGE = "page"
 
 const val PAGE_SIZE_FROM_DB = 50
 const val PAGE_SIZE_FROM_NET = 20
+
+const val DRAWER_CLOSE_DELAY = 200L

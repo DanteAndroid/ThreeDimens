@@ -1,6 +1,12 @@
 package com.example.threedimens.utils
 
 import android.view.View
+import androidx.core.view.GravityCompat
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.example.threedimens.MainDrawerActivity
+import com.example.threedimens.R
+import kotlinx.android.synthetic.main.activity_main_drawer.*
+import kotlinx.android.synthetic.main.app_bar_main_drawer.*
 
 /**
  * @author Du Wenyu
@@ -31,4 +37,23 @@ object UiUtil {
         }
     }
 
+    // 延迟隐藏，防止圆圈乱闪
+    fun smoothHideSwipeRefresh(swipeRefresh: SwipeRefreshLayout) {
+        swipeRefresh.postDelayed({
+            swipeRefresh.isRefreshing = false
+        }, 300)
+    }
+}
+
+fun MainDrawerActivity.setBack(enable: Boolean) {
+    if (enable) {
+        toolbar.setNavigationIcon(R.drawable.ic_back)
+        toolbar.setNavigationOnClickListener {
+            onBackPressed()
+            setBack(false)
+        }
+    } else {
+        toolbar.setNavigationIcon(R.drawable.ic_menu)
+        toolbar.setNavigationOnClickListener { drawer_layout.openDrawer(GravityCompat.START) }
+    }
 }

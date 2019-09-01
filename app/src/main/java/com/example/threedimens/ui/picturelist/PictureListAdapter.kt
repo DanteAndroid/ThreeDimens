@@ -4,10 +4,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.threedimens.R
+import com.example.threedimens.data.ApiType
 import com.example.threedimens.data.Image
 import com.example.threedimens.utils.load
 
@@ -30,8 +32,15 @@ class PictureListAdapter(val onClick: (Image, View, Int) -> Unit) :
     inner class PictureHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val imageView = view.findViewById<ImageView>(R.id.image)
         fun bind(image: Image) {
-            imageView.load(image.url)
+            setNumber(image)
+            imageView.load(image.url, header = image.post)
             imageView.setOnClickListener { onClick(image, itemView, adapterPosition) }
+        }
+
+        private fun setNumber(image: Image) {
+            if (image.type.contains(ApiType.Site.MEIZITU.name)) {
+                itemView.findViewById<TextView>(R.id.num).text = (adapterPosition + 1).toString()
+            }
         }
     }
 
