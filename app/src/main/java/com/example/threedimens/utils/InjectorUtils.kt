@@ -1,8 +1,8 @@
 package com.example.threedimens.utils
 
 import com.example.base.base.BaseApplication
-import com.example.threedimens.data.ApiType
 import com.example.threedimens.data.AppDatabase
+import com.example.threedimens.main.ApiType
 import com.example.threedimens.ui.detail.PictureViewerRepository
 import com.example.threedimens.ui.picturelist.ImageRepository
 import com.example.threedimens.ui.postlist.PostRepository

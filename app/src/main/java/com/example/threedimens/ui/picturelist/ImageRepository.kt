@@ -1,11 +1,11 @@
 package com.example.threedimens.ui.picturelist
 
 import androidx.paging.DataSource
-import com.example.threedimens.data.ApiType
-import com.example.threedimens.data.DataParser.getPostImages
 import com.example.threedimens.data.Image
 import com.example.threedimens.data.ImageDao
+import com.example.threedimens.main.ApiType
 import com.example.threedimens.net.NetManager
+import com.example.threedimens.parse.DataParser.getImages
 import com.example.threedimens.utils.PAGE_SIZE_FROM_NET
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.withContext
@@ -19,7 +19,7 @@ class ImageRepository(val apiType: ApiType, private val imageDao: ImageDao) {
     fun getType(): String = apiType.type
 
     fun getPagedImages(): DataSource.Factory<Int, Image> {
-        println("get images ${apiType.type} ${apiType.path}")
+        println("getWalls images ${apiType.type} ${apiType.path}")
         return imageDao.getPagedImages(apiType.type)
     }
 
@@ -27,17 +27,21 @@ class ImageRepository(val apiType: ApiType, private val imageDao: ImageDao) {
         return withContext(IO) {
             when (apiType.site) {
                 ApiType.Site.GANK -> {
-                    getPostImages(apiType, NetManager.gankApi.get(PAGE_SIZE_FROM_NET, page))
+                    getImages(apiType, NetManager.gankApi.get(PAGE_SIZE_FROM_NET, page))
                 }
                 ApiType.Site.DOUBAN -> {
-                    getPostImages(apiType, NetManager.dbApi.get(apiType.category, page))
+                    getImages(apiType, NetManager.dbApi.get(apiType.category, page))
                 }
-                ApiType.Site.MEIZITU -> {
-                    getPostImages(apiType, NetManager.postApi.getPictures(apiType.path, page))
+                ApiType.Site.WALLHAVEN -> {
+                    getImages(apiType, NetManager.wallApi.getWalls(apiType.category, page))
                 }
-                ApiType.Site.H_FORUM -> {
-                    getPostImages(apiType, NetManager.postApi.getPictures(apiType.path, page))
-                }
+//                ApiType.Site.MEIZITU -> {
+//                    getImages(apiType, NetManager.postApi.getPictures(apiType.path, page))
+//                }
+//                ApiType.Site.YAKEXI -> {
+//                    getImages(apiType, NetManager.postApi.getPictures(apiType.path, page))
+//                }
+                else -> throw IllegalStateException("${apiType.type} not implemented in ${javaClass.canonicalName}")
             }
         }
     }

@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.base.base.BaseFragment
 import com.example.base.base.LoadStatus
 import com.example.threedimens.R
-import com.example.threedimens.data.ApiType
+import com.example.threedimens.main.ApiType
 import com.example.threedimens.ui.detail.PictureViewerActivity
 import com.example.threedimens.utils.InjectorUtils
 import kotlinx.android.synthetic.main.fragment_picture_list.*
@@ -25,7 +25,7 @@ class PictureListFragment : BaseFragment() {
 
     //    private val args: PicturePageFragmentArgs by navArgs()
     private val apiType: ApiType by lazy {
-        arguments?.getSerializable(ARG_API_TYPE) as ApiType
+        arguments?.getParcelable<ApiType>(ARG_API_TYPE) as ApiType
     }
 
     private val viewModel: PictureListViewModel by viewModels {
@@ -104,13 +104,12 @@ class PictureListFragment : BaseFragment() {
 
 
     companion object {
-
         private const val ARG_API_TYPE = "api_type"
 
         fun newInstance(type: ApiType): PictureListFragment {
             return PictureListFragment().apply {
                 arguments = Bundle().apply {
-                    putSerializable(ARG_API_TYPE, type)
+                    putParcelable(ARG_API_TYPE, type)
                 }
             }
         }

@@ -5,17 +5,18 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.fragment.app.FragmentStatePagerAdapter
-import com.example.threedimens.data.ApiType
 import com.example.threedimens.ui.picturelist.PictureListFragment
+import com.example.threedimens.ui.postlist.PostListFragment
 
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
  * one of the sections/tabs/pages.
  */
-class PicturesPagerAdapter(
+class TabsPagerAdapter(
+    private val isPost: Boolean,
     private val titles: Array<String>,
-    private val apiTypes: List<ApiType>,
+    private val apiTypes: Array<ApiType>,
     fm: FragmentManager
 ) :
     FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
@@ -23,6 +24,7 @@ class PicturesPagerAdapter(
     var currentFragment: Fragment? = null
 
     override fun getItem(position: Int): Fragment {
+        if (isPost) return PostListFragment.newInstance(apiTypes[position])
         return PictureListFragment.newInstance(
             apiTypes[position]
         )

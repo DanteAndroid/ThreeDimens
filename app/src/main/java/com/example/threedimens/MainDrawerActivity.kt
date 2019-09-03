@@ -35,7 +35,7 @@ class MainDrawerActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
     private fun setupDrawer() {
         controller = findNavController(R.id.navHostFragment)
         appBarConfiguration = AppBarConfiguration(
-            setOf(R.id.picturesTabsFragment, R.id.postsTabsFragment),
+            setOf(R.id.nav_main, R.id.nav_meizi),
             drawer_layout
         )
         toolbar.setupWithNavController(controller, appBarConfiguration)
@@ -69,11 +69,11 @@ class MainDrawerActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.picturesTabsFragment -> {
+            R.id.nav_main -> {
                 toast("picturesTabsFragment")
 
             }
-            R.id.postsTabsFragment -> {
+            R.id.nav_meizi -> {
                 toast("postsTabsFragment")
             }
             R.id.nav_favorite -> {

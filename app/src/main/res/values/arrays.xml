@@ -23,11 +23,18 @@
         <item name="db_silk">黑丝控</item>
     </string-array>
 
-    <string-array name="mz_titles">
+    <string-array name="meizi_titles">
         <item name="mz_qc">清纯妹子</item>
         <item name="mz_sexy">性感MM</item>
         <item name="mz_jp">日本美女</item>
         <item name="mz_tw">台湾美女</item>
+    </string-array>
+
+    <string-array name="wall_titles">
+        <item name="wall_anime">动漫</item>
+        <item name="wall_fantasy">幻想</item>
+        <item name="wall_girl">女性</item>
+        <item name="wall_landscape">风景</item>
     </string-array>
 
     <string-array name="cache_strategy">

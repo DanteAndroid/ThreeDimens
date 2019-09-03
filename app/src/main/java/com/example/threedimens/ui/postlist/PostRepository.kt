@@ -1,12 +1,12 @@
 package com.example.threedimens.ui.postlist
 
 import androidx.lifecycle.LiveData
-import com.example.threedimens.data.ApiType
-import com.example.threedimens.data.DataParser.getPosts
 import com.example.threedimens.data.Image
 import com.example.threedimens.data.Post
 import com.example.threedimens.data.PostDao
+import com.example.threedimens.main.ApiType
 import com.example.threedimens.net.NetManager
+import com.example.threedimens.parse.DataParser.getPosts
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.withContext
 
@@ -32,7 +32,7 @@ class PostRepository(private val apiType: ApiType, private val postDao: PostDao)
                 ApiType.Site.MEIZITU -> {
                     getPosts(apiType, NetManager.postApi.getPosts(apiType.category, page))
                 }
-                ApiType.Site.H_FORUM -> {
+                ApiType.Site.YAKEXI -> {
                     getPosts(apiType, NetManager.postApi.getPosts(apiType.category, page))
                 }
                 else -> throw IllegalStateException("Not implemented: $apiType")

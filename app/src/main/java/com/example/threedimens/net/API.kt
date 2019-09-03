@@ -1,7 +1,7 @@
 package com.example.threedimens.net
 
 /**
- * Net request APIs and types
+ * Net request APIs and CATEs
  */
 object API {
 
@@ -10,31 +10,39 @@ object API {
     val DOWNLOAD_BASE = "https://github.com/DanteAndroid/Beauty/releases/download/"
 
     //Gank
-    val TYPE_GANK = "0"
-    val TYPE_HIDE = "hide"
+    val CATE_GANK = "0"
+    val CATE_HIDE = "hide"
 
     //豆瓣
-    val TYPE_DB_BREAST = "2"
-    val TYPE_DB_BUTT = "6"
-    val TYPE_DB_SILK = "7"
-    val TYPE_DB_LEG = "3"
-    val TYPE_DB_RANK = "5"
+    const val CATE_DB_BREAST = "2"
+    const val CATE_DB_BUTT = "6"
+    const val CATE_DB_SILK = "7"
+    const val CATE_DB_LEG = "3"
+    const val CATE_DB_RANK = "5"
 
-    //MZ
-    val TYPE_MZ_SEXY = "xinggan"
-    val TYPE_MZ_INNOCENT = "mm"
-    val TYPE_MZ_JAPAN = "japan"
-    val TYPE_MZ_TAIWAN = "taiwan"
+    //妹子图
+    const val CATE_MZ_SEXY = "xinggan"
+    const val CATE_MZ_INNOCENT = "mm"
+    const val CATE_MZ_JAPAN = "japan"
+    const val CATE_MZ_TAIWAN = "taiwan"
+
+    //wall haven
+    const val CATE_WH_GIRL = "girl"
+    const val CATE_WH_ANIME = "anime"
+    const val CATE_WH_FANTASY = "fantasy"
+    const val CATE_WH_LANDSCAPE = "landscape"
 
     //Base API
-    val GANK_BASE = "http://gank.io/api/"
-    val DB_BASE = "https://www.dbmeinv.com/"
-    val A_BASE = "http://www.acg.fi/"
-    val MZ_BASE = "https://www.mzitu.com/"
+    const val GANK_BASE = "http://gank.io/api/"
+    const val DB_BASE = "https://www.dbmeinv.com/"
+    const val MZ_BASE = "https://www.mzitu.com/"
+    const val WALL_BASE = "https://wallhaven.cc/"
 
     //H API
-    var H_BASE = "http://bww.yakexi.biz/pw/"
-    var H_MAIN = H_BASE + "thread.php?fid="
+    const val YAKEXI_BASE = "http://bww.yakexi.biz/pw/"
+    const val H_MAIN = YAKEXI_BASE + "thread.php?fid="
+
+    const val SHT_BASE = ""
 
 
 }

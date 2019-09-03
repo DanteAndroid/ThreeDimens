@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.base.base.BaseFragment
 import com.example.threedimens.R
-import com.example.threedimens.data.ApiType
 import com.example.threedimens.ui.picturelist.PictureListFragment
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.fragment_main_tabs.*
@@ -15,16 +14,25 @@ import kotlinx.android.synthetic.main.fragment_main_tabs.*
  * @author Du Wenyu
  * 2019-08-23
  */
-class PicturesTabsFragment : BaseFragment() {
+abstract class PicturesTabsFragment : BaseFragment() {
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    abstract fun isPost(): Boolean
+    abstract fun getTitleArrayId(): Int
+    abstract fun getApiTypeArray(): Array<ApiType>
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.fragment_main_tabs, container, false)
     }
 
     override fun initView() {
-        val adapter = PicturesPagerAdapter(
-            resources.getStringArray(R.array.main_titles),
-            ApiType.mainTypes,
+        val adapter = TabsPagerAdapter(
+            isPost(),
+            resources.getStringArray(getTitleArrayId()),
+            getApiTypeArray(),
             activity!!.supportFragmentManager
         )
         pager.adapter = adapter

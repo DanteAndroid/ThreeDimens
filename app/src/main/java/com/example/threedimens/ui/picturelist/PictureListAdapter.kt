@@ -9,8 +9,8 @@ import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.threedimens.R
-import com.example.threedimens.data.ApiType
 import com.example.threedimens.data.Image
+import com.example.threedimens.main.ApiType
 import com.example.threedimens.utils.load
 
 /**

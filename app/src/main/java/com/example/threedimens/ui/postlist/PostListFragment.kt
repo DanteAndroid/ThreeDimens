@@ -13,7 +13,7 @@ import com.example.base.base.BaseFragment
 import com.example.base.base.LoadStatus
 import com.example.threedimens.MainDrawerActivity
 import com.example.threedimens.R
-import com.example.threedimens.data.ApiType
+import com.example.threedimens.main.ApiType
 import com.example.threedimens.net.API
 import com.example.threedimens.ui.picturelist.PictureListFragment
 import com.example.threedimens.utils.InjectorUtils
@@ -28,7 +28,7 @@ class PostListFragment private constructor() : BaseFragment() {
 
     //    private val args: PicturePageFragmentArgs by navArgs()
     private val apiType: ApiType by lazy {
-        arguments?.getSerializable(ARG_API_TYPE) as ApiType
+        arguments?.getParcelable<ApiType>(ARG_API_TYPE) as ApiType
     }
 
     private val viewModel: PostListViewModel by viewModels {
@@ -137,7 +137,7 @@ class PostListFragment private constructor() : BaseFragment() {
         fun newInstance(type: ApiType): PostListFragment {
             return PostListFragment().apply {
                 arguments = Bundle().apply {
-                    putSerializable(ARG_API_TYPE, type)
+                    putParcelable(ARG_API_TYPE, type)
                 }
             }
         }

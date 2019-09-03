@@ -10,11 +10,10 @@ import retrofit2.http.Query
 /**
  * Created by yons on 16/12/8.
  */
-interface DBApi {
+interface WallApi {
 
     @Headers("User-Agent: $PC_USER_AGENT")
-    @GET("index")
-    fun get(@Query("cid") type: String, @Query("pager_offset") page: Int): Call<ResponseBody>
-
+    @GET("search")
+    fun getWalls(@Query("q") type: String, @Query("page") page: Int): Call<ResponseBody>
 
 }

@@ -5,14 +5,18 @@
 
     <group android:checkableBehavior="single">
         <item
-                android:id="@+id/picturesTabsFragment"
+            android:id="@+id/nav_main"
                 android:icon="@drawable/ic_menu_camera"
                 android:checked="true"
                 android:title="@string/nav_main" />
         <item
-                android:id="@+id/postsTabsFragment"
+            android:id="@+id/nav_meizi"
                 android:icon="@drawable/ic_menu_gallery"
                 android:title="@string/nav_mz"/>
+        <item
+            android:id="@+id/nav_wall"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="@string/nav_wall" />
         <item
                 android:id="@+id/nav_favorite"
                 android:icon="@drawable/ic_menu_manage"
