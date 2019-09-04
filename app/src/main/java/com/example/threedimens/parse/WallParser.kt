@@ -20,15 +20,31 @@ object WallParser : IParser {
         val images = arrayListOf<Image>()
         try {
             val document = Jsoup.parse(data)
-            val elements = document.select("div[id=thumbs] img")
-
+            val elements = document.select("div[id=thumbs] figure")
             println("${javaClass.canonicalName} elements ${elements.size}")
-//            images.add(Image(url = url, type = apiType.type, post = refer))
+            for (element in elements) {
+                val img = element.selectFirst("img")
+                val thumbUrl = img.attr("data-src")
+                val url = getOriginalUrl(thumbUrl)
+                val refer = element.selectFirst("a").attr("href")
+//                val originUrl = parseOriginalUrl(refer)
+                images.add(Image(id = url, url = url, type = apiType.type, post = refer))
+            }
 
         } catch (e: IOException) {
             e.printStackTrace()
         }
         return images
+    }
+
+    private fun getOriginalUrl(thumbUrl: String): String {
+        val id = thumbUrl.substringAfterLast("/").substringBefore(".")
+        val tail = thumbUrl.substringAfterLast("small").replace(id, "wallhaven-$id")
+        return "https://w.wallhaven.cc/full$tail"
+    }
+
+    fun parseOriginalUrl(refer: String): String {
+        return Jsoup.connect(refer).get().selectFirst("main[id=main] img").attr("src")
     }
 
 }

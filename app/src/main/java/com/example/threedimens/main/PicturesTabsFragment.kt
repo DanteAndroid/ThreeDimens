@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.blankj.utilcode.util.ScreenUtils
 import com.example.base.base.BaseFragment
 import com.example.threedimens.R
 import com.example.threedimens.ui.picturelist.PictureListFragment
@@ -37,7 +38,7 @@ abstract class PicturesTabsFragment : BaseFragment() {
         )
         pager.adapter = adapter
         tabs.setupWithViewPager(pager)
-        tabs.tabMode = TabLayout.MODE_SCROLLABLE
+        tabs.tabMode = if (displayFixTabs()) TabLayout.MODE_FIXED else TabLayout.MODE_SCROLLABLE
 
         tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabReselected(tab: TabLayout.Tab) {
@@ -52,6 +53,13 @@ abstract class PicturesTabsFragment : BaseFragment() {
             }
 
         })
+    }
+
+    private fun displayFixTabs(): Boolean {
+        if (ScreenUtils.isLandscape() || getApiTypeArray().size <= 4) {
+            return true
+        }
+        return false
     }
 
 }

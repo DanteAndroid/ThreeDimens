@@ -56,7 +56,7 @@ object MztParser : IParser {
                 }
                 val refer = API.MZ_BASE + apiType.path
 //            image.setTotalPage(1)//无需loadmore
-                images.add(Image(url = url, type = apiType.type, post = refer))
+                images.add(Image(id = url, url = url, type = apiType.type, post = refer))
             }
         } catch (e: IOException) {
             e.printStackTrace()

@@ -45,9 +45,9 @@ class PictureDetailFragment private constructor() : BaseFragment() {
     }
 
     private fun loadWithTransition() {
-        detailImage.load(url, loadOnlyFromCache = true) {
+        detailImage.load(url, loadOnlyFromCache = true, onLoadingFinished = {
             activity?.supportStartPostponedEnterTransition()
-        }
+        })
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             activity?.window?.sharedElementEnterTransition = TransitionSet()
                 .addTransition(ChangeImageTransform())

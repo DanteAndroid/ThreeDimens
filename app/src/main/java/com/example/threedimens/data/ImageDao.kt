@@ -19,8 +19,11 @@ interface ImageDao {
     @Query("select * from image where id = :id")
     fun getImage(id: Int): LiveData<Image>
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(image: Image)
+
+    @Update
+    fun update(image: Image)
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(image: List<Image>)

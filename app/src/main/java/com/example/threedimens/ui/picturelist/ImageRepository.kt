@@ -35,12 +35,12 @@ class ImageRepository(val apiType: ApiType, private val imageDao: ImageDao) {
                 ApiType.Site.WALLHAVEN -> {
                     getImages(apiType, NetManager.wallApi.getWalls(apiType.category, page))
                 }
-//                ApiType.Site.MEIZITU -> {
-//                    getImages(apiType, NetManager.postApi.getPictures(apiType.path, page))
-//                }
-//                ApiType.Site.YAKEXI -> {
-//                    getImages(apiType, NetManager.postApi.getPictures(apiType.path, page))
-//                }
+                ApiType.Site.MEIZITU -> {
+                    getImages(apiType, NetManager.postApi.getPictures(apiType.path, page))
+                }
+                ApiType.Site.YAKEXI -> {
+                    getImages(apiType, NetManager.postApi.getPictures(apiType.path, page))
+                }
                 else -> throw IllegalStateException("${apiType.type} not implemented in ${javaClass.canonicalName}")
             }
         }

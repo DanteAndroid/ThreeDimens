@@ -51,9 +51,9 @@ class ApiType(val site: Site, val category: String = "") : Parcelable {
         )
 
         val menuWallHaven: Array<ApiType> = arrayOf(
-            ApiType(Site.WALLHAVEN, API.CATE_WH_GIRL),
             ApiType(Site.WALLHAVEN, API.CATE_WH_ANIME),
             ApiType(Site.WALLHAVEN, API.CATE_WH_FANTASY),
+            ApiType(Site.WALLHAVEN, API.CATE_WH_GIRL),
             ApiType(Site.WALLHAVEN, API.CATE_WH_LANDSCAPE)
         )
 

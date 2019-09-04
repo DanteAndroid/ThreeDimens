@@ -19,9 +19,11 @@ import java.util.*
 //    )]
 )
 data class Image(
-    val id: Int = 0,
+    @Json(name = "_id")
+    @PrimaryKey
+    val id: String,
     var type: String,
-    @PrimaryKey val url: String,
+    val url: String,
     @Json(name = "publishedAt")
     val timestamp: Date? = null,
     val post: String = ""

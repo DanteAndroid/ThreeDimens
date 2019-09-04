@@ -9,9 +9,13 @@ import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.threedimens.R
+import com.example.threedimens.data.AppDatabase
 import com.example.threedimens.data.Image
 import com.example.threedimens.main.ApiType
+import com.example.threedimens.parse.WallParser
 import com.example.threedimens.utils.load
+import org.jetbrains.anko.runOnUiThread
+import kotlin.concurrent.thread
 
 /**
  * @author Du Wenyu
@@ -33,8 +37,27 @@ class PictureListAdapter(val onClick: (Image, View, Int) -> Unit) :
         private val imageView = view.findViewById<ImageView>(R.id.image)
         fun bind(image: Image) {
             setNumber(image)
-            imageView.load(image.url, header = image.post)
+            imageView.load(image.url, header = image.post, onLoadingFailed = {
+                println("parseRealImage ${image.url}")
+                fetchRealUrl(image, imageView)
+            })
             imageView.setOnClickListener { onClick(image, itemView, adapterPosition) }
+        }
+
+        private fun fetchRealUrl(image: Image, imageView: ImageView) {
+            try {
+                thread {
+                    val originalUrl = WallParser.parseOriginalUrl(image.post)
+                    val realImage = image.copy(url = originalUrl)
+                    AppDatabase.getInstance(itemView.context).imageDao().insert(realImage)
+                    itemView.context.runOnUiThread {
+                        println("parseRealImage ${realImage} ${image}")
+                        notifyItemChanged(adapterPosition)
+                    }
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
 
         private fun setNumber(image: Image) {

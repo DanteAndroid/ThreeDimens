@@ -23,7 +23,8 @@ fun ImageView.load(
     header: String = "",
     loadOnlyFromCache: Boolean = false,
     animate: Boolean = false,
-    onLoadingFinished: () -> Unit = {}
+    onLoadingFinished: () -> Unit = {},
+    onLoadingFailed: () -> Unit = {}
 ) {
     val listener = object : RequestListener<Drawable> {
         override fun onLoadFailed(
@@ -33,6 +34,7 @@ fun ImageView.load(
             isFirstResource: Boolean
         ): Boolean {
             onLoadingFinished()
+            onLoadingFailed()
             return false
         }
 
@@ -58,15 +60,18 @@ fun ImageView.load(
             }
         }
 
-    val glideUrl = GlideUrl(
-        url, LazyHeaders.Builder()
-            .addHeader("Referer", header)
-            .addHeader("User-Agent", PC_USER_AGENT)
-            .build()
-    )
+    fun getUrlWithHeader(url: String): GlideUrl {
+        return GlideUrl(
+            url, LazyHeaders.Builder()
+                .addHeader("Referer", header)
+                .addHeader("User-Agent", PC_USER_AGENT)
+                .build()
+        )
+    }
     GlideApp.with(this)
-        .load(glideUrl)
+        .load(getUrlWithHeader(url))
         .apply(requestOptions)
+//        .error(GlideApp.with(this).load(getUrlWithHeader(getRetryUrl(url))))
         .listener(listener)
         .apply {
             if (!loadOnlyFromCache) {
@@ -75,3 +80,15 @@ fun ImageView.load(
         }
         .into(this)
 }
+
+fun getRetryUrl(url: String): String {
+    var suffix = "jpg"
+    if (url.endsWith(".jpg")) {
+        suffix = "png"
+    }
+    val retryUrl = url.replaceAfterLast(".", suffix)
+    println("retryUrl $retryUrl")
+    return retryUrl
+
+}
+
