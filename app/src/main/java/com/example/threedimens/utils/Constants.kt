@@ -29,3 +29,4 @@ const val PAGE_SIZE_FROM_DB = 50
 const val PAGE_SIZE_FROM_NET = 20
 
 const val DRAWER_CLOSE_DELAY = 200L
+

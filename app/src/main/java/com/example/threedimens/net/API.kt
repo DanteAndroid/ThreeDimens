@@ -31,6 +31,8 @@ object API {
     const val CATE_WH_ANIME = "anime"
     const val CATE_WH_FANTASY = "fantasy"
     const val CATE_WH_LANDSCAPE = "landscape"
+    const val CATE_WH_DARK = "dark"
+    const val CATE_WH_SIMPLE = "simple"
 
     //Base API
     const val GANK_BASE = "http://gank.io/api/"

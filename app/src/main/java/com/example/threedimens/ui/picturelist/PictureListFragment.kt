@@ -50,6 +50,7 @@ class PictureListFragment : BaseFragment() {
         recyclerView.adapter = adapter
 
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
                 println("load onScrollStateChange ${recyclerView.canScrollVertically(1)}")

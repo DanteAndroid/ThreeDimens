@@ -35,6 +35,8 @@
         <item name="wall_fantasy">幻想</item>
         <item name="wall_girl">女性</item>
         <item name="wall_landscape">风景</item>
+        <item name="wall_landscape">黑暗</item>
+        <item name="wall_landscape">简约</item>
     </string-array>
 
     <string-array name="cache_strategy">

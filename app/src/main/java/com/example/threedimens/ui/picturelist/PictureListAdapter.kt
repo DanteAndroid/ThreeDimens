@@ -3,7 +3,6 @@ package com.example.threedimens.ui.picturelist
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
@@ -12,6 +11,7 @@ import com.example.threedimens.R
 import com.example.threedimens.data.Image
 import com.example.threedimens.ui.main.ApiType
 import com.example.threedimens.utils.load
+import com.example.threedimens.utils.widget.RatioImageView
 
 /**
  * @author Du Wenyu
@@ -33,9 +33,10 @@ class PictureListAdapter(
     }
 
     inner class PictureHolder(view: View) : RecyclerView.ViewHolder(view) {
-        private val imageView = view.findViewById<ImageView>(R.id.image)
+        private val imageView = view.findViewById<RatioImageView>(R.id.image)
         fun bind(image: Image) {
             setNumber(image)
+//            imageView.setOriginalSize(width, height)
             imageView.load(image.url, header = image.post, onLoadingFailed = {
                 viewModel.fetchRealUrl(image)
             })

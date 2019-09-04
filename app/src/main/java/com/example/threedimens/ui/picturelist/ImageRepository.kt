@@ -5,6 +5,8 @@ import com.example.threedimens.data.Image
 import com.example.threedimens.data.ImageDao
 import com.example.threedimens.data.parse.DataParser.getImages
 import com.example.threedimens.net.NetManager
+import com.example.threedimens.net.WallApi.Companion.AT_LEAST_RESOLUTION
+import com.example.threedimens.net.WallApi.Companion.WALL_HAVEN_RATIOS
 import com.example.threedimens.ui.main.ApiType
 import com.example.threedimens.utils.PAGE_SIZE_FROM_NET
 import kotlinx.coroutines.Dispatchers.IO
@@ -33,7 +35,15 @@ class ImageRepository(val apiType: ApiType, private val imageDao: ImageDao) {
                     getImages(apiType, NetManager.dbApi.get(apiType.category, page))
                 }
                 ApiType.Site.WALLHAVEN -> {
-                    getImages(apiType, NetManager.wallApi.getWalls(apiType.category, page))
+                    getImages(
+                        apiType,
+                        NetManager.wallApi.getWalls(
+                            apiType.category,
+                            WALL_HAVEN_RATIOS,
+                            AT_LEAST_RESOLUTION,
+                            page
+                        )
+                    )
                 }
                 ApiType.Site.MEIZITU -> {
                     getImages(apiType, NetManager.postApi.getPictures(apiType.path, page))

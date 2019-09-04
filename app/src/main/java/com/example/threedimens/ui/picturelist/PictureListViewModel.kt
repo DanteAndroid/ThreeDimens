@@ -61,6 +61,7 @@ class PictureListViewModel(private val repository: ImageRepository) : BaseStatus
                 withContext(IO) {
                     val originalUrl = WallParser.parseOriginalUrl(image.post)
                     val realImage = image.copy(url = originalUrl)
+                    println("fetchRealUrl")
                     repository.update(realImage)
                 }
             } catch (e: Exception) {

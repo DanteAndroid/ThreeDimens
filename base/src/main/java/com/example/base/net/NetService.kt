@@ -71,7 +71,7 @@ class NetService private constructor(val url: String = "") {
             .addInterceptor(loggingInterceptor)
     }
 
-    private fun createUnsafeTrustManager(): X509TrustManager {
+    fun createUnsafeTrustManager(): X509TrustManager {
         return object : X509TrustManager {
             @SuppressLint("TrustAllX509TrustManager")
             override fun checkClientTrusted(chain: Array<out X509Certificate>?, authType: String?) {

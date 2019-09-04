@@ -20,7 +20,7 @@
                 android:paddingStart="4dp"
                 android:paddingTop="4dp"
                 android:paddingEnd="4dp"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
                 app:spanCount="2"
                 tools:listitem="@layout/picture_list_item" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

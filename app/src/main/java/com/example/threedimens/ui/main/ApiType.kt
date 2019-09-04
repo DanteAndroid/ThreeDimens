@@ -54,7 +54,9 @@ class ApiType(val site: Site, val category: String = "") : Parcelable {
             ApiType(Site.WALLHAVEN, API.CATE_WH_ANIME),
             ApiType(Site.WALLHAVEN, API.CATE_WH_FANTASY),
             ApiType(Site.WALLHAVEN, API.CATE_WH_GIRL),
-            ApiType(Site.WALLHAVEN, API.CATE_WH_LANDSCAPE)
+            ApiType(Site.WALLHAVEN, API.CATE_WH_LANDSCAPE),
+            ApiType(Site.WALLHAVEN, API.CATE_WH_DARK),
+            ApiType(Site.WALLHAVEN, API.CATE_WH_SIMPLE)
         )
 
         @JvmField

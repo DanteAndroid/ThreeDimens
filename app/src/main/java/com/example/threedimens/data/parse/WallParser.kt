@@ -3,8 +3,10 @@ package com.example.threedimens.data.parse
 import com.example.threedimens.data.Image
 import com.example.threedimens.data.Post
 import com.example.threedimens.ui.main.ApiType
+import com.example.threedimens.utils.AppUtil
 import org.jsoup.Jsoup
 import java.io.IOException
+import javax.net.ssl.SSLContext
 
 /**
  * @author Du Wenyu
@@ -44,7 +46,10 @@ object WallParser : IParser {
     }
 
     fun parseOriginalUrl(refer: String): String {
-        return Jsoup.connect(refer).get().selectFirst("main[id=main] img").attr("src")
+        val sslContext = SSLContext.getInstance("SSL")
+        sslContext.init(null, arrayOf(AppUtil.createUnsafeTrustManager()), null)
+        return Jsoup.connect(refer).sslSocketFactory(sslContext.socketFactory).get()
+            .selectFirst("main[id=main] img").attr("src")
     }
 
 }
