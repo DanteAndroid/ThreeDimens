@@ -1,4 +1,4 @@
-package com.example.threedimens.main
+package com.example.threedimens.ui.main
 
 import com.example.threedimens.R
 

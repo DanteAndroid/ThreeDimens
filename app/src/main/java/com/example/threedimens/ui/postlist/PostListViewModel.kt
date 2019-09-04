@@ -37,7 +37,7 @@ class PostListViewModel(private val repository: PostRepository) : BaseStatusVM()
         try {
             setStatus(LoadStatus.LOADING)
             val result = repository.fetchPosts(pageNum)
-            println("insert ${result.size} ${result.first()}")
+            println("update ${result.size} ${result.first()}")
             repository.insert(result)
             setStatus(LoadStatus.DONE)
 

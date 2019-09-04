@@ -1,9 +1,9 @@
-package com.example.threedimens.main
+package com.example.threedimens.ui.main
 
 import android.os.Parcel
 import android.os.Parcelable
+import com.example.threedimens.data.parse.*
 import com.example.threedimens.net.API
-import com.example.threedimens.parse.*
 
 /**
  * @author Du Wenyu

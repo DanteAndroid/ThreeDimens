@@ -1,8 +1,8 @@
-package com.example.threedimens.parse
+package com.example.threedimens.data.parse
 
 import com.example.threedimens.data.Image
 import com.example.threedimens.data.Post
-import com.example.threedimens.main.ApiType
+import com.example.threedimens.ui.main.ApiType
 import com.squareup.moshi.FromJson
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.ToJson

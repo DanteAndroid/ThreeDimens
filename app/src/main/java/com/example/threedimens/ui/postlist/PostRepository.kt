@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import com.example.threedimens.data.Image
 import com.example.threedimens.data.Post
 import com.example.threedimens.data.PostDao
-import com.example.threedimens.main.ApiType
+import com.example.threedimens.data.parse.DataParser.getPosts
 import com.example.threedimens.net.NetManager
-import com.example.threedimens.parse.DataParser.getPosts
+import com.example.threedimens.ui.main.ApiType
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.withContext
 

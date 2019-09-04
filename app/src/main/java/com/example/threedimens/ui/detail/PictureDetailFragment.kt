@@ -40,7 +40,7 @@ class PictureDetailFragment private constructor() : BaseFragment() {
         if (showTransition) {
             loadWithTransition()
         } else {
-            detailImage.load(url, animate = true)
+            detailImage.load(url, animate = true, showOriginal = true)
         }
     }
 
@@ -57,7 +57,7 @@ class PictureDetailFragment private constructor() : BaseFragment() {
                 excludeTarget(android.R.id.navigationBarBackground, true)
                 excludeTarget(R.id.action_bar_container, true)
                 doOnEnd {
-                    detailImage?.load(url)
+                    detailImage?.load(url, showOriginal = true)
                 }
             }
         } else {

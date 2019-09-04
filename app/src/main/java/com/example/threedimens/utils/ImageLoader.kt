@@ -11,7 +11,7 @@ import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
 import com.example.threedimens.R
-import com.example.threedimens.widget.GlideApp
+import com.example.threedimens.utils.widget.GlideApp
 
 /**
  * @author Du Wenyu
@@ -23,6 +23,7 @@ fun ImageView.load(
     header: String = "",
     loadOnlyFromCache: Boolean = false,
     animate: Boolean = false,
+    showOriginal: Boolean = false,
     onLoadingFinished: () -> Unit = {},
     onLoadingFailed: () -> Unit = {}
 ) {
@@ -71,24 +72,16 @@ fun ImageView.load(
     GlideApp.with(this)
         .load(getUrlWithHeader(url))
         .apply(requestOptions)
-//        .error(GlideApp.with(this).load(getUrlWithHeader(getRetryUrl(url))))
+//        .error(GlideApp.with(this).load(getUrlWithHeader(url)))
         .listener(listener)
         .apply {
             if (!loadOnlyFromCache) {
                 transition(DrawableTransitionOptions.withCrossFade())
             }
+            if (showOriginal) {
+//                override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+            }
         }
         .into(this)
-}
-
-fun getRetryUrl(url: String): String {
-    var suffix = "jpg"
-    if (url.endsWith(".jpg")) {
-        suffix = "png"
-    }
-    val retryUrl = url.replaceAfterLast(".", suffix)
-    println("retryUrl $retryUrl")
-    return retryUrl
-
 }
 

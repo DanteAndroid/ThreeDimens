@@ -1,7 +1,7 @@
 package com.example.threedimens.net
 
 import com.example.base.net.NetService
-import com.example.threedimens.main.ApiType
+import com.example.threedimens.ui.main.ApiType
 
 /**
  * @author Du Wenyu

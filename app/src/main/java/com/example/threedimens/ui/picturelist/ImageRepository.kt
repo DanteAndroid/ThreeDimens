@@ -3,9 +3,9 @@ package com.example.threedimens.ui.picturelist
 import androidx.paging.DataSource
 import com.example.threedimens.data.Image
 import com.example.threedimens.data.ImageDao
-import com.example.threedimens.main.ApiType
+import com.example.threedimens.data.parse.DataParser.getImages
 import com.example.threedimens.net.NetManager
-import com.example.threedimens.parse.DataParser.getImages
+import com.example.threedimens.ui.main.ApiType
 import com.example.threedimens.utils.PAGE_SIZE_FROM_NET
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.withContext
@@ -47,13 +47,13 @@ class ImageRepository(val apiType: ApiType, private val imageDao: ImageDao) {
     }
 
 
-    suspend fun insert(image: Image) {
+    suspend fun update(image: Image) {
         withContext(IO) {
-            imageDao.insert(image)
+            imageDao.update(image)
         }
     }
 
-    suspend fun insert(images: List<Image>) {
+    suspend fun update(images: List<Image>) {
         withContext(IO) {
             imageDao.insert(images)
         }

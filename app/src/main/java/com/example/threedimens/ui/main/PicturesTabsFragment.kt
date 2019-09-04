@@ -1,4 +1,4 @@
-package com.example.threedimens.main
+package com.example.threedimens.ui.main
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -53,6 +53,11 @@ abstract class PicturesTabsFragment : BaseFragment() {
             }
 
         })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        println("onResume")
     }
 
     private fun displayFixTabs(): Boolean {

@@ -1,4 +1,4 @@
-package com.example.threedimens.main
+package com.example.threedimens.ui.main
 
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
@@ -25,6 +25,7 @@ class TabsPagerAdapter(
 
     override fun getItem(position: Int): Fragment {
         if (isPost) return PostListFragment.newInstance(apiTypes[position])
+        println("getItem newInstance ${apiTypes[position].type}")
         return PictureListFragment.newInstance(
             apiTypes[position]
         )

@@ -2,13 +2,13 @@ package com.example.threedimens.utils
 
 import com.example.base.base.BaseApplication
 import com.example.threedimens.data.AppDatabase
-import com.example.threedimens.main.ApiType
 import com.example.threedimens.ui.detail.PictureViewerRepository
+import com.example.threedimens.ui.main.ApiType
 import com.example.threedimens.ui.picturelist.ImageRepository
 import com.example.threedimens.ui.postlist.PostRepository
-import com.example.threedimens.viewmodel.PictureViewerViewModelFactory
-import com.example.threedimens.viewmodel.PicturesViewModelFactory
-import com.example.threedimens.viewmodel.PostsViewModelFactory
+import com.example.threedimens.utils.viewmodel.PictureViewerViewModelFactory
+import com.example.threedimens.utils.viewmodel.PicturesViewModelFactory
+import com.example.threedimens.utils.viewmodel.PostsViewModelFactory
 
 /**
  * @author Du Wenyu

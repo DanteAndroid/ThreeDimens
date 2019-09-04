@@ -35,7 +35,7 @@ class MainDrawerActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
     private fun setupDrawer() {
         controller = findNavController(R.id.navHostFragment)
         appBarConfiguration = AppBarConfiguration(
-            setOf(R.id.nav_main, R.id.nav_meizi),
+            setOf(R.id.nav_main, R.id.nav_meizi, R.id.nav_wall, R.id.nav_favorite),
             drawer_layout
         )
         toolbar.setupWithNavController(controller, appBarConfiguration)

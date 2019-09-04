@@ -1,4 +1,4 @@
-package com.example.threedimens.viewmodel
+package com.example.threedimens.utils.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

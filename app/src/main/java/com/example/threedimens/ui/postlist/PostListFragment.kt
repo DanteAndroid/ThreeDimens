@@ -13,8 +13,8 @@ import com.example.base.base.BaseFragment
 import com.example.base.base.LoadStatus
 import com.example.threedimens.MainDrawerActivity
 import com.example.threedimens.R
-import com.example.threedimens.main.ApiType
 import com.example.threedimens.net.API
+import com.example.threedimens.ui.main.ApiType
 import com.example.threedimens.ui.picturelist.PictureListFragment
 import com.example.threedimens.utils.InjectorUtils
 import com.example.threedimens.utils.setBack

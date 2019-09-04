@@ -12,8 +12,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.base.base.BaseFragment
 import com.example.base.base.LoadStatus
 import com.example.threedimens.R
-import com.example.threedimens.main.ApiType
 import com.example.threedimens.ui.detail.PictureViewerActivity
+import com.example.threedimens.ui.main.ApiType
 import com.example.threedimens.utils.InjectorUtils
 import kotlinx.android.synthetic.main.fragment_picture_list.*
 import org.jetbrains.anko.design.snackbar
@@ -25,16 +25,17 @@ class PictureListFragment : BaseFragment() {
 
     //    private val args: PicturePageFragmentArgs by navArgs()
     private val apiType: ApiType by lazy {
-        arguments?.getParcelable<ApiType>(ARG_API_TYPE) as ApiType
+        arguments!!.getParcelable<ApiType>(ARG_API_TYPE) as ApiType
     }
 
     private val viewModel: PictureListViewModel by viewModels {
         InjectorUtils.providePageViewModelFactory(apiType)
     }
 
-    private val adapter = PictureListAdapter { image, view, position ->
-        PictureViewerActivity.startViewer(activity!!, view, image.url, image.type, position)
-
+    private val adapter by lazy {
+        PictureListAdapter(viewModel) { image, view, position ->
+            PictureViewerActivity.startViewer(activity!!, view, image.url, image.type, position)
+        }
     }
 
     override fun onCreateView(
@@ -84,7 +85,7 @@ class PictureListFragment : BaseFragment() {
         })
         viewModel.pagedImages.observe(this, Observer {
             if (it.isEmpty()) return@Observer
-            println("load type ${it?.first()?.type} ${it.size}")
+            println("parseRealImage load type ${it?.first()?.type} ${it.size}")
             adapter.submitList(it)
         })
     }

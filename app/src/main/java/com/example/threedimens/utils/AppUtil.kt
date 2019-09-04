@@ -1,10 +1,10 @@
 package com.example.threedimens.utils
 
+import android.annotation.SuppressLint
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
@@ -14,6 +14,11 @@ import com.blankj.utilcode.util.Utils
 import com.example.threedimens.BuildConfig
 import com.example.threedimens.R
 import moe.feng.alipay.zerosdk.AlipayZeroSdk
+import okhttp3.OkHttpClient
+import java.security.cert.X509Certificate
+import javax.net.ssl.HostnameVerifier
+import javax.net.ssl.SSLContext
+import javax.net.ssl.X509TrustManager
 
 /**
  * Created by Dante on 2016/2/19.
@@ -21,19 +26,29 @@ import moe.feng.alipay.zerosdk.AlipayZeroSdk
 object AppUtil {
 
 
-    fun openAppInfo(context: Context) {
-        //redirect user to app Settings
-        val i = Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-        i.addCategory(Intent.CATEGORY_DEFAULT)
-        i.data = Uri.parse("package:" + context.applicationContext.packageName)
-        context.startActivity(i)
+    fun getUnsafeOkHttpClient(): OkHttpClient.Builder {
+        val unsafeTrustManager = createUnsafeTrustManager()
+        val sslContext = SSLContext.getInstance("SSL")
+        sslContext.init(null, arrayOf(unsafeTrustManager), null)
+        return OkHttpClient.Builder()
+            .sslSocketFactory(sslContext.socketFactory, unsafeTrustManager)
+            .hostnameVerifier(HostnameVerifier { p0, p1 -> true })
     }
 
-    fun isIntentSafe(intent: Intent): Boolean {
-        val packageManager = Utils.getApp().packageManager
-        val activities =
-            packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY)
-        return activities.size > 0
+    private fun createUnsafeTrustManager(): X509TrustManager {
+        return object : X509TrustManager {
+            @SuppressLint("TrustAllX509TrustManager")
+            override fun checkClientTrusted(chain: Array<out X509Certificate>?, authType: String?) {
+            }
+
+            @SuppressLint("TrustAllX509TrustManager")
+            override fun checkServerTrusted(chain: Array<out X509Certificate>?, authType: String?) {
+            }
+
+            override fun getAcceptedIssuers(): Array<out X509Certificate>? {
+                return emptyArray()
+            }
+        }
     }
 
     fun goMarket(activity: AppCompatActivity) {

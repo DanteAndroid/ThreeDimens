@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.threedimens.widget
+package com.example.threedimens.utils.widget
 
 import android.content.Context
 import android.util.AttributeSet
@@ -32,9 +32,9 @@ class RatioImageView : AppCompatImageView {
     private var originalWidth: Int = 0
     private var originalHeight: Int = 0
 
-    constructor(context: Context) : super(context) {}
+    constructor(context: Context) : super(context)
 
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {}
+    constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(
         context,

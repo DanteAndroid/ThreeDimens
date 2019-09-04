@@ -1,9 +1,14 @@
 package com.example.base.net
 
+import android.annotation.SuppressLint
 import com.example.base.BuildConfig
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
+import java.security.cert.X509Certificate
+import javax.net.ssl.HostnameVerifier
+import javax.net.ssl.SSLContext
+import javax.net.ssl.X509TrustManager
 
 /**
  * @author Du Wenyu
@@ -39,7 +44,10 @@ class NetService private constructor(val url: String = "") {
         return createRetrofit(baseUrl, okHttpClient).create(T::class.java)
     }
 
-    fun createRetrofit(baseUrl: String, okHttpClient: OkHttpClient = createOkHttpClient()): Retrofit {
+    fun createRetrofit(
+        baseUrl: String,
+        okHttpClient: OkHttpClient = createOkHttpClient()
+    ): Retrofit {
         return Retrofit.Builder()
             .baseUrl(baseUrl)
             .client(okHttpClient)
@@ -54,8 +62,29 @@ class NetService private constructor(val url: String = "") {
                 else HttpLoggingInterceptor.Level.NONE
             }
 
+        val unsafeTrustManager = createUnsafeTrustManager()
+        val sslContext = SSLContext.getInstance("SSL")
+        sslContext.init(null, arrayOf(unsafeTrustManager), null)
         return OkHttpClient.Builder()
+            .sslSocketFactory(sslContext.socketFactory, unsafeTrustManager)
+            .hostnameVerifier(HostnameVerifier { p0, p1 -> true })
             .addInterceptor(loggingInterceptor)
+    }
+
+    private fun createUnsafeTrustManager(): X509TrustManager {
+        return object : X509TrustManager {
+            @SuppressLint("TrustAllX509TrustManager")
+            override fun checkClientTrusted(chain: Array<out X509Certificate>?, authType: String?) {
+            }
+
+            @SuppressLint("TrustAllX509TrustManager")
+            override fun checkServerTrusted(chain: Array<out X509Certificate>?, authType: String?) {
+            }
+
+            override fun getAcceptedIssuers(): Array<out X509Certificate>? {
+                return emptyArray()
+            }
+        }
     }
 
     private fun createOkHttpClient(): OkHttpClient {
