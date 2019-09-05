@@ -3,7 +3,7 @@ package com.example.base.base
 import android.app.Application
 
 /**
- * @author Du Wenyu
+ * @author Dante
  * 2019-08-19
  */
 abstract class BaseApplication : Application() {

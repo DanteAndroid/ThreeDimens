@@ -13,11 +13,12 @@ import com.example.threedimens.data.Post
 import com.example.threedimens.utils.load
 
 /**
- * @author Du Wenyu
+ * @author Dante
  * 2019-08-23
  */
 class PostListAdapter(val onClick: (Post, View, Int) -> Unit) :
     ListAdapter<Post, PostListAdapter.PictureHolder>(IMAGE_COMPARATOR) {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PictureHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.post_list_item, parent, false)

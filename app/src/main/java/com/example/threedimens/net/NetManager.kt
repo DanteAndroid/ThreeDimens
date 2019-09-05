@@ -4,7 +4,7 @@ import com.example.base.net.NetService
 import com.example.threedimens.ui.main.ApiType
 
 /**
- * @author Du Wenyu
+ * @author Dante
  * 2019-08-23
  */
 object NetManager {

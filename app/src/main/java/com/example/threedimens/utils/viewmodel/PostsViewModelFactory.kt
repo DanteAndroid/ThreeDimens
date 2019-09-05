@@ -6,7 +6,7 @@ import com.example.threedimens.ui.postlist.PostListViewModel
 import com.example.threedimens.ui.postlist.PostRepository
 
 /**
- * @author Du Wenyu
+ * @author Dante
  * 2019-08-23
  */
 class PostsViewModelFactory(private val repository: PostRepository) :

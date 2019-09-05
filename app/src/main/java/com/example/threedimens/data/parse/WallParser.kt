@@ -1,5 +1,6 @@
 package com.example.threedimens.data.parse
 
+import androidx.annotation.WorkerThread
 import com.example.threedimens.data.Image
 import com.example.threedimens.data.Post
 import com.example.threedimens.ui.main.ApiType
@@ -9,7 +10,7 @@ import java.io.IOException
 import javax.net.ssl.SSLContext
 
 /**
- * @author Du Wenyu
+ * @author Dante
  * 2019-09-03
  */
 object WallParser : IParser {
@@ -23,13 +24,11 @@ object WallParser : IParser {
         try {
             val document = Jsoup.parse(data)
             val elements = document.select("div[id=thumbs] figure")
-            println("${javaClass.canonicalName} elements ${elements.size}")
             for (element in elements) {
                 val img = element.selectFirst("img")
                 val thumbUrl = img.attr("data-src")
                 val url = getOriginalUrl(thumbUrl)
                 val refer = element.selectFirst("a").attr("href")
-//                val originUrl = parseOriginalUrl(refer)
                 images.add(Image(id = url, url = url, type = apiType.type, post = refer))
             }
 
@@ -45,6 +44,7 @@ object WallParser : IParser {
         return "https://w.wallhaven.cc/full$tail"
     }
 
+    @WorkerThread
     fun parseOriginalUrl(refer: String): String {
         val sslContext = SSLContext.getInstance("SSL")
         sslContext.init(null, arrayOf(AppUtil.createUnsafeTrustManager()), null)

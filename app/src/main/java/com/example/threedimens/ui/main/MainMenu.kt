@@ -3,7 +3,7 @@ package com.example.threedimens.ui.main
 import com.example.threedimens.R
 
 /**
- * @author Du Wenyu
+ * @author Dante
  * 2019-09-03
  */
 class MainTabsFragment : PicturesTabsFragment() {

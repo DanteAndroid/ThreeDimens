@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.base.base.BaseActivity
 
 /**
- * @author Du Wenyu
+ * @author Dante
  * 2019-08-21
  */
 

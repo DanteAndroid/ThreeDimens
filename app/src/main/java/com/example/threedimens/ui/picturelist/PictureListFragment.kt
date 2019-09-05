@@ -1,6 +1,7 @@
 package com.example.threedimens.ui.picturelist
 
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,21 +10,22 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.base.base.BaseFragment
 import com.example.base.base.LoadStatus
 import com.example.threedimens.R
 import com.example.threedimens.ui.detail.PictureViewerActivity
 import com.example.threedimens.ui.main.ApiType
 import com.example.threedimens.utils.InjectorUtils
+import com.example.threedimens.utils.Scrollable
 import kotlinx.android.synthetic.main.fragment_picture_list.*
 import org.jetbrains.anko.design.snackbar
 
 /**
  * A placeholder fragment containing a simple view.
  */
-class PictureListFragment : BaseFragment() {
+class PictureListFragment : BaseFragment(), Scrollable {
 
-    //    private val args: PicturePageFragmentArgs by navArgs()
     private val apiType: ApiType by lazy {
         arguments!!.getParcelable<ApiType>(ARG_API_TYPE) as ApiType
     }
@@ -48,12 +50,11 @@ class PictureListFragment : BaseFragment() {
     override fun initView() {
         recyclerView.setHasFixedSize(true)
         recyclerView.adapter = adapter
-
+        val manager = recyclerView.layoutManager as StaggeredGridLayoutManager
+        Handler().post { manager.invalidateSpanAssignments() }
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
-                println("load onScrollStateChange ${recyclerView.canScrollVertically(1)}")
                 if (!recyclerView.canScrollVertically(1)) {
                     viewModel.loadMoreImages()
                     swipeRefresh.isRefreshing = true
@@ -86,12 +87,11 @@ class PictureListFragment : BaseFragment() {
         })
         viewModel.pagedImages.observe(this, Observer {
             if (it.isEmpty()) return@Observer
-            println("parseRealImage load type ${it?.first()?.type} ${it.size}")
             adapter.submitList(it)
         })
     }
 
-    fun scrollToTop() {
+    override fun scrollToTop() {
         if (recyclerView.layoutManager is LinearLayoutManager) {
             val manager = recyclerView.layoutManager as LinearLayoutManager
             if (manager.findLastVisibleItemPosition() > 20) {
@@ -103,7 +103,6 @@ class PictureListFragment : BaseFragment() {
             recyclerView.scrollToPosition(0)
         }
     }
-
 
     companion object {
         private const val ARG_API_TYPE = "api_type"

@@ -17,7 +17,7 @@ import javax.net.ssl.X509TrustManager
 
 
 /**
- * @author Du Wenyu
+ * @author Dante
  * 2019-08-27
  */
 @GlideModule

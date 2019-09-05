@@ -4,7 +4,7 @@ import androidx.paging.PagedList
 import com.example.threedimens.data.Image
 
 /**
- * @author Du Wenyu
+ * @author Dante
  * 2019-08-28
  */
 class ImageBoundaryCallback(private val viewModel: PictureListViewModel) :
@@ -17,13 +17,11 @@ class ImageBoundaryCallback(private val viewModel: PictureListViewModel) :
 
     override fun onItemAtEndLoaded(itemAtEnd: Image) {
         super.onItemAtEndLoaded(itemAtEnd)
-        println("load Paging onItemAtEndLoaded ${Thread.currentThread().name} ")
         viewModel.loadMoreImages()
     }
 
     override fun onZeroItemsLoaded() {
         super.onZeroItemsLoaded()
-        println("load  Paging onItemAtEndLoaded ${Thread.currentThread().name} ")
         viewModel.refreshImages()
     }
 

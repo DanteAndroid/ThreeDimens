@@ -9,7 +9,7 @@ import org.jsoup.Jsoup
 import java.io.IOException
 
 /**
- * @author Du Wenyu
+ * @author Dante
  * 2019-09-03
  */
 object MztParser : IParser {
@@ -43,11 +43,10 @@ object MztParser : IParser {
                 val pageStr = aElements.get(aElements.size - 2).text()
                 if (!TextUtils.isEmpty(pageStr) && TextUtils.isDigitsOnly(pageStr)) {
                     totalPage = Integer.parseInt(pageStr)
-                    println("parseMzt total page is $totalPage")
                 }
             }
-            val src =
-                document.getElementsByClass("main-image").first().selectFirst("img").attr("src")
+            val src = document.getElementsByClass("main-image").first()
+                .selectFirst("img").attr("src")
             for (index in 1 until totalPage + 1) {
                 val url: String = if (index < 10) {
                     src.replace("01.", "0$index.")

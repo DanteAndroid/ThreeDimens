@@ -1,64 +1,48 @@
 package com.example.threedimens.utils
 
+import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.widget.ImageView
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.load.model.GlideUrl
 import com.bumptech.glide.load.model.LazyHeaders
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions
 import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.BitmapImageViewTarget
 import com.bumptech.glide.request.target.Target
+import com.bumptech.glide.request.transition.Transition
 import com.example.threedimens.R
 import com.example.threedimens.utils.widget.GlideApp
+import com.example.threedimens.utils.widget.RatioImageView
 
 /**
- * @author Du Wenyu
+ * @author Dante
  * 2019-08-27
  */
 
 fun ImageView.load(
     url: String,
     header: String = "",
+    /**
+     * 仅从缓存中读取，缓存里没有则加载失败
+     */
     loadOnlyFromCache: Boolean = false,
+    /**
+     * 是否显示转圈动画
+     */
     animate: Boolean = false,
+    /**
+     * 加载原图
+     */
     showOriginal: Boolean = false,
     onLoadingFinished: () -> Unit = {},
     onLoadingFailed: () -> Unit = {}
 ) {
-    val listener = object : RequestListener<Drawable> {
-        override fun onLoadFailed(
-            e: GlideException?,
-            model: Any?,
-            target: Target<Drawable>?,
-            isFirstResource: Boolean
-        ): Boolean {
-            onLoadingFinished()
-            onLoadingFailed()
-            return false
-        }
-
-        override fun onResourceReady(
-            resource: Drawable?,
-            model: Any?,
-            target: Target<Drawable>?,
-            dataSource: DataSource?,
-            isFirstResource: Boolean
-        ): Boolean {
-            onLoadingFinished()
-            return false
-        }
-    }
 
     val requestOptions = RequestOptions()
-        .error(R.drawable.placeholder)
         .dontTransform()
         .onlyRetrieveFromCache(loadOnlyFromCache)
         .apply {
-            if (!animate) {
-                placeholder(R.drawable.loading_animation)
-            }
+            placeholder(if (animate) R.drawable.loading_animation else R.drawable.placeholder)
         }
 
     fun getUrlWithHeader(url: String): GlideUrl {
@@ -70,18 +54,34 @@ fun ImageView.load(
         )
     }
     GlideApp.with(this)
+        .asBitmap()
         .load(getUrlWithHeader(url))
         .apply(requestOptions)
 //        .error(GlideApp.with(this).load(getUrlWithHeader(url)))
-        .listener(listener)
+//        .listener(listener)
         .apply {
             if (!loadOnlyFromCache) {
-                transition(DrawableTransitionOptions.withCrossFade())
+                transition(BitmapTransitionOptions.withCrossFade())
             }
             if (showOriginal) {
-//                override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+                override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
             }
         }
-        .into(this)
+        .into(object : BitmapImageViewTarget(this) {
+
+            override fun onLoadFailed(errorDrawable: Drawable?) {
+                super.onLoadFailed(errorDrawable)
+                onLoadingFinished()
+                onLoadingFailed()
+            }
+
+            override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                super.onResourceReady(resource, transition)
+                if (this@load is RatioImageView) {
+                    this@load.setOriginalSize(resource.width, resource.height)
+                }
+                onLoadingFinished()
+            }
+        })
 }
 

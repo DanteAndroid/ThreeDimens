@@ -19,7 +19,6 @@ import org.jetbrains.anko.toast
 
 class MainDrawerActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
-
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var controller: NavController
 

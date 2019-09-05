@@ -35,12 +35,9 @@ class PictureListViewModel(private val repository: ImageRepository) : BaseStatus
     fun loadMoreImages() {
         viewModelScope.launch {
             fetchImages(++page)
-            println("LoadPage ${repository.getType()} $page ")
         }
     }
 
-
-    @Synchronized
     private suspend fun fetchImages(pageNum: Int = 1) {
         try {
             setStatus(LoadStatus.LOADING)
@@ -61,7 +58,6 @@ class PictureListViewModel(private val repository: ImageRepository) : BaseStatus
                 withContext(IO) {
                     val originalUrl = WallParser.parseOriginalUrl(image.post)
                     val realImage = image.copy(url = originalUrl)
-                    println("fetchRealUrl")
                     repository.update(realImage)
                 }
             } catch (e: Exception) {

@@ -8,7 +8,8 @@ import retrofit2.http.Headers
 import retrofit2.http.Query
 
 /**
- * Created by yons on 16/12/8.
+ * @author Dante
+ * 2019-08-23
  */
 interface WallApi {
     companion object {

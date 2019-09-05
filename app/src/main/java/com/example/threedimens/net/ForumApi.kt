@@ -6,9 +6,9 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 /**
- * Created by yons on 16/12/16.
+ * @author Dante
+ * 2019-08-23
  */
-
 interface ForumApi {
 
     //Post示例

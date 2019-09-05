@@ -11,7 +11,7 @@ import com.example.threedimens.utils.viewmodel.PicturesViewModelFactory
 import com.example.threedimens.utils.viewmodel.PostsViewModelFactory
 
 /**
- * @author Du Wenyu
+ * @author Dante
  * 2019-08-23
  */
 object InjectorUtils {

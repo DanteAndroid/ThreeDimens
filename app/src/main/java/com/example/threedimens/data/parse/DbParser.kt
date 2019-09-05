@@ -7,7 +7,7 @@ import org.jsoup.Jsoup
 import java.io.IOException
 
 /**
- * @author Du Wenyu
+ * @author Dante
  * 2019-09-03
  */
 object DbParser : IParser {

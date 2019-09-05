@@ -71,5 +71,6 @@ dependencies {
     api 'com.squareup.moshi:moshi-adapters:1.8.0'
     // Permission
     api "org.permissionsdispatcher:permissionsdispatcher:4.5.0"
-
+    //noinspection GradleDependency
+    api 'com.bugtags.library:bugtags-lib:latest.integration'
 }

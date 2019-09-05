@@ -3,12 +3,13 @@ package com.example.threedimens.ui.detail
 import android.app.Activity
 import android.content.Intent
 import android.view.View
+import android.view.ViewGroup
 import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityOptionsCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
+import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.Observer
 import androidx.viewpager.widget.ViewPager
 import com.example.base.base.BaseActivity
@@ -51,7 +52,7 @@ class PictureViewerActivity(override val layoutResId: Int = R.layout.activity_vi
         }
     }
 
-
+    private lateinit var adapter: DetailPagerAdapter
     private var hasInit: Boolean = false
     private lateinit var type: String
 
@@ -71,10 +72,10 @@ class PictureViewerActivity(override val layoutResId: Int = R.layout.activity_vi
         type = intent!!.getStringExtra(ARG_TYPE)!!
         currentPosition = transPosition
 
-        val adapter = DetailPagerAdapter(fragmentManager = supportFragmentManager)
+        adapter = DetailPagerAdapter(fragmentManager = supportFragmentManager)
 
         viewModel.getImages().observe(this, Observer {
-            adapter.addData(it)
+            adapter.setNewData(it)
             initViewPager(adapter)
         })
     }
@@ -93,9 +94,10 @@ class PictureViewerActivity(override val layoutResId: Int = R.layout.activity_vi
     }
 
     override fun onBackPressed() {
-        super.onBackPressed()
+        adapter.currentFragment?.restoreImage()
         supportFinishAfterTransition()
     }
+
 
     override fun supportFinishAfterTransition() {
         if (transPosition == currentPosition) {
@@ -108,20 +110,27 @@ class PictureViewerActivity(override val layoutResId: Int = R.layout.activity_vi
     inner class DetailPagerAdapter(
         private val images: MutableList<Image> = mutableListOf(),
         fragmentManager: FragmentManager
-    ) :
-        FragmentPagerAdapter(
-            fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT
-        ) {
+    ) : FragmentStatePagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+
+        var currentFragment: PictureDetailFragment? = null
+
         override fun getItem(position: Int): Fragment {
             return PictureDetailFragment.newInstance(
-                images[position].url,
-                transPosition == position
+                images[position].url, transPosition == position
             )
+        }
+
+        override fun setPrimaryItem(container: ViewGroup, position: Int, `object`: Any) {
+            super.setPrimaryItem(container, position, `object`)
+            if (currentFragment !== `object`) {
+                currentFragment = `object` as PictureDetailFragment
+            }
         }
 
         override fun getCount(): Int = images.size
 
-        fun addData(list: List<Image>) {
+        fun setNewData(list: List<Image>) {
+            images.clear()
             images.addAll(list)
             notifyDataSetChanged()
         }

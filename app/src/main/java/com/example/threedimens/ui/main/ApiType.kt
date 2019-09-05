@@ -6,7 +6,7 @@ import com.example.threedimens.data.parse.*
 import com.example.threedimens.net.API
 
 /**
- * @author Du Wenyu
+ * @author Dante
  * 2019-08-23
  */
 class ApiType(val site: Site, val category: String = "") : Parcelable {

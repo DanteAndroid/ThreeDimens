@@ -8,13 +8,13 @@ import retrofit2.http.Headers
 import retrofit2.http.Query
 
 /**
- * Created by yons on 16/12/8.
+ * @author Dante
+ * 2019-08-23
  */
 interface DBApi {
 
     @Headers("User-Agent: $PC_USER_AGENT")
-    @GET("index")
-    fun get(@Query("cid") type: String, @Query("pager_offset") page: Int): Call<ResponseBody>
-
+    @GET("/")
+    fun getDouban(@Query("cid") type: String, @Query("pager_offset") page: Int): Call<ResponseBody>
 
 }

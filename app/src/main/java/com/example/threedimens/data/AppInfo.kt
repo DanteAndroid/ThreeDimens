@@ -1,5 +1,9 @@
 package com.example.threedimens.data
 
+/**
+ * @author Dante
+ * 2019-08-23
+ */
 data class AppInfo(
     val announcement: String,
     val apk_name: String,

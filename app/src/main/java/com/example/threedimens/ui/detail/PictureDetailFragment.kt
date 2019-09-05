@@ -23,6 +23,7 @@ class PictureDetailFragment private constructor() : BaseFragment() {
     private val url: String by lazy {
         arguments!!.getString(ARG_IMAGE)!!
     }
+
     private val showTransition: Boolean by lazy {
         arguments!!.getBoolean(ARG_TRANSITION, false)
     }
@@ -36,11 +37,21 @@ class PictureDetailFragment private constructor() : BaseFragment() {
 
     override fun initView() {
         ViewCompat.setTransitionName(detailImage, url)
+        detailImage.setMaxZoomRatio(2.0f)
         detailImage.setOnClickListener { UiUtil.toggleSystemUI(it) }
         if (showTransition) {
+            // 直接点进来的才显示 SharedElement 动画
             loadWithTransition()
         } else {
             detailImage.load(url, animate = true, showOriginal = true)
+        }
+    }
+
+    fun restoreImage() {
+        detailImage?.also {
+            if (it.isZoomed) {
+                detailImage?.setZoom(1.0f)
+            }
         }
     }
 
@@ -61,7 +72,7 @@ class PictureDetailFragment private constructor() : BaseFragment() {
                 }
             }
         } else {
-            detailImage.load(url, animate = true)
+            detailImage.load(url, animate = true, showOriginal = true)
         }
     }
 

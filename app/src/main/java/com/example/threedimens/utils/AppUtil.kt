@@ -25,7 +25,6 @@ import javax.net.ssl.X509TrustManager
  */
 object AppUtil {
 
-
     fun getUnsafeOkHttpClient(): OkHttpClient.Builder {
         val unsafeTrustManager = createUnsafeTrustManager()
         val sslContext = SSLContext.getInstance("SSL")

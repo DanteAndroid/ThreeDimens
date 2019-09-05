@@ -5,12 +5,13 @@ import com.example.threedimens.data.Post
 import com.example.threedimens.ui.main.ApiType
 
 /**
- * @author Du Wenyu
+ * @author Dante
  * 2019-09-03
  */
 interface IParser {
 
     fun parsePosts(apiType: ApiType, data: String): List<Post>
+
     fun parseImages(apiType: ApiType, data: String): List<Image>
 
 }

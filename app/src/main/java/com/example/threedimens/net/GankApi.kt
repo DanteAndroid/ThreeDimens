@@ -8,14 +8,14 @@ import retrofit2.http.Headers
 import retrofit2.http.Path
 
 /**
- * Created by yons on 16/12/8.
+ * @author Dante
+ * 2019-08-23
  */
-
 interface GankApi {
 
     @Headers("User-Agent: $PC_USER_AGENT")
     @GET("data/%E7%A6%8F%E5%88%A9/{count}/{page}")
-    fun get(@Path("count") count: Int, @Path("page") page: Int): Call<ResponseBody>
+    fun getGank(@Path("count") count: Int, @Path("page") page: Int): Call<ResponseBody>
 
     class Result<T> {
         var error: Boolean = false

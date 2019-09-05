@@ -13,7 +13,7 @@ import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.withContext
 
 /**
- * @author Du Wenyu
+ * @author Dante
  * 2019-08-23
  */
 class ImageRepository(val apiType: ApiType, private val imageDao: ImageDao) {
@@ -21,7 +21,6 @@ class ImageRepository(val apiType: ApiType, private val imageDao: ImageDao) {
     fun getType(): String = apiType.type
 
     fun getPagedImages(): DataSource.Factory<Int, Image> {
-        println("getWalls images ${apiType.type} ${apiType.path}")
         return imageDao.getPagedImages(apiType.type)
     }
 
@@ -29,10 +28,10 @@ class ImageRepository(val apiType: ApiType, private val imageDao: ImageDao) {
         return withContext(IO) {
             when (apiType.site) {
                 ApiType.Site.GANK -> {
-                    getImages(apiType, NetManager.gankApi.get(PAGE_SIZE_FROM_NET, page))
+                    getImages(apiType, NetManager.gankApi.getGank(PAGE_SIZE_FROM_NET, page))
                 }
                 ApiType.Site.DOUBAN -> {
-                    getImages(apiType, NetManager.dbApi.get(apiType.category, page))
+                    getImages(apiType, NetManager.dbApi.getDouban(apiType.category, page))
                 }
                 ApiType.Site.WALLHAVEN -> {
                     getImages(

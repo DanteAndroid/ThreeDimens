@@ -9,7 +9,7 @@ import kotlinx.android.synthetic.main.activity_main_drawer.*
 import kotlinx.android.synthetic.main.app_bar_main_drawer.*
 
 /**
- * @author Du Wenyu
+ * @author Dante
  * 2019-08-25
  */
 object UiUtil {

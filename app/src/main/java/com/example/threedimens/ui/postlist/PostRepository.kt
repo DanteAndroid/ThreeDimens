@@ -11,7 +11,7 @@ import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.withContext
 
 /**
- * @author Du Wenyu
+ * @author Dante
  * 2019-08-23
  */
 class PostRepository(private val apiType: ApiType, private val postDao: PostDao) {
@@ -39,7 +39,6 @@ class PostRepository(private val apiType: ApiType, private val postDao: PostDao)
             }
         }
     }
-
 
     suspend fun insert(post: Post) {
         withContext(IO) {

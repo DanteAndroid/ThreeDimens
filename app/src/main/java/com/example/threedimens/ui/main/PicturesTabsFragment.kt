@@ -7,12 +7,12 @@ import android.view.ViewGroup
 import com.blankj.utilcode.util.ScreenUtils
 import com.example.base.base.BaseFragment
 import com.example.threedimens.R
-import com.example.threedimens.ui.picturelist.PictureListFragment
+import com.example.threedimens.utils.Scrollable
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.fragment_main_tabs.*
 
 /**
- * @author Du Wenyu
+ * @author Dante
  * 2019-08-23
  */
 abstract class PicturesTabsFragment : BaseFragment() {
@@ -42,8 +42,7 @@ abstract class PicturesTabsFragment : BaseFragment() {
 
         tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabReselected(tab: TabLayout.Tab) {
-                val fragment = adapter.currentFragment as? PictureListFragment
-                fragment?.scrollToTop()
+                (adapter.currentFragment as? Scrollable)?.scrollToTop()
             }
 
             override fun onTabUnselected(p0: TabLayout.Tab?) {
@@ -55,13 +54,8 @@ abstract class PicturesTabsFragment : BaseFragment() {
         })
     }
 
-    override fun onResume() {
-        super.onResume()
-        println("onResume")
-    }
-
     private fun displayFixTabs(): Boolean {
-        if (ScreenUtils.isLandscape() || getApiTypeArray().size <= 4) {
+        if (ScreenUtils.isLandscape() || getApiTypeArray().size <= 5) {
             return true
         }
         return false

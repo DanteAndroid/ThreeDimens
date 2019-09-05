@@ -14,7 +14,7 @@ import com.example.threedimens.utils.load
 import com.example.threedimens.utils.widget.RatioImageView
 
 /**
- * @author Du Wenyu
+ * @author Dante
  * 2019-08-23
  */
 class PictureListAdapter(
@@ -36,7 +36,6 @@ class PictureListAdapter(
         private val imageView = view.findViewById<RatioImageView>(R.id.image)
         fun bind(image: Image) {
             setNumber(image)
-//            imageView.setOriginalSize(width, height)
             imageView.load(image.url, header = image.post, onLoadingFailed = {
                 viewModel.fetchRealUrl(image)
             })

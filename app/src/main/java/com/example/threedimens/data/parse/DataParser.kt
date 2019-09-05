@@ -8,7 +8,7 @@ import retrofit2.Call
 
 
 /**
- * @author Du Wenyu
+ * @author Dante
  * 2019-08-23
  */
 object DataParser {

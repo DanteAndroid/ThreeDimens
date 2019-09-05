@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.example.base.base.BaseStatusVM
 
 /**
- * @author Du Wenyu
+ * @author Dante
  * 2019-08-25
  */
 class PictureViwerViewModel(private val repository: PictureViewerRepository) : BaseStatusVM() {

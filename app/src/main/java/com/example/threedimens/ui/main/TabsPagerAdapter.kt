@@ -25,7 +25,6 @@ class TabsPagerAdapter(
 
     override fun getItem(position: Int): Fragment {
         if (isPost) return PostListFragment.newInstance(apiTypes[position])
-        println("getItem newInstance ${apiTypes[position].type}")
         return PictureListFragment.newInstance(
             apiTypes[position]
         )

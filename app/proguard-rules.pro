@@ -37,15 +37,15 @@
 ##   public *;
 ##}
 #
-### bugtags
-#  -keepattributes LineNumberTable,SourceFile,Exceptions,InnerClasses
-#  -keep class com.bugtags.library.** {*;}
-#  -dontwarn com.bugtags.library.**
-#  -keep class io.bugtags.** {*;}
-#  -dontwarn io.bugtags.**
-#  -dontwarn org.apache.http.**
-#  -dontwarn android.net.http.AndroidHttpClient
-#  # End Bugtags
+## bugtags
+  -keepattributes LineNumberTable,SourceFile,Exceptions,InnerClasses
+  -keep class com.bugtags.library.** {*;}
+  -dontwarn com.bugtags.library.**
+  -keep class io.bugtags.** {*;}
+  -dontwarn io.bugtags.**
+  -dontwarn org.apache.http.**
+  -dontwarn android.net.http.AndroidHttpClient
+  # End Bugtags
 #
 #-dontwarn okio.**
 #-dontwarn com.squareup.okhttp.**

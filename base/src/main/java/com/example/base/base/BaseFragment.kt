@@ -5,7 +5,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 
 /**
- * @author Du Wenyu
+ * @author Dante
  * 2019-08-19
  */
 abstract class BaseFragment : Fragment() {

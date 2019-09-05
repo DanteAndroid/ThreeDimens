@@ -13,7 +13,7 @@ import org.json.JSONObject
 import java.util.*
 
 /**
- * @author Du Wenyu
+ * @author Dante
  * 2019-09-03
  */
 object GankParser : IParser {
@@ -51,7 +51,6 @@ object GankParser : IParser {
         fun fromJson(data: String): Image? {
             return moshi.adapter(Image::class.java).fromJson(data)?.apply {
                 type = apiType.type
-                println("parseGank $type")
             }
         }
     }

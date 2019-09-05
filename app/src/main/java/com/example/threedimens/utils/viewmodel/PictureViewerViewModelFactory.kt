@@ -6,7 +6,7 @@ import com.example.threedimens.ui.detail.PictureViewerRepository
 import com.example.threedimens.ui.detail.PictureViwerViewModel
 
 /**
- * @author Du Wenyu
+ * @author Dante
  * 2019-08-23
  */
 class PictureViewerViewModelFactory(private val repository: PictureViewerRepository) :

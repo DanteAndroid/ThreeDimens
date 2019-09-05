@@ -24,20 +24,16 @@ class PostListViewModel(private val repository: PostRepository) : BaseStatusVM()
         }
     }
 
-    fun loadMoreImages() {
+    fun loadMorePosts() {
         viewModelScope.launch {
             fetchPosts(++page)
-            println("LoadPage ${repository.getType()} $page ")
         }
     }
 
-
-    @Synchronized
     private suspend fun fetchPosts(pageNum: Int = 1) {
         try {
             setStatus(LoadStatus.LOADING)
             val result = repository.fetchPosts(pageNum)
-            println("update ${result.size} ${result.first()}")
             repository.insert(result)
             setStatus(LoadStatus.DONE)
 

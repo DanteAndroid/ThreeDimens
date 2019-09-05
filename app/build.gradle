@@ -1,12 +1,14 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
+apply plugin: 'com.bugtags.library.plugin'
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
+    useLibrary 'org.apache.http.legacy'
     defaultConfig {
         applicationId "com.example.threedimens"
         minSdkVersion 19
@@ -15,6 +17,10 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
+        ndk {
+            // 设置支持的 SO 库构架，一般而言，取你所有的库支持的构架的`交集`。
+            abiFilters 'armeabi-v7a', 'arm64-v8a'
+        }
     }
     buildTypes {
         debug {
@@ -33,6 +39,14 @@ android {
     }
 }
 
+bugtags {
+    //自动上传符号表功能配置，如果需要根据 build varint 配置，请参考帮助中心->符号表->Android 符号表->配置自动上传符号表
+    appKey "0d6e2cc47a7db77bbde298fff0ff02df"  //这里是你的 appKey
+    appSecret "APP_SECRET"    //这里是你的 appSecret，管理员在设置页可以查看
+    mappingUploadEnabled true
+}
+
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
@@ -50,7 +64,7 @@ dependencies {
     implementation 'com.blankj:utilcodex:1.25.9'
     implementation 'org.jsoup:jsoup:1.12.1'
     implementation 'moe.feng:AlipayZeroSdk:1.1'
-//    implementation 'com.github.MikeOrtiz:TouchImageView:2.2.0'
+    implementation 'com.github.MikeOrtiz:TouchImageView:2.2.0'
 //    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.49-androidx'
 //    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0-beta-3'
     implementation 'com.github.anrwatchdog:anrwatchdog:1.4.0'

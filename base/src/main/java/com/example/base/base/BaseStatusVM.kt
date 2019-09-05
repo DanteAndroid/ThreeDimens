@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.cancel
 
 /**
- * @author Du Wenyu
+ * @author Dante
  * 2019-08-23
  */
 enum class LoadStatus { LOADING, ERROR, DONE }

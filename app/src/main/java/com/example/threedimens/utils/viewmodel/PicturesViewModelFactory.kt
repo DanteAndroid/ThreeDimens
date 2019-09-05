@@ -6,7 +6,7 @@ import com.example.threedimens.ui.picturelist.ImageRepository
 import com.example.threedimens.ui.picturelist.PictureListViewModel
 
 /**
- * @author Du Wenyu
+ * @author Dante
  * 2019-08-23
  */
 class PicturesViewModelFactory(private val imageRepository: ImageRepository) :

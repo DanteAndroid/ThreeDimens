@@ -11,7 +11,7 @@ import javax.net.ssl.SSLContext
 import javax.net.ssl.X509TrustManager
 
 /**
- * @author Du Wenyu
+ * @author Dante
  * 2019-08-20
  */
 class NetService private constructor(val url: String = "") {

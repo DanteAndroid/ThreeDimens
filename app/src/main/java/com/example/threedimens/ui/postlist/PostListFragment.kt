@@ -17,6 +17,7 @@ import com.example.threedimens.net.API
 import com.example.threedimens.ui.main.ApiType
 import com.example.threedimens.ui.picturelist.PictureListFragment
 import com.example.threedimens.utils.InjectorUtils
+import com.example.threedimens.utils.Scrollable
 import com.example.threedimens.utils.setBack
 import kotlinx.android.synthetic.main.fragment_picture_list.*
 import org.jetbrains.anko.design.snackbar
@@ -24,7 +25,7 @@ import org.jetbrains.anko.design.snackbar
 /**
  * A placeholder fragment containing a simple view.
  */
-class PostListFragment private constructor() : BaseFragment() {
+class PostListFragment private constructor() : BaseFragment(), Scrollable {
 
     //    private val args: PicturePageFragmentArgs by navArgs()
     private val apiType: ApiType by lazy {
@@ -52,13 +53,6 @@ class PostListFragment private constructor() : BaseFragment() {
             it as MainDrawerActivity
             it.setBack(true)
         }
-//        findNavController().navigate(
-//            R.id.action_postsTabsFragment_to_pictureListFragment,
-//            bundleOf(
-//                ARG_API_TYPE to apiType
-//            )
-//        )
-
     }
 
     override fun onCreateView(
@@ -71,14 +65,12 @@ class PostListFragment private constructor() : BaseFragment() {
     override fun initView() {
         recyclerView.setHasFixedSize(true)
         recyclerView.adapter = adapter
-        println("${javaClass.simpleName} ${apiType.type}")
 
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
-                println("load onScrollStateChange ${recyclerView.canScrollVertically(1)}")
                 if (!recyclerView.canScrollVertically(1)) {
-                    viewModel.loadMoreImages()
+                    viewModel.loadMorePosts()
                     swipeRefresh.isRefreshing = true
                 }
             }
@@ -102,22 +94,19 @@ class PostListFragment private constructor() : BaseFragment() {
                 }
                 LoadStatus.DONE -> {
                     swipeRefresh.isRefreshing = false
-
                 }
                 else -> {
                     swipeRefresh.isRefreshing = false
-
                 }
             }
         })
         viewModel.posts.observe(this, Observer {
             if (it.isEmpty()) return@Observer
-            println("load type ${it?.first()?.type} ${it.size}")
             adapter.submitList(it)
         })
     }
 
-    fun scrollToTop() {
+    override fun scrollToTop() {
         if (recyclerView.layoutManager is LinearLayoutManager) {
             val manager = recyclerView.layoutManager as LinearLayoutManager
             if (manager.findLastVisibleItemPosition() > 20) {

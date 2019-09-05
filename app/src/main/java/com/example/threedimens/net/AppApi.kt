@@ -5,7 +5,7 @@ import retrofit2.Call
 import retrofit2.http.GET
 
 /**
- * @author Du Wenyu
+ * @author Dante
  * 2019-08-23
  */
 interface AppApi {

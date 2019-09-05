@@ -5,7 +5,6 @@ package com.example.threedimens.net
  */
 object API {
 
-    val SPLASH = "http://news-at.zhihu.com/api/"
     val GITHUB_RAW = "https://raw.githubusercontent.com/DanteAndroid/Beauty/master/"
     val DOWNLOAD_BASE = "https://github.com/DanteAndroid/Beauty/releases/download/"
 
