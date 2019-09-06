@@ -26,10 +26,18 @@ object WallParser : IParser {
             val elements = document.select("div[id=thumbs] figure")
             for (element in elements) {
                 val img = element.selectFirst("img")
-                val thumbUrl = img.attr("data-src")
-                val url = getOriginalUrl(thumbUrl)
+                val url = img.attr("data-src")
+                val originalUrl = getOriginalUrl(url)
                 val refer = element.selectFirst("a").attr("href")
-                images.add(Image(id = url, url = url, type = apiType.type, post = refer))
+                images.add(
+                    Image(
+                        id = url,
+                        url = url,
+                        originalUrl = originalUrl,
+                        type = apiType.type,
+                        post = refer
+                    )
+                )
             }
 
         } catch (e: IOException) {

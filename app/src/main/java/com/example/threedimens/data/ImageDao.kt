@@ -17,7 +17,7 @@ interface ImageDao {
     fun getImages(type: String): LiveData<List<Image>>
 
     @Query("select * from image where id = :id")
-    fun getImage(id: Int): LiveData<Image>
+    fun getImage(id: String): LiveData<Image>
 
     @Update
     fun update(image: Image)

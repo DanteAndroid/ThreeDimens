@@ -8,7 +8,6 @@ import com.bumptech.glide.load.model.LazyHeaders
 import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.BitmapImageViewTarget
-import com.bumptech.glide.request.target.Target
 import com.bumptech.glide.request.transition.Transition
 import com.example.threedimens.R
 import com.example.threedimens.utils.widget.GlideApp
@@ -42,7 +41,8 @@ fun ImageView.load(
         .dontTransform()
         .onlyRetrieveFromCache(loadOnlyFromCache)
         .apply {
-            placeholder(if (animate) R.drawable.loading_animation else R.drawable.placeholder)
+            if (animate) placeholder(R.drawable.loading_animation)
+            if (!showOriginal) placeholder(R.drawable.placeholder)
         }
 
     fun getUrlWithHeader(url: String): GlideUrl {
@@ -64,7 +64,10 @@ fun ImageView.load(
                 transition(BitmapTransitionOptions.withCrossFade())
             }
             if (showOriginal) {
-                override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+//                override(
+//                    com.bumptech.glide.request.target.Target.SIZE_ORIGINAL,
+//                    com.bumptech.glide.request.target.Target.SIZE_ORIGINAL
+//                )
             }
         }
         .into(object : BitmapImageViewTarget(this) {

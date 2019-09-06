@@ -14,5 +14,9 @@ class PictureViewerRepository(private val type: String, private val imageDao: Im
         return imageDao.getImages(type)
     }
 
+    fun getImage(id: String): LiveData<Image> {
+        return imageDao.getImage(id)
+    }
+
 
 }

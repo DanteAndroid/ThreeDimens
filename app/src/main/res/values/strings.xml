@@ -116,5 +116,6 @@
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="nav_wall">壁纸天地</string>
+    <string name="nav_booru">Booru图集</string>
 
 </resources>

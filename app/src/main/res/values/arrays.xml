@@ -38,6 +38,9 @@
         <item name="wall_landscape">黑暗</item>
         <item name="wall_landscape">简约</item>
     </string-array>
+    <string-array name="booru_titles">
+        <item name="booru_yande">Yande</item>
+    </string-array>
 
     <string-array name="cache_strategy">
         <item name="none">不缓存(不记录浏览位置)</item>

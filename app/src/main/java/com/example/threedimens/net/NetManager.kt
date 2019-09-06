@@ -31,6 +31,9 @@ object NetManager {
     val wallApi: WallApi by lazy {
         NetService.getInstance().createApi<WallApi>(API.WALL_BASE)
     }
+    val yandeApi: BooruApi by lazy {
+        NetService.getInstance().createApi<BooruApi>(API.YANDE_BASE)
+    }
     val yakexiApi: ForumApi by lazy {
         NetService.getInstance().createApi<ForumApi>(API.YAKEXI_BASE)
     }

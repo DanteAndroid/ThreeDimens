@@ -15,6 +15,8 @@ class PictureViwerViewModel(private val repository: PictureViewerRepository) : B
 
     fun getImages() = repository.getImages()
 
+    fun getImage(id: String) = repository.getImage(id)
+
 
     fun setPosition(position: Int) {
         _position.value = position

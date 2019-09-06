@@ -24,6 +24,7 @@ data class Image(
     val id: String,
     var type: String,
     val url: String,
+    val originalUrl: String = "",
     @Json(name = "publishedAt")
     val timestamp: Date? = null,
     val post: String = ""

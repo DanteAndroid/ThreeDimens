@@ -34,3 +34,13 @@ class WallTabsFragment : PicturesTabsFragment() {
     override fun getApiTypeArray(): Array<ApiType> = ApiType.menuWallHaven
 
 }
+
+class BooruTabsFragment : PicturesTabsFragment() {
+
+    override fun isPost(): Boolean = false
+
+    override fun getTitleArrayId(): Int = R.array.booru_titles
+
+    override fun getApiTypeArray(): Array<ApiType> = ApiType.menuBooru
+
+}

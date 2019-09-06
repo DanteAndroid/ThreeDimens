@@ -38,11 +38,11 @@ object API {
     const val DB_BASE = "https://www.dbmeinv.com/"
     const val MZ_BASE = "https://www.mzitu.com/"
     const val WALL_BASE = "https://wallhaven.cc/"
+    const val YANDE_BASE = "https://yande.re/"
 
     //H API
     const val YAKEXI_BASE = "http://bww.yakexi.biz/pw/"
     const val H_MAIN = YAKEXI_BASE + "thread.php?fid="
-
     const val SHT_BASE = ""
 
 

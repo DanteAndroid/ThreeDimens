@@ -36,9 +36,7 @@ class PictureListAdapter(
         private val imageView = view.findViewById<RatioImageView>(R.id.image)
         fun bind(image: Image) {
             setNumber(image)
-            imageView.load(image.url, header = image.post, onLoadingFailed = {
-                viewModel.fetchRealUrl(image)
-            })
+            imageView.load(image.url, header = image.post)
             imageView.setOnClickListener { onClick(image, itemView, adapterPosition) }
         }
 

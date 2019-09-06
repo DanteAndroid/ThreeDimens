@@ -47,6 +47,9 @@ class ImageRepository(val apiType: ApiType, private val imageDao: ImageDao) {
                 ApiType.Site.MEIZITU -> {
                     getImages(apiType, NetManager.postApi.getPictures(apiType.path, page))
                 }
+                ApiType.Site.YANDE -> {
+                    getImages(apiType, NetManager.yandeApi.get(page))
+                }
                 ApiType.Site.YAKEXI -> {
                     getImages(apiType, NetManager.postApi.getPictures(apiType.path, page))
                 }

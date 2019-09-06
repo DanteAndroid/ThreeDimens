@@ -1,26 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:tools="http://schemas.android.com/tools"
-      tools:showIn="navigation_view">
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_main"
-                android:icon="@drawable/ic_menu_camera"
+                android:id="@+id/nav_main"
                 android:checked="true"
+                android:icon="@drawable/ic_menu_camera"
                 android:title="@string/nav_main" />
         <item
-            android:id="@+id/nav_meizi"
+                android:id="@+id/nav_meizi"
                 android:icon="@drawable/ic_menu_gallery"
-                android:title="@string/nav_mz"/>
+                android:title="@string/nav_mz" />
         <item
-            android:id="@+id/nav_wall"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="@string/nav_wall" />
+                android:id="@+id/nav_wall"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="@string/nav_wall" />
+        <item
+                android:id="@+id/nav_booru"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="@string/nav_booru" />
         <item
                 android:id="@+id/nav_favorite"
                 android:icon="@drawable/ic_menu_manage"
-                android:title="@string/favorite"/>
+                android:title="@string/favorite" />
     </group>
 
     <item android:title="@string/app">
@@ -28,11 +32,11 @@
             <item
                     android:id="@+id/nav_share"
                     android:icon="@drawable/ic_menu_share"
-                    android:title="@string/menu_share"/>
+                    android:title="@string/menu_share" />
             <item
                     android:id="@+id/nav_setting"
                     android:icon="@drawable/ic_menu_manage"
-                    android:title="@string/menu_settings"/>
+                    android:title="@string/menu_settings" />
         </menu>
     </item>
 

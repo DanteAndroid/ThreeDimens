@@ -59,9 +59,10 @@ class PictureViewerActivity(override val layoutResId: Int = R.layout.activity_vi
     private val transPosition: Int by lazy { intent!!.getIntExtra(ARG_POSITION, 0) }
     private var currentPosition: Int = 0
 
-    private val viewModel: PictureViwerViewModel by viewModels {
+    val viewModel: PictureViwerViewModel by viewModels {
         InjectorUtils.providePictureViewerViewModelFactory(type)
     }
+
 
     override fun enableBack(): Boolean = true
 
@@ -116,7 +117,7 @@ class PictureViewerActivity(override val layoutResId: Int = R.layout.activity_vi
 
         override fun getItem(position: Int): Fragment {
             return PictureDetailFragment.newInstance(
-                images[position].url, transPosition == position
+                images[position].id, transPosition == position
             )
         }
 

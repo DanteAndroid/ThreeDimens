@@ -11,7 +11,7 @@ import com.example.threedimens.utils.DATABASE_NAME
  * @author Dante
  * 2019-08-23
  */
-@Database(entities = [Image::class, Post::class], version = 1, exportSchema = false)
+@Database(entities = [Image::class, Post::class], version = 2, exportSchema = false)
 @TypeConverters(RoomConverter::class)
 abstract class AppDatabase : RoomDatabase() {
 
