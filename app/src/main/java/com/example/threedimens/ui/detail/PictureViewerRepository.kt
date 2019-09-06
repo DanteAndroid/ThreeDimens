@@ -3,6 +3,8 @@ package com.example.threedimens.ui.detail
 import androidx.lifecycle.LiveData
 import com.example.threedimens.data.Image
 import com.example.threedimens.data.ImageDao
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 /**
  * @author Dante
@@ -18,5 +20,9 @@ class PictureViewerRepository(private val type: String, private val imageDao: Im
         return imageDao.getImage(id)
     }
 
-
+    suspend fun update(image: Image) {
+        withContext(Dispatchers.IO) {
+            imageDao.update(image)
+        }
+    }
 }

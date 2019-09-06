@@ -12,12 +12,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.transition.doOnEnd
 import androidx.core.view.ViewCompat
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import com.example.base.base.BaseFragment
 import com.example.threedimens.R
 import com.example.threedimens.data.Image
 import com.example.threedimens.utils.UiUtil
+import com.example.threedimens.utils.getDelayedTransitionListener
 import com.example.threedimens.utils.load
+import com.example.threedimens.utils.widget.GlideApp
+import com.ortiz.touchview.TouchImageView
 import kotlinx.android.synthetic.main.fragment_picture_detail.*
 
 class PictureDetailFragment private constructor() : BaseFragment() {
@@ -25,11 +29,11 @@ class PictureDetailFragment private constructor() : BaseFragment() {
     private val id: String by lazy {
         arguments!!.getString(ARG_ID)!!
     }
-
-
     private val showTransition: Boolean by lazy {
         arguments!!.getBoolean(ARG_TRANSITION, false)
     }
+
+    private lateinit var viewModel: PictureViwerViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,59 +43,73 @@ class PictureDetailFragment private constructor() : BaseFragment() {
     }
 
     override fun initView() {
-        (activity as PictureViewerActivity).viewModel.getImage(id).observe(this, Observer { image ->
+        viewModel = (activity as PictureViewerActivity).viewModel
+        viewModel.getImage(id).observe(this, Observer { image ->
             ViewCompat.setTransitionName(detailImage, image.url)
-            detailImage.setMaxZoomRatio(2.0f)
+            (detailImage as? TouchImageView)?.setMaxZoomRatio(2.0f)
             detailImage.setOnClickListener { UiUtil.toggleSystemUI(it) }
             if (showTransition) {
                 // 直接点进来的才显示 SharedElement 动画
                 loadWithTransition(image)
             } else {
-                simpleLoad(image)
+                load(image)
             }
         })
-
     }
 
     private fun loadWithTransition(image: Image) {
-        detailImage.load(image.url, loadOnlyFromCache = true, onLoadingFinished = {
-            activity?.supportStartPostponedEnterTransition()
-        })
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            load(image, true)
+
             activity?.window?.sharedElementEnterTransition = TransitionSet()
                 .addTransition(ChangeImageTransform())
                 .addTransition(ChangeBounds()).apply {
                     doOnEnd {
-                        println("loadOnEnd ${image.originalUrl}")
-                        detailImage?.load(
-                            if (image.originalUrl.isEmpty()) image.url else image.originalUrl,
-                            showOriginal = true
-                        )
+                        if (image.originalUrl.isNotEmpty()) {
+                            setProgressIndicator(true)
+                        }
                     }
                 }
+
             activity?.window?.enterTransition = Fade().apply {
                 excludeTarget(android.R.id.statusBarBackground, true)
                 excludeTarget(android.R.id.navigationBarBackground, true)
                 excludeTarget(R.id.action_bar_container, true)
             }
+
         } else {
-            simpleLoad(image)
+            load(image)
         }
     }
 
-    private fun simpleLoad(image: Image) {
+    private fun load(image: Image, showTransition: Boolean = false) {
+        val thumbnail = GlideApp.with(this)
+            .asBitmap()
+            .onlyRetrieveFromCache(true)
+            .load(image.url).apply {
+                if (showTransition)
+                    listener(getDelayedTransitionListener())
+            }
         detailImage.load(
             if (image.originalUrl.isEmpty()) image.url else image.originalUrl,
             showOriginal = true,
-            animate = true
+            thumbnail = thumbnail,
+            onResourceReady = {
+                setProgressIndicator(false)
+            },
+            onLoadFailed = {
+                viewModel.fetchRealUrl(image)
+            }
         )
     }
 
+    private fun setProgressIndicator(show: Boolean) {
+        progress.isVisible = show
+    }
+
     fun restoreImage() {
-        detailImage?.also {
-            if (it.isZoomed) {
-                detailImage?.setZoom(1.0f)
-            }
+        if ((detailImage as? TouchImageView)?.isZoomed == true) {
+            (detailImage as TouchImageView).setZoom(1.0f)
         }
     }
 

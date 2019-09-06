@@ -8,13 +8,9 @@ import com.blankj.utilcode.util.SPUtils
 import com.example.base.base.BaseStatusVM
 import com.example.base.base.LoadStatus
 import com.example.threedimens.data.Image
-import com.example.threedimens.data.parse.WallParser
-import com.example.threedimens.ui.main.ApiType
 import com.example.threedimens.utils.PAGE_SIZE_FROM_DB
 import com.example.threedimens.utils.VIEW_PAGE
-import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 /**
  * 维护每个 tab 下的页面及其数据
@@ -51,20 +47,6 @@ class PictureListViewModel(private val repository: ImageRepository) : BaseStatus
         }
     }
 
-    fun fetchRealUrl(image: Image) {
-        if (!image.type.contains(ApiType.Site.WALLHAVEN.name)) return
-        viewModelScope.launch {
-            try {
-                withContext(IO) {
-                    val originalUrl = WallParser.parseOriginalUrl(image.post)
-                    val realImage = image.copy(url = originalUrl)
-                    repository.update(realImage)
-                }
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        }
-    }
 
     override fun onCleared() {
         super.onCleared()

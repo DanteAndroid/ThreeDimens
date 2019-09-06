@@ -59,12 +59,6 @@ class ImageRepository(val apiType: ApiType, private val imageDao: ImageDao) {
     }
 
 
-    suspend fun update(image: Image) {
-        withContext(IO) {
-            imageDao.update(image)
-        }
-    }
-
     suspend fun update(images: List<Image>) {
         withContext(IO) {
             imageDao.insert(images)
