@@ -7,6 +7,7 @@ import com.example.base.base.BaseStatusVM
 import com.example.base.base.LoadStatus
 import com.example.threedimens.data.Post
 import com.example.threedimens.utils.VIEW_PAGE
+import com.example.threedimens.utils.VIEW_POSITION
 import kotlinx.coroutines.launch
 
 /**
@@ -44,8 +45,20 @@ class PostListViewModel(private val repository: PostRepository) : BaseStatusVM()
         }
     }
 
+    fun saveLastPosition(lastPosition: Int) {
+        if (lastPosition > 0) {
+            SPUtils.getInstance().put(VIEW_POSITION + repository.getType(), lastPosition)
+        }
+    }
+
+    fun getLastPosition(): Int {
+        return SPUtils.getInstance().getInt(VIEW_POSITION + repository.getType(), 0)
+    }
+
     override fun onCleared() {
         super.onCleared()
         SPUtils.getInstance().put(VIEW_PAGE + repository.getType(), page)
     }
+
+
 }

@@ -8,8 +8,10 @@ import com.blankj.utilcode.util.SPUtils
 import com.example.base.base.BaseStatusVM
 import com.example.base.base.LoadStatus
 import com.example.threedimens.data.Image
+import com.example.threedimens.ui.main.ApiType
 import com.example.threedimens.utils.PAGE_SIZE_FROM_DB
 import com.example.threedimens.utils.VIEW_PAGE
+import com.example.threedimens.utils.VIEW_POSITION
 import kotlinx.coroutines.launch
 
 /**
@@ -28,29 +30,55 @@ class PictureListViewModel(private val repository: ImageRepository) : BaseStatus
         }
     }
 
-    fun loadMoreImages() {
-        viewModelScope.launch {
-            fetchImages(++page)
+    /**
+     * 加载下一页的图片
+     * @return 无需加载则返回false
+     */
+    fun loadMoreImages(): Boolean {
+        if (repository.apiType.site == ApiType.Site.MEIZITU) {
+            // 妹子图不需要加载更多页因为已经解析完所有图片了
+            return false
         }
+        viewModelScope.launch {
+            if (fetchImages(page + 1)) {
+                page++
+            }
+        }
+        return true
     }
 
-    private suspend fun fetchImages(pageNum: Int = 1) {
+    /**
+     * 加载某页图片列表
+     * @return 加载成功则返回true
+     */
+    private suspend fun fetchImages(pageNum: Int = 1): Boolean {
         try {
             setStatus(LoadStatus.LOADING)
             val result = repository.fetchImages(pageNum)
-            repository.update(result)
+            repository.insert(result)
             setStatus(LoadStatus.DONE)
+            return true
         } catch (e: Exception) {
             e.printStackTrace()
             setStatus(LoadStatus.ERROR)
-            page--
+        }
+        return false
+    }
+
+    fun saveLastPosition(lastPosition: Int) {
+        if (lastPosition > 0) {
+            SPUtils.getInstance().put(VIEW_POSITION + repository.getType(), lastPosition)
         }
     }
 
+    fun getLastPosition(): Int {
+        return SPUtils.getInstance().getInt(VIEW_POSITION + repository.getType(), 0)
+    }
 
     override fun onCleared() {
         super.onCleared()
         SPUtils.getInstance().put(VIEW_PAGE + repository.getType(), page)
     }
+
 
 }

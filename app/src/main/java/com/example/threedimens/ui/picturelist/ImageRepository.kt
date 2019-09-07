@@ -9,6 +9,7 @@ import com.example.threedimens.net.WallApi.Companion.AT_LEAST_RESOLUTION
 import com.example.threedimens.net.WallApi.Companion.WALL_HAVEN_RATIOS
 import com.example.threedimens.ui.main.ApiType
 import com.example.threedimens.utils.PAGE_SIZE_FROM_NET
+import com.example.threedimens.utils.PAGE_SIZE_FROM_NET_LARGE
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.withContext
 
@@ -21,6 +22,7 @@ class ImageRepository(val apiType: ApiType, private val imageDao: ImageDao) {
     fun getType(): String = apiType.type
 
     fun getPagedImages(): DataSource.Factory<Int, Image> {
+        println("getType ${apiType.type}")
         return imageDao.getPagedImages(apiType.type)
     }
 
@@ -45,13 +47,19 @@ class ImageRepository(val apiType: ApiType, private val imageDao: ImageDao) {
                     )
                 }
                 ApiType.Site.MEIZITU -> {
-                    getImages(apiType, NetManager.postApi.getPictures(apiType.path, page))
+                    getImages(apiType, NetManager.MEIZI_API.getPictures(apiType.path, page))
                 }
                 ApiType.Site.YANDE -> {
-                    getImages(apiType, NetManager.yandeApi.get(page))
+                    getImages(apiType, NetManager.yandeApi.getYande(page))
+                }
+                ApiType.Site.SAFEBOORU -> {
+                    getImages(apiType, NetManager.safeApi.getSafe(page * PAGE_SIZE_FROM_NET_LARGE))
+                }
+                ApiType.Site.DANBOORU -> {
+                    getImages(apiType, NetManager.danApi.getDan(page))
                 }
                 ApiType.Site.YAKEXI -> {
-                    getImages(apiType, NetManager.postApi.getPictures(apiType.path, page))
+                    getImages(apiType, NetManager.MEIZI_API.getPictures(apiType.path, page))
                 }
                 else -> throw IllegalStateException("${apiType.type} not implemented in ${javaClass.canonicalName}")
             }
@@ -59,7 +67,7 @@ class ImageRepository(val apiType: ApiType, private val imageDao: ImageDao) {
     }
 
 
-    suspend fun update(images: List<Image>) {
+    suspend fun insert(images: List<Image>) {
         withContext(IO) {
             imageDao.insert(images)
         }

@@ -81,6 +81,7 @@ class PictureViewerActivity(override val layoutResId: Int = R.layout.activity_vi
         })
     }
 
+
     private fun initViewPager(adapter: DetailPagerAdapter) {
         if (hasInit) return
         pager.adapter = adapter

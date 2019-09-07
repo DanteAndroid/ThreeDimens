@@ -1,7 +1,6 @@
 package com.example.threedimens.utils
 
 import android.graphics.Bitmap
-import android.graphics.drawable.Drawable
 import android.widget.ImageView
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
@@ -10,14 +9,13 @@ import com.bumptech.glide.load.model.LazyHeaders
 import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
-import com.bumptech.glide.request.target.BitmapImageViewTarget
 import com.bumptech.glide.request.target.Target
-import com.bumptech.glide.request.transition.Transition
 import com.example.threedimens.R
 import com.example.threedimens.ui.detail.PictureDetailFragment
 import com.example.threedimens.utils.widget.GlideApp
 import com.example.threedimens.utils.widget.GlideRequest
 import com.example.threedimens.utils.widget.RatioImageView
+
 
 /**
  * @author Dante
@@ -59,30 +57,44 @@ fun ImageView.load(
         .asBitmap()
         .load(getUrlWithHeader(url))
         .apply(requestOptions)
-//        .error(GlideApp.with(this).load(getUrlWithHeader(url)))
         .apply {
             if (showOriginal) {
                 override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+                    .error(R.drawable.placeholder)
             } else {
                 transition(BitmapTransitionOptions.withCrossFade())
             }
         }
         .thumbnail(thumbnail)
-        .into(object : BitmapImageViewTarget(this) {
-
-            override fun onLoadFailed(errorDrawable: Drawable?) {
-                super.onLoadFailed(errorDrawable)
+        .listener(object : RequestListener<Bitmap> {
+            override fun onLoadFailed(
+                e: GlideException?,
+                model: Any?,
+                target: Target<Bitmap>?,
+                isFirstResource: Boolean
+            ): Boolean {
                 onLoadFailed()
+                return false
             }
 
-            override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-                super.onResourceReady(resource, transition)
-                if (this@load is RatioImageView) {
-                    this@load.setOriginalSize(resource.width, resource.height)
+            override fun onResourceReady(
+                resource: Bitmap?,
+                model: Any?,
+                target: Target<Bitmap>?,
+                dataSource: DataSource?,
+                isFirstResource: Boolean
+            ): Boolean {
+                resource?.let {
+                    if (this@load is RatioImageView) {
+                        this@load.setOriginalSize(resource.width, resource.height)
+                    }
                 }
                 onResourceReady()
+                return false
             }
+
         })
+        .into(this)
 }
 
 fun <T> PictureDetailFragment.getDelayedTransitionListener(): RequestListener<T> {

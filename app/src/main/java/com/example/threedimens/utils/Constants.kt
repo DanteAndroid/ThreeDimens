@@ -27,6 +27,10 @@ const val VIEW_PAGE = "page"
 
 const val PAGE_SIZE_FROM_DB = 50
 const val PAGE_SIZE_FROM_NET = 20
+const val PAGE_SIZE_FROM_NET_LARGE = 40
 
-const val DRAWER_CLOSE_DELAY = 200L
+const val LOAD_LIST_RETRY_TIMES = 3
+const val LOAD_PICTURE_RETRY_TIMES = 3
+
+
 

@@ -9,7 +9,7 @@ import retrofit2.http.Path
  * @author Dante
  * 2019-08-23
  */
-interface PostApi {
+interface MeiziApi {
 
     //Post示例
     @GET("{type}/page/{page}/")

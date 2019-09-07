@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -18,6 +19,7 @@ import com.example.threedimens.ui.detail.PictureViewerActivity
 import com.example.threedimens.ui.main.ApiType
 import com.example.threedimens.utils.InjectorUtils
 import com.example.threedimens.utils.Scrollable
+import com.example.threedimens.utils.getLastPosition
 import kotlinx.android.synthetic.main.fragment_picture_list.*
 import org.jetbrains.anko.design.snackbar
 
@@ -40,6 +42,8 @@ class PictureListFragment : BaseFragment(), Scrollable {
         }
     }
 
+    private lateinit var manager: StaggeredGridLayoutManager
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -50,14 +54,17 @@ class PictureListFragment : BaseFragment(), Scrollable {
     override fun initView() {
         recyclerView.setHasFixedSize(true)
         recyclerView.adapter = adapter
-        val manager = recyclerView.layoutManager as StaggeredGridLayoutManager
+        manager =
+            StaggeredGridLayoutManager(apiType.site.spanCount, StaggeredGridLayoutManager.VERTICAL)
+        recyclerView.layoutManager = manager
         Handler().post { manager.invalidateSpanAssignments() }
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
                 if (!recyclerView.canScrollVertically(1)) {
-                    viewModel.loadMoreImages()
-                    swipeRefresh.isRefreshing = true
+                    if (viewModel.loadMoreImages()) {
+                        swipeRefresh.isRefreshing = true
+                    }
                 }
             }
         })
@@ -89,12 +96,45 @@ class PictureListFragment : BaseFragment(), Scrollable {
             if (it.isEmpty()) return@Observer
             adapter.submitList(it)
         })
+
+        findNavController().addOnDestinationChangedListener { controller, destination, arguments ->
+            viewModel.saveLastPosition(manager.getLastPosition())
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        viewModel.saveLastPosition(manager.getLastPosition())
+    }
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        super.onViewStateRestored(savedInstanceState)
+        if (savedInstanceState == null) {
+            restoreLastPosition()
+        }
+    }
+
+    private fun restoreLastPosition() {
+        val lastPosition = viewModel.getLastPosition()
+        if (lastPosition > 0) {
+            recyclerView.postDelayed({
+                if (lastPosition < manager.spanCount * 20) {
+                    manager.smoothScrollToPosition(
+                        recyclerView,
+                        RecyclerView.State(),
+                        lastPosition
+                    )
+                } else {
+                    manager.scrollToPosition(lastPosition)
+                }
+            }, 200)
+        }
     }
 
     override fun scrollToTop() {
         if (recyclerView.layoutManager is LinearLayoutManager) {
             val manager = recyclerView.layoutManager as LinearLayoutManager
-            if (manager.findLastVisibleItemPosition() > 20) {
+            if (manager.findLastVisibleItemPosition() > 30) {
                 recyclerView.scrollToPosition(0)
             } else {
                 recyclerView.smoothScrollToPosition(0)

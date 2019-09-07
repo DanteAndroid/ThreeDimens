@@ -2,6 +2,8 @@ package com.example.threedimens.utils
 
 import android.view.View
 import androidx.core.view.GravityCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.threedimens.MainDrawerActivity
 import com.example.threedimens.R
@@ -57,4 +59,12 @@ fun MainDrawerActivity.setBack(enable: Boolean) {
         toolbar.setNavigationIcon(R.drawable.ic_menu)
         toolbar.setNavigationOnClickListener { drawer_layout.openDrawer(GravityCompat.START) }
     }
+}
+
+fun StaggeredGridLayoutManager.getLastPosition(): Int {
+    return findLastCompletelyVisibleItemPositions(IntArray(spanCount))[0]
+}
+
+fun LinearLayoutManager.getLastPosition(): Int {
+    return findLastCompletelyVisibleItemPosition()
 }

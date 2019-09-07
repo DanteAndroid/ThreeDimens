@@ -10,7 +10,7 @@ import java.io.IOException
  * @author Dante
  * 2019-09-03
  */
-object DbParser : IParser {
+object DoubanParser : IParser {
 
     override fun parsePosts(apiType: ApiType, data: String): List<Post> {
         throw IllegalStateException("${javaClass.simpleName} has no posts")

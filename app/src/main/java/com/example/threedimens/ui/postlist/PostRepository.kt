@@ -30,10 +30,10 @@ class PostRepository(private val apiType: ApiType, private val postDao: PostDao)
         return withContext(IO) {
             when (apiType.site) {
                 ApiType.Site.MEIZITU -> {
-                    getPosts(apiType, NetManager.postApi.getPosts(apiType.category, page))
+                    getPosts(apiType, NetManager.MEIZI_API.getPosts(apiType.category, page))
                 }
                 ApiType.Site.YAKEXI -> {
-                    getPosts(apiType, NetManager.postApi.getPosts(apiType.category, page))
+                    getPosts(apiType, NetManager.MEIZI_API.getPosts(apiType.category, page))
                 }
                 else -> throw IllegalStateException("Not implemented: $apiType")
             }

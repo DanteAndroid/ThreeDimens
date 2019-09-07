@@ -14,11 +14,12 @@ class ApiType(val site: Site, val category: String = "") : Parcelable {
 
     val type get() = site.name + category + path
 
-    enum class Site(val baseUrl: String, val parser: IParser) {
-        GANK(API.GANK_BASE, GankParser), DOUBAN(API.DB_BASE, DbParser),
+    enum class Site(val baseUrl: String, val parser: IParser, val spanCount: Int = 2) {
+        GANK(API.GANK_BASE, GankParser), DOUBAN(API.DB_BASE, DoubanParser, 3),
         MEIZITU(API.MZ_BASE, MztParser), YAKEXI(API.YAKEXI_BASE, MztParser),
         SEHUATANG(API.SHT_BASE, MztParser), WALLHAVEN(API.WALL_BASE, WallParser),
-        YANDE(API.YANDE_BASE, YandeParser)
+        YANDE(API.YANDE_BASE, YandeParser), SAFEBOORU(API.SAFEBOORU_BASE, SafeParser, 3),
+        DANBOORU(API.DANBOORU_BASE, DanParser, 3)
     }
 
     constructor(source: Parcel) : this(
@@ -61,7 +62,9 @@ class ApiType(val site: Site, val category: String = "") : Parcelable {
         )
 
         val menuBooru: Array<ApiType> = arrayOf(
-            ApiType(Site.YANDE)
+            ApiType(Site.YANDE),
+            ApiType(Site.SAFEBOORU),
+            ApiType(Site.DANBOORU)
         )
 
         @JvmField

@@ -17,6 +17,7 @@ import androidx.lifecycle.Observer
 import com.example.base.base.BaseFragment
 import com.example.threedimens.R
 import com.example.threedimens.data.Image
+import com.example.threedimens.utils.LOAD_PICTURE_RETRY_TIMES
 import com.example.threedimens.utils.UiUtil
 import com.example.threedimens.utils.getDelayedTransitionListener
 import com.example.threedimens.utils.load
@@ -34,6 +35,7 @@ class PictureDetailFragment private constructor() : BaseFragment() {
     }
 
     private lateinit var viewModel: PictureViwerViewModel
+    private var retryTimes: Int = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,6 +54,7 @@ class PictureDetailFragment private constructor() : BaseFragment() {
                 // 直接点进来的才显示 SharedElement 动画
                 loadWithTransition(image)
             } else {
+                setProgressIndicator(true)
                 load(image)
             }
         })
@@ -98,7 +101,11 @@ class PictureDetailFragment private constructor() : BaseFragment() {
                 setProgressIndicator(false)
             },
             onLoadFailed = {
-                viewModel.fetchRealUrl(image)
+                setProgressIndicator(false)
+                if (retryTimes < LOAD_PICTURE_RETRY_TIMES) {
+                    retryTimes++
+                    viewModel.fetchRealUrl(image)
+                }
             }
         )
     }
