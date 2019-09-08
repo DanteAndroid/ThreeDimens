@@ -45,9 +45,11 @@ class PictureDetailFragment private constructor() : BaseFragment() {
 
     override fun initView() {
         viewModel = (activity as PictureViewerActivity).viewModel
+        if (detailImage is TouchImageView) {
+            detailImage.setMaxZoomRatio(2.0f)
+        }
         viewModel.getImage(id).observe(this, Observer { image ->
             ViewCompat.setTransitionName(detailImage, image.url)
-            detailImage?.setMaxZoomRatio(2.0f)
             detailImage.setOnClickListener { UiUtil.toggleSystemUI(it) }
             setProgressIndicator(true)
             if (showTransition) {

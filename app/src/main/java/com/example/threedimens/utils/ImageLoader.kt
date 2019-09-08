@@ -1,6 +1,7 @@
 package com.example.threedimens.utils
 
 import android.graphics.Bitmap
+import android.text.format.DateUtils
 import android.widget.ImageView
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
@@ -42,7 +43,13 @@ fun ImageView.load(
         .dontTransform()
         .apply {
             if (animate) placeholder(R.drawable.loading_animation)
-            if (!showOriginal) placeholder(R.drawable.placeholder)
+            if (showOriginal) {
+                // 显示原图时提高一倍的超时
+                timeout((5 * DateUtils.SECOND_IN_MILLIS).toInt())
+            } else {
+                placeholder(R.drawable.placeholder)
+            }
+
         }
 
     fun getUrlWithHeader(url: String): GlideUrl {
