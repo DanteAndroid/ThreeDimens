@@ -39,9 +39,10 @@
         <item name="wall_landscape">简约</item>
     </string-array>
     <string-array name="booru_titles">
-        <item name="booru_yande">Yande</item>
         <item name="booru_safe">Safe</item>
+        <item name="booru_yande">Yande</item>
         <item name="booru_dan">Dan</item>
+        <item name="booru_dan">Real</item>
     </string-array>
 
     <string-array name="cache_strategy">

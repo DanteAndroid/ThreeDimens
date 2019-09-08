@@ -58,6 +58,9 @@ class ImageRepository(val apiType: ApiType, private val imageDao: ImageDao) {
                 ApiType.Site.DANBOORU -> {
                     getImages(apiType, NetManager.danApi.getDan(page))
                 }
+                ApiType.Site.`3DBOORU` -> {
+                    getImages(apiType, NetManager.`3dApi`.get3D(page))
+                }
                 ApiType.Site.YAKEXI -> {
                     getImages(apiType, NetManager.MEIZI_API.getPictures(apiType.path, page))
                 }

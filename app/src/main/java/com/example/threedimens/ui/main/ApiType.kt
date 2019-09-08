@@ -19,7 +19,7 @@ class ApiType(val site: Site, val category: String = "") : Parcelable {
         MEIZITU(API.MZ_BASE, MztParser), YAKEXI(API.YAKEXI_BASE, MztParser),
         SEHUATANG(API.SHT_BASE, MztParser), WALLHAVEN(API.WALL_BASE, WallParser),
         YANDE(API.YANDE_BASE, YandeParser), SAFEBOORU(API.SAFEBOORU_BASE, SafeParser, 3),
-        DANBOORU(API.DANBOORU_BASE, DanParser, 3)
+        DANBOORU(API.DANBOORU_BASE, DanParser, 3), `3DBOORU`(API.`3DBOORU_BASE`, `3DParser`, 3)
     }
 
     constructor(source: Parcel) : this(
@@ -62,9 +62,10 @@ class ApiType(val site: Site, val category: String = "") : Parcelable {
         )
 
         val menuBooru: Array<ApiType> = arrayOf(
-            ApiType(Site.YANDE),
             ApiType(Site.SAFEBOORU),
-            ApiType(Site.DANBOORU)
+            ApiType(Site.YANDE),
+            ApiType(Site.DANBOORU),
+            ApiType(Site.`3DBOORU`)
         )
 
         @JvmField

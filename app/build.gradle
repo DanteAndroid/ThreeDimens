@@ -21,11 +21,12 @@ android {
             // 设置支持的 SO 库构架，一般而言，取你所有的库支持的构架的`交集`。
             abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86'
         }
+        vectorDrawables.useSupportLibrary true
     }
     buildTypes {
         debug {
-            minifyEnabled false
-            shrinkResources false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         release {
@@ -50,7 +51,6 @@ bugtags {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
@@ -68,5 +68,7 @@ dependencies {
 //    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.49-androidx'
 //    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0-beta-3'
     implementation 'com.github.anrwatchdog:anrwatchdog:1.4.0'
+    implementation 'com.github.chrisbanes:PhotoView:2.3.0'
     implementation 'com.github.bumptech.glide:okhttp3-integration:4.9.0'
+    implementation 'com.infstory:proguard-snippets:1.0.0'
 }

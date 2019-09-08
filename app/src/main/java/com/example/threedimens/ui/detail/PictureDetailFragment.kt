@@ -10,7 +10,6 @@ import android.transition.TransitionSet
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.transition.doOnEnd
 import androidx.core.view.ViewCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
@@ -48,13 +47,13 @@ class PictureDetailFragment private constructor() : BaseFragment() {
         viewModel = (activity as PictureViewerActivity).viewModel
         viewModel.getImage(id).observe(this, Observer { image ->
             ViewCompat.setTransitionName(detailImage, image.url)
-            (detailImage as? TouchImageView)?.setMaxZoomRatio(2.0f)
+            detailImage?.setMaxZoomRatio(2.0f)
             detailImage.setOnClickListener { UiUtil.toggleSystemUI(it) }
+            setProgressIndicator(true)
             if (showTransition) {
                 // 直接点进来的才显示 SharedElement 动画
                 loadWithTransition(image)
             } else {
-                setProgressIndicator(true)
                 load(image)
             }
         })
@@ -63,17 +62,10 @@ class PictureDetailFragment private constructor() : BaseFragment() {
     private fun loadWithTransition(image: Image) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             load(image, true)
-
-            activity?.window?.sharedElementEnterTransition = TransitionSet()
+            val transitionSet = TransitionSet()
                 .addTransition(ChangeImageTransform())
-                .addTransition(ChangeBounds()).apply {
-                    doOnEnd {
-                        if (image.originalUrl.isNotEmpty()) {
-                            setProgressIndicator(true)
-                        }
-                    }
-                }
-
+                .addTransition(ChangeBounds())
+            activity?.window?.sharedElementEnterTransition = transitionSet
             activity?.window?.enterTransition = Fade().apply {
                 excludeTarget(android.R.id.statusBarBackground, true)
                 excludeTarget(android.R.id.navigationBarBackground, true)
@@ -111,11 +103,13 @@ class PictureDetailFragment private constructor() : BaseFragment() {
     }
 
     private fun setProgressIndicator(show: Boolean) {
+//        detailImage.isZoomEnabled = true
+        println("setProgress $show")
         progress.isVisible = show
     }
 
     fun restoreImage() {
-        if ((detailImage as? TouchImageView)?.isZoomed == true) {
+        if (detailImage?.isZoomed == true) {
             (detailImage as TouchImageView).setZoom(1.0f)
         }
     }

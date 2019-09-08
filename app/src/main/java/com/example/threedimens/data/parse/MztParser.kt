@@ -16,19 +16,20 @@ object MztParser : IParser {
 
     override fun parsePosts(apiType: ApiType, data: String): List<Post> {
         val posts = arrayListOf<Post>()
-        try {
-            val document = Jsoup.parse(data)
-            val elements = document.select("div[class=postlist] li")
-            for (element in elements) {
+
+        val document = Jsoup.parse(data)
+        val elements = document.select("div[class=postlist] li")
+        for (element in elements) {
+            try {
                 val aElement = element.selectFirst("a")
                 val link = aElement.attr("href")
                 val img = aElement.selectFirst("img")
                 val title = img.attr("alt")
                 val src = img.attr("data-original")
                 posts.add(Post(postUrl = link, type = apiType.type, coverUrl = src, title = title))
+            } catch (e: IOException) {
+                e.printStackTrace()
             }
-        } catch (e: IOException) {
-            e.printStackTrace()
         }
         return posts
     }

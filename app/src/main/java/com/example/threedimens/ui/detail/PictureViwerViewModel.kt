@@ -29,7 +29,8 @@ class PictureViwerViewModel(private val repository: PictureViewerRepository) : B
 
     fun fetchRealUrl(image: Image) {
         if (image.type.contains(ApiType.Site.WALLHAVEN.name) ||
-            image.type.contains(ApiType.Site.SAFEBOORU.name)
+            image.type.contains(ApiType.Site.SAFEBOORU.name) ||
+            image.type.contains(ApiType.Site.`3DBOORU`.name)
         ) {
             viewModelScope.launch {
                 try {

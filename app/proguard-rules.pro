@@ -37,6 +37,8 @@
 ##   public *;
 ##}
 #
+-keep class com.example.threedimens.App
+
 ## bugtags
   -keepattributes LineNumberTable,SourceFile,Exceptions,InnerClasses
   -keep class com.bugtags.library.** {*;}
@@ -97,14 +99,14 @@
 ## retrolambda
 #-dontwarn java.lang.invoke.*
 #
-## Glide
-#-keep public class * implements com.bumptech.glide.module.GlideModule
-#-keep public class * extends com.bumptech.glide.module.AppGlideModule
-#-keep public enum com.bumptech.glide.load.ImageHeaderParser$** {
-#  **[] $VALUES;
-#  public *;
-#}
-#
+# Glide
+-keep public class * implements com.bumptech.glide.module.GlideModule
+-keep public class * extends com.bumptech.glide.module.AppGlideModule
+-keep public enum com.bumptech.glide.load.ImageHeaderParser$** {
+  **[] $VALUES;
+  public *;
+}
+
 # JSR 305 annotations are for embedding nullability information.
 -dontwarn javax.annotation.**
 
@@ -155,7 +157,6 @@
     <fields>;
 }
 -keep class kotlin.reflect.jvm.internal.impl.builtins.BuiltInsLoaderImpl
-
 -keepclassmembers class kotlin.Metadata {
     public <methods>;
 }

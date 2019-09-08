@@ -21,10 +21,10 @@ object WallParser : IParser {
 
     override fun parseImages(apiType: ApiType, data: String): List<Image> {
         val images = arrayListOf<Image>()
-        try {
-            val document = Jsoup.parse(data)
-            val elements = document.select("div[id=thumbs] figure")
-            for (element in elements) {
+        val document = Jsoup.parse(data)
+        val elements = document.select("div[id=thumbs] figure")
+        for (element in elements) {
+            try {
                 val img = element.selectFirst("img")
                 val url = img.attr("data-src")
                 val originalUrl = getOriginalUrl(url)
@@ -38,10 +38,9 @@ object WallParser : IParser {
                         post = refer
                     )
                 )
+            } catch (e: IOException) {
+                e.printStackTrace()
             }
-
-        } catch (e: IOException) {
-            e.printStackTrace()
         }
         return images
     }

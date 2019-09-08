@@ -18,10 +18,10 @@ object YandeParser : IParser {
 
     override fun parseImages(apiType: ApiType, data: String): List<Image> {
         val images = arrayListOf<Image>()
-        try {
-            val document = Jsoup.parse(data)
-            val elements = document.select("ul[id=post-list-posts] li")
-            for (element in elements) {
+        val document = Jsoup.parse(data)
+        val elements = document.select("ul[id=post-list-posts] li")
+        for (element in elements) {
+            try {
                 val a = element.selectFirst("a[class=thumb]")
                 val original = element.selectFirst("a[class=directlink largeimg]")
                 val url = original.attr("href")
@@ -36,10 +36,9 @@ object YandeParser : IParser {
                         post = refer
                     )
                 )
+            } catch (e: IOException) {
+                e.printStackTrace()
             }
-
-        } catch (e: IOException) {
-            e.printStackTrace()
         }
         return images
     }

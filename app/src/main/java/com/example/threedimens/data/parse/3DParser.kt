@@ -11,7 +11,7 @@ import java.io.IOException
  * @author Du Wenyu
  * 2019-09-05
  */
-object DanParser : IParser {
+object `3DParser` : IParser {
 
     override fun parsePosts(apiType: ApiType, data: String): List<Post> {
         throw IllegalStateException("${javaClass.simpleName} has no posts")
@@ -20,12 +20,14 @@ object DanParser : IParser {
     override fun parseImages(apiType: ApiType, data: String): List<Image> {
         val images = arrayListOf<Image>()
         val document = Jsoup.parse(data)
-        val elements = document.select("div[id=posts] article")
+        val elements = document.select("div[id=post-list] span[class=thumb blacklisted]")
+        println("${javaClass.name}  ${elements.size}")
+
         for (element in elements) {
             try {
-                val refer = API.DANBOORU_BASE + element.selectFirst("a").attr("href")
-                val thumbUrl = element.attr("data-preview-file-url")
-                val url = element.attr("data-file-url")
+                val refer = API.`3DBOORU_BASE` + element.selectFirst("a").attr("href")
+                val thumbUrl = element.selectFirst("img").attr("src")
+                val url = getOriginalUrl(thumbUrl)
                 println("${javaClass.name} ${elements.size}, $refer $thumbUrl, $url")
                 images.add(
                     Image(
@@ -42,6 +44,10 @@ object DanParser : IParser {
         }
         return images
     }
+
+    private fun getOriginalUrl(thumbUrl: String) =
+        thumbUrl.replace("sample/", "")
+            .replace("preview/", "")
 
 
 }
