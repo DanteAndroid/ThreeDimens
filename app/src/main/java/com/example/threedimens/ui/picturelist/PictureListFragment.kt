@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -97,9 +98,17 @@ class PictureListFragment : BaseFragment(), Scrollable {
             adapter.submitList(it)
         })
 
-        findNavController().addOnDestinationChangedListener { controller, destination, arguments ->
+        findNavController().addOnDestinationChangedListener(listener)
+    }
+
+    private val listener =
+        NavController.OnDestinationChangedListener { controller, destination, arguments ->
             viewModel.saveLastPosition(manager.getLastPosition())
         }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        findNavController().removeOnDestinationChangedListener(listener)
     }
 
     override fun onPause() {

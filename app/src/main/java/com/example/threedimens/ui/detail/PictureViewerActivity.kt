@@ -97,7 +97,7 @@ class PictureViewerActivity(override val layoutResId: Int = R.layout.activity_vi
 
     override fun onBackPressed() {
         adapter.currentFragment?.restoreImage()
-        supportFinishAfterTransition()
+        super.onBackPressed()
     }
 
 

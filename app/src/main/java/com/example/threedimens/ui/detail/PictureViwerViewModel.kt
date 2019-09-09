@@ -51,5 +51,6 @@ class PictureViwerViewModel(private val repository: PictureViewerRepository) : B
             }
         }
 
+
     }
 }

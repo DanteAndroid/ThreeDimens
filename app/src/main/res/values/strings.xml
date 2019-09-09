@@ -10,7 +10,7 @@
     <string name="shared_img" translatable="false">shared_img</string>
     <string name="activity_settings">设置</string>
     <string name="app">应用</string>
-    <string name="action_share">分享</string>
+    <string name="share">分享</string>
     <string name="activity_detail">详情页</string>
     <string name="loading">努力加载中…</string>
     <string name="my_email" translatable="false">danteandroi@gmail.com</string>
@@ -53,7 +53,7 @@
     <string name="load_no_result">啊哦，妹子太害羞，不好意思出來了</string>
     <string name="try_again">再来一次</string>
     <string name="save_img_failed">无法保存图片</string>
-    <string name="save_img_success">妹子传送成功~</string>
+    <string name="save_img_success">图片保存成功~</string>
     <string name="view_img_hint">长按图片可以保存到手机~</string>
     <string name="title_activity_test" translatable="false">TestActivity</string>
     <string name="save_img">保存</string>

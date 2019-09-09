@@ -13,16 +13,17 @@ import android.view.ViewGroup
 import androidx.core.view.ViewCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
+import com.blankj.utilcode.util.IntentUtils
 import com.example.base.base.BaseFragment
 import com.example.threedimens.R
 import com.example.threedimens.data.Image
-import com.example.threedimens.utils.LOAD_PICTURE_RETRY_TIMES
-import com.example.threedimens.utils.UiUtil
-import com.example.threedimens.utils.getDelayedTransitionListener
-import com.example.threedimens.utils.load
+import com.example.threedimens.utils.*
 import com.example.threedimens.utils.widget.GlideApp
 import com.ortiz.touchview.TouchImageView
 import kotlinx.android.synthetic.main.fragment_picture_detail.*
+import org.jetbrains.anko.design.snackbar
+import org.jetbrains.anko.doAsyncResult
+import org.jetbrains.anko.selector
 
 class PictureDetailFragment private constructor() : BaseFragment() {
 
@@ -46,12 +47,13 @@ class PictureDetailFragment private constructor() : BaseFragment() {
     override fun initView() {
         viewModel = (activity as PictureViewerActivity).viewModel
         if (detailImage is TouchImageView) {
-            detailImage.setMaxZoomRatio(2.0f)
+            detailImage?.setMaxZoomRatio(2.0f)
         }
-        viewModel.getImage(id).observe(this, Observer { image ->
+        println("initView ${viewModel.getImage(id).value}")
+        val data = viewModel.getImage(id)
+        data.observe(this, Observer { image ->
             ViewCompat.setTransitionName(detailImage, image.url)
             detailImage.setOnClickListener { UiUtil.toggleSystemUI(it) }
-            setProgressIndicator(true)
             if (showTransition) {
                 // 直接点进来的才显示 SharedElement 动画
                 loadWithTransition(image)
@@ -80,6 +82,8 @@ class PictureDetailFragment private constructor() : BaseFragment() {
     }
 
     private fun load(image: Image, showTransition: Boolean = false) {
+        println("loadImage")
+        setProgressIndicator(true)
         val thumbnail = GlideApp.with(this)
             .asBitmap()
             .onlyRetrieveFromCache(true)
@@ -93,6 +97,7 @@ class PictureDetailFragment private constructor() : BaseFragment() {
             thumbnail = thumbnail,
             onResourceReady = {
                 setProgressIndicator(false)
+                onLoadSuccess(image)
             },
             onLoadFailed = {
                 setProgressIndicator(false)
@@ -104,9 +109,55 @@ class PictureDetailFragment private constructor() : BaseFragment() {
         )
     }
 
+    private fun onLoadSuccess(image: Image) {
+        detailImage?.isZoomEnabled = true
+        detailImage.setOnLongClickListener {
+            it.context.apply {
+                val items = listOf(
+                    getString(R.string.save_img),
+                    getString(R.string.share)
+                )
+                selector(items = items) { _, i ->
+                    when (i) {
+                        0 -> {
+                            downloadPicture(image)
+                        }
+                        1 -> {
+                            sharePicture(image)
+                        }
+                    }
+                }
+            }
+            return@setOnLongClickListener true
+        }
+    }
+
+    private fun downloadPicture(image: Image) {
+        val file = doAsyncResult {
+            GlideApp.with(this@PictureDetailFragment)
+                .download(if (image.originalUrl.isEmpty()) image.url else image.originalUrl)
+                .submit().get()
+
+        }.get()
+        val result = saveImage(image, file)
+        if (result) {
+            detailImage.snackbar(R.string.save_img_success)
+        } else {
+            file.delete()
+        }
+    }
+
+    private fun sharePicture(image: Image) {
+        val file = getImageFile(image)
+        if (file.exists()) {
+            startActivity(IntentUtils.getShareImageIntent("Image", file, false))
+        } else {
+            downloadPicture(image)
+            sharePicture(image)
+        }
+    }
+
     private fun setProgressIndicator(show: Boolean) {
-//        detailImage.isZoomEnabled = true
-        println("setProgress $show")
         progress.isVisible = show
     }
 
