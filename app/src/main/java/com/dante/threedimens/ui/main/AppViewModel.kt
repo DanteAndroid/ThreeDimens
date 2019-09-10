@@ -82,7 +82,6 @@ class AppViewModel(val context: Activity) : ViewModel() {
         }
     }
 
-
     private fun showAnnouncement(announcement: String) {
         if (announcement.isNotEmpty() && SPUtils.getInstance().getBoolean(announcement, true)) {
             context.apply {
