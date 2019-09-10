@@ -1,0 +1,16 @@
+{
+  "lastest_version": "v1.3.0",
+  "lastest_version_code": 26,
+  "forceUpdate": true,
+  "announcement": "提示：\n\n本版本更新了几个重要的自定义设置，请到设置里查看",
+  "message": " -修复隐藏图区不能显示的问题n - 新的自定义设置",
+  "apk_name": "app-armeabi-v7a-release.apk",
+  "vip": [
+    "67B6DF845280BEFA66729AAE3760D0CA",
+    "75BF6E246958460F2F81E943B38E1EE7",
+    "6579ECEFB2E8072093AA89EAE86D95A5",
+    "A0A39FD71ECBBCF83F5A092322C3AAFF",
+    "0CED94EA74E68BDA96CB23790A4E8216",
+    "643ACB5544BD0D726E7DC8D0E7E252EA"
+  ]
+}
