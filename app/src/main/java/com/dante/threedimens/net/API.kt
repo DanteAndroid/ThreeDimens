@@ -31,7 +31,7 @@ object API {
 
     //Base API
     const val GANK_BASE = "http://gank.io/api/"
-    const val DB_BASE = "https://www.dbmeinv.com/"
+    const val DB_BASE = "https://www.buxiuse.com/"
     const val MZ_BASE = "https://www.mzitu.com/"
     const val WALL_BASE = "https://wallhaven.cc/"
     const val YANDE_BASE = "https://yande.re/"

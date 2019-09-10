@@ -97,8 +97,6 @@ class PictureListFragment : BaseFragment(), Scrollable {
             if (it.isEmpty()) return@Observer
             adapter.submitList(it)
         })
-
-        findNavController().addOnDestinationChangedListener(listener)
     }
 
     private val listener =
@@ -106,8 +104,13 @@ class PictureListFragment : BaseFragment(), Scrollable {
             viewModel.saveLastPosition(manager.getLastPosition())
         }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
+    override fun onStart() {
+        super.onStart()
+        findNavController().addOnDestinationChangedListener(listener)
+    }
+
+    override fun onStop() {
+        super.onStop()
         findNavController().removeOnDestinationChangedListener(listener)
     }
 

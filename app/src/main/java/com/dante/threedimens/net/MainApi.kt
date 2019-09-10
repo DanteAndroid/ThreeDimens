@@ -20,6 +20,6 @@ interface MainApi {
 
     @Headers("User-Agent: $PC_USER_AGENT")
     @GET("/")
-    fun getDouban(@Query("cid") type: String, @Query("pager_offset") page: Int): Call<ResponseBody>
+    fun getDouban(@Query("cid") type: String, @Query("page") page: Int): Call<ResponseBody>
 
 }

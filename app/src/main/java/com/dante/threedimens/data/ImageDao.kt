@@ -10,10 +10,10 @@ import androidx.room.*
  */
 @Dao
 interface ImageDao {
-    @Query("select * from image where type = :type ")
+    @Query("select * from image where type = :type order by timestamp DESC")
     fun getPagedImages(type: String): DataSource.Factory<Int, Image>
 
-    @Query("select * from image where type = :type ")
+    @Query("select * from image where type = :type order by timestamp DESC")
     fun getImages(type: String): LiveData<List<Image>>
 
     @Query("select * from image where id = :id")
