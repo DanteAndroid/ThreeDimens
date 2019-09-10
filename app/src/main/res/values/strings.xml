@@ -10,7 +10,6 @@
     <string name="shared_img" translatable="false">shared_img</string>
     <string name="activity_settings">设置</string>
     <string name="app">应用</string>
-    <string name="share">分享</string>
     <string name="activity_detail">详情页</string>
     <string name="loading">努力加载中…</string>
     <string name="my_email" translatable="false">danteandroi@gmail.com</string>
@@ -30,12 +29,12 @@
     <string name="license_description">
         本APP仅供学习交流使用，资源全部来源于网络，如有侵权请联系我将移除此app
     </string>
-    <string name="column_not_available">栏目未完成，请更新或联系作者 :D</string>
+    <string name="column_not_available">该模块尚未发布，请更新版本或私信作者参与测试</string>
     <string name="clear_cache_success">缓存已清理</string>
     <string name="clear_cache_failed">缓存删除失败</string>
     <string name="original_splash">启动图</string>
     <string name="set_original_splash">随机使用已缓存的图片或使用自带启动图</string>
-    <string name="share_app_description">这个软件很不错，图片适合做壁纸 https://www.coolapk.com/apk/com.dante.girl
+    <string name="share_app_description">这个软件很不错，图片适合做壁纸 https://www.coolapk.com/apk/com.dante.threedimens
     </string>
     <string name="share_app">分享应用</string>
     <string name="tips">贴士</string>
@@ -82,7 +81,7 @@
     <string name="theme_color">主题颜色</string>
     <string name="theme_choose">选择你喜欢的各式各样颜色吧~</string>
     <string name="update_message">更新内容:\n\n %s</string>
-    <string name="downloading">可劲下载中…</string>
+    <string name="downloading">三次元妹子%s</string>
     <string name="new_version">发现新版本</string>
     <string name="install_hint">当前是debug版本，由于正式版签名不同更新会失败。卸载重装即可</string>
     <string name="alipay_not_found">您没有安装支付宝，请添加作者微信赞助: lightear</string>
@@ -117,5 +116,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="nav_wall">壁纸天地</string>
     <string name="nav_booru">Booru图集</string>
+    <string name="share">分享</string>
+    <string name="download_start">开始下载……可在通知栏查看进度</string>
 
 </resources>

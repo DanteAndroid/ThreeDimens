@@ -7,30 +7,30 @@
 
     <fragment
         android:id="@+id/nav_main"
-        android:name="com.example.threedimens.ui.main.MainTabsFragment"
+        android:name="com.dante.threedimens.ui.main.MainTabsFragment"
         android:label="@string/nav_main" />
     <fragment
         android:id="@+id/nav_meizi"
-        android:name="com.example.threedimens.ui.main.MeiziTabsFragment"
+        android:name="com.dante.threedimens.ui.main.MeiziTabsFragment"
         android:label="@string/nav_mz" />
     <fragment
         android:id="@+id/nav_wall"
-        android:name="com.example.threedimens.ui.main.WallTabsFragment"
+        android:name="com.dante.threedimens.ui.main.WallTabsFragment"
         android:label="@string/nav_wall">
     </fragment>
-    <fragment
-            android:id="@+id/nav_booru"
-            android:name="com.example.threedimens.ui.main.BooruTabsFragment"
-            android:label="@string/nav_booru"></fragment>
+    <!--    <fragment-->
+    <!--        android:id="@+id/nav_booru"-->
+    <!--        android:name="com.dante.threedimens.ui.main.BooruTabsFragment"-->
+    <!--        android:label="@string/nav_booru" />-->
 
 
     <fragment
         android:id="@+id/postListFragment"
-        android:name="com.example.threedimens.ui.postlist.PostListFragment"
+        android:name="com.dante.threedimens.ui.postlist.PostListFragment"
         android:label="PostListFragment" />
     <fragment
         android:id="@+id/pictureListFragment"
-        android:name="com.example.threedimens.ui.picturelist.PictureListFragment"
+        android:name="com.dante.threedimens.ui.picturelist.PictureListFragment"
         android:label="fragment_picture_list"
         tools:layout="@layout/fragment_picture_list" />
 

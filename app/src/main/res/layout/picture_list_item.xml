@@ -5,7 +5,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="4dp">
 
-    <com.example.threedimens.utils.widget.RatioImageView
+    <com.dante.threedimens.utils.widget.RatioImageView
             android:id="@+id/image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
