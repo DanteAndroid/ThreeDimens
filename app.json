@@ -1,6 +1,6 @@
 {
   "lastest_version": "0.1",
-  "lastest_version_code": 2,
+  "lastest_version_code": 1,
   "forceUpdate": false,
   "announcement": "提示：\n\n本版本更新了几个重要的自定义设置，请到设置里查看",
   "message": " - 修复隐藏图区不能显示的问题\n - 新的自定义设置",
