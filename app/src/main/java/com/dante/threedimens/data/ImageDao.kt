@@ -28,6 +28,6 @@ interface ImageDao {
     @Delete
     fun delete(image: Image)
 
-    @Query("delete from image")
-    fun deleteAll()
+    @Query("delete from image where type = :type")
+    fun deleteAll(type: String)
 }

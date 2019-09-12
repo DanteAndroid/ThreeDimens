@@ -68,7 +68,6 @@ class ImageRepository(val apiType: ApiType, private val imageDao: ImageDao) {
         }
     }
 
-
     suspend fun insert(images: List<Image>) {
         withContext(IO) {
             imageDao.insert(images)
@@ -76,4 +75,10 @@ class ImageRepository(val apiType: ApiType, private val imageDao: ImageDao) {
     }
 
 
+    suspend fun deleteAll() {
+        withContext(IO) {
+            println("deleteAll ${apiType.type}")
+            imageDao.deleteAll(apiType.type)
+        }
+    }
 }

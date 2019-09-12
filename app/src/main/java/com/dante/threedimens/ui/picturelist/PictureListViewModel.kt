@@ -26,6 +26,7 @@ class PictureListViewModel(private val repository: ImageRepository) : BaseStatus
 
     fun refreshImages() {
         viewModelScope.launch {
+            repository.deleteAll()
             fetchImages()
         }
     }
