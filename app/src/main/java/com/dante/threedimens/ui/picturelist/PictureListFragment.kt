@@ -18,7 +18,6 @@ import com.dante.threedimens.ui.detail.PictureViewerActivity
 import com.dante.threedimens.ui.main.ApiType
 import com.dante.threedimens.utils.InjectorUtils
 import com.dante.threedimens.utils.Scrollable
-import com.dante.threedimens.utils.getLastPosition
 import kotlinx.android.synthetic.main.fragment_picture_list.*
 import org.jetbrains.anko.design.snackbar
 
@@ -102,17 +101,17 @@ class PictureListFragment : BaseFragment(), Scrollable {
     }
 
 
-    override fun onPause() {
-        super.onPause()
-        viewModel.saveLastPosition(manager.getLastPosition())
-    }
-
-    override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        super.onViewStateRestored(savedInstanceState)
-        if (savedInstanceState == null) {
-            restoreLastPosition()
-        }
-    }
+//    override fun onPause() {
+//        super.onPause()
+//        viewModel.saveLastPosition(manager.getLastPosition())
+//    }
+//
+//    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+//        super.onViewStateRestored(savedInstanceState)
+//        if (savedInstanceState == null) {
+//            restoreLastPosition()
+//        }
+//    }
 
     private fun restoreLastPosition() {
         val lastPosition = viewModel.getLastPosition()
