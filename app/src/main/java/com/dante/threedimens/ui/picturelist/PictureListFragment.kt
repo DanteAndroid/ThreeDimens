@@ -8,8 +8,6 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.NavController
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -76,6 +74,7 @@ class PictureListFragment : BaseFragment(), Scrollable {
         swipeRefresh.setOnRefreshListener {
             viewModel.refreshImages()
         }
+        viewModel.refreshImages()
         viewModel.status.observe(this, Observer {
             when (it) {
                 LoadStatus.LOADING -> {
@@ -97,22 +96,11 @@ class PictureListFragment : BaseFragment(), Scrollable {
             if (it.isEmpty()) return@Observer
             adapter.submitList(it)
         })
+//        findNavController().addOnDestinationChangedListener { controller, destination, arguments ->
+//            viewModel.saveLastPosition(manager.getLastPosition())
+//        }
     }
 
-    private val listener =
-        NavController.OnDestinationChangedListener { controller, destination, arguments ->
-            viewModel.saveLastPosition(manager.getLastPosition())
-        }
-
-    override fun onStart() {
-        super.onStart()
-        findNavController().addOnDestinationChangedListener(listener)
-    }
-
-    override fun onStop() {
-        super.onStop()
-        findNavController().removeOnDestinationChangedListener(listener)
-    }
 
     override fun onPause() {
         super.onPause()

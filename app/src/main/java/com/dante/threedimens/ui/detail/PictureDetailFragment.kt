@@ -96,10 +96,11 @@ class PictureDetailFragment private constructor() : BaseFragment() {
                 onLoadSuccess(image)
             },
             onLoadFailed = {
-                setProgressIndicator(false)
                 if (retryTimes < LOAD_PICTURE_RETRY_TIMES) {
                     retryTimes++
                     viewModel.fetchRealUrl(image)
+                } else {
+                    setProgressIndicator(false)
                 }
             }
         )

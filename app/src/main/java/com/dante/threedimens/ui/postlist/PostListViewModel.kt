@@ -21,6 +21,7 @@ class PostListViewModel(private val repository: PostRepository) : BaseStatusVM()
 
     fun refreshPosts() {
         viewModelScope.launch {
+            repository.deleteAll()
             fetchPosts()
         }
     }

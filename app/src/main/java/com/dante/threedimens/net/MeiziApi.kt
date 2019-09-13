@@ -11,11 +11,15 @@ import retrofit2.http.Path
  */
 interface MeiziApi {
 
-    //Post示例
     @GET("{type}/page/{page}/")
     fun getPosts(@Path("type") type: String, @Path("page") page: Int): Call<ResponseBody>
 
     @GET("/{post}/{page}")
     fun getPictures(@Path("post") postUrl: String, @Path("page") page: Int): Call<ResponseBody>
 
+    @GET("/{type}/{page}")
+    fun getMeituluPosts(@Path("type") type: String, @Path("page") page: String): Call<ResponseBody>
+
+    @GET("/{post}")
+    fun getMeituluPictures(@Path("post") postUrl: String): Call<ResponseBody>
 }

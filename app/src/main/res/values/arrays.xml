@@ -6,8 +6,7 @@
         <item name="db">豆瓣美女</item>
         <item name="anime">动漫图</item>
     </string-array>
-    <string-array
-        name="image_type_value">
+    <string-array name="image_type_value">
         <item name="original">origin</item>
         <item name="gank">0</item>
         <item name="db">5</item>
@@ -15,8 +14,8 @@
     </string-array>
 
     <string-array name="main_titles">
-        <item name="gank">Gank</item>
-        <item name="db_rank">热门</item>
+        <item name="gank">△Gank</item>
+        <item name="db_rank">热门美女</item>
         <item name="db_breast">波涛胸涌</item>
         <item name="db_butt">悬崖翘臂</item>
         <item name="db_leg">美腿控</item>
@@ -24,13 +23,17 @@
     </string-array>
 
     <string-array name="meizi_titles">
-        <item name="mz_qc">清纯妹子</item>
-        <item name="mz_sexy">性感MM</item>
-        <item name="mz_jp">日本美女</item>
-        <item name="mz_tw">台湾美女</item>
+        <item name="mz_hot">☆️热子</item>
+        <item name="mz_qc">☆️清纯</item>
+        <item name="mz_sexy">☆️性感</item>
+        <item name="mtl_chinese">国产</item>
+        <item name="mtl_model">模特</item>
+        <item name="mtl_breast">美胸</item>
+        <item name="mtl_cos">情趣</item>
     </string-array>
 
     <string-array name="wall_titles">
+        <item name="wall_random">随机</item>
         <item name="wall_anime">动漫</item>
         <item name="wall_fantasy">幻想</item>
         <item name="wall_girl">女性</item>
@@ -39,10 +42,11 @@
         <item name="wall_landscape">简约</item>
     </string-array>
     <string-array name="booru_titles">
-        <item name="booru_safe">Safe</item>
+        <item name="booru_safe">安全图区</item>
         <item name="booru_yande">Yande</item>
-        <item name="booru_dan">Dan</item>
-        <item name="booru_dan">Real</item>
+        <item name="booru_dan">Dan-全部</item>
+        <item name="booru_dan">Dan-热门</item>
+        <item name="booru_dan">真人</item>
     </string-array>
 
     <string-array name="cache_strategy">

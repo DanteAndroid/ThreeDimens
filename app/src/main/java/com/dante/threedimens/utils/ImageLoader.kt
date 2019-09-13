@@ -41,15 +41,14 @@ fun ImageView.load(
 
     val requestOptions = RequestOptions()
         .dontTransform()
+        .placeholder(R.drawable.placeholder)
+//        .error(R.drawable.placeholder)
         .apply {
             if (animate) placeholder(R.drawable.loading_animation)
             if (showOriginal) {
                 // 显示原图时提高一倍的超时
                 timeout((5 * DateUtils.SECOND_IN_MILLIS).toInt())
-            } else {
-                placeholder(R.drawable.placeholder)
             }
-
         }
 
     fun getUrlWithHeader(url: String): GlideUrl {
@@ -67,7 +66,6 @@ fun ImageView.load(
         .apply {
             if (showOriginal) {
                 override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
-                    .error(R.drawable.placeholder)
             } else {
                 transition(BitmapTransitionOptions.withCrossFade())
             }

@@ -30,10 +30,19 @@ class PostRepository(private val apiType: ApiType, private val postDao: PostDao)
         return withContext(IO) {
             when (apiType.site) {
                 ApiType.Site.MEIZITU -> {
-                    getPosts(apiType, NetManager.MEIZI_API.getPosts(apiType.category, page))
+                    getPosts(apiType, NetManager.meiziApi.getPosts(apiType.category, page))
+                }
+                ApiType.Site.MTL -> {
+                    getPosts(
+                        apiType,
+                        NetManager.meituluApi.getMeituluPosts(
+                            apiType.category,
+                            if (page == 1) "" else "$page.html"
+                        )
+                    )
                 }
                 ApiType.Site.YAKEXI -> {
-                    getPosts(apiType, NetManager.MEIZI_API.getPosts(apiType.category, page))
+                    getPosts(apiType, NetManager.meiziApi.getPosts(apiType.category, page))
                 }
                 else -> throw IllegalStateException("Not implemented: $apiType")
             }
@@ -52,4 +61,10 @@ class PostRepository(private val apiType: ApiType, private val postDao: PostDao)
         }
     }
 
+    suspend fun deleteAll() {
+        println("deleteall posts")
+        withContext(IO) {
+            postDao.deleteAll(apiType.type)
+        }
+    }
 }

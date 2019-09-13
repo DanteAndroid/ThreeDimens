@@ -12,8 +12,8 @@ object NetManager {
 //        return when (apiType.site) {
 //            ApiType.Site.GANK -> gankApi
 //            ApiType.Site.DOUBAN -> dbApi
-//            ApiType.Site.MEIZITU -> MEIZI_API
-//            ApiType.Site.YAKEXI -> MEIZI_API
+//            ApiType.Site.MEIZITU -> meiziApi
+//            ApiType.Site.YAKEXI -> meiziApi
 //            else -> throw IllegalStateException("${apiType.type} not implemented in ${javaClass.canonicalName}")
 //        }
 //    }
@@ -28,8 +28,11 @@ object NetManager {
         NetService.getInstance().createApi<MainApi>(API.DB_BASE)
     }
 
-    val MEIZI_API: MeiziApi by lazy {
+    val meiziApi: MeiziApi by lazy {
         NetService.getInstance().createApi<MeiziApi>(API.MZ_BASE)
+    }
+    val meituluApi: MeiziApi by lazy {
+        NetService.getInstance().createApi<MeiziApi>(API.MEITULU_BASE)
     }
     val wallApi: WallApi by lazy {
         NetService.getInstance().createApi<WallApi>(API.WALL_BASE)

@@ -1,5 +1,6 @@
 package com.dante.threedimens.ui.postlist
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,22 +8,16 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.NavController
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dante.base.base.BaseFragment
 import com.dante.base.base.LoadStatus
-import com.dante.threedimens.MainDrawerActivity
 import com.dante.threedimens.R
-import com.dante.threedimens.net.API
 import com.dante.threedimens.ui.main.ApiType
-import com.dante.threedimens.ui.picturelist.PictureListFragment
 import com.dante.threedimens.utils.InjectorUtils
 import com.dante.threedimens.utils.Scrollable
 import com.dante.threedimens.utils.getLastPosition
-import com.dante.threedimens.utils.setBack
 import kotlinx.android.synthetic.main.fragment_picture_list.*
 import org.jetbrains.anko.design.snackbar
 
@@ -42,22 +37,16 @@ class PostListFragment private constructor() : BaseFragment(), Scrollable {
     private lateinit var manager: GridLayoutManager
 
     private val adapter = PostListAdapter { post, view, position ->
-        apiType.path = post.postUrl.removePrefix(API.MZ_BASE)
-        activity?.let {
-            it.supportFragmentManager.beginTransaction()
-                .setCustomAnimations(
-                    R.anim.fragment_open_enter, R.anim.fragment_fade_exit,
-                    R.anim.fragment_fade_enter, R.anim.fragment_close_exit
-                )
-                .replace(
-                    R.id.navHostFragment,
-                    PictureListFragment.newInstance(apiType), null
-                )
-                .addToBackStack(null).commit()
-
-            it as MainDrawerActivity
-            it.setBack(true)
-        }
+        apiType.path = post.postUrl.removePrefix(apiType.site.baseUrl)
+        activity?.startActivity(Intent(context, PostDetailActivity::class.java).apply {
+            putExtra(ARG_API_TYPE, apiType)
+        })
+//        findNavController().navigate(
+//            R.id.action_postListFragment_to_pictureListFragment,
+//            bundleOf(
+//                ARG_API_TYPE to apiType
+//            )
+//        )
     }
 
     override fun onCreateView(
@@ -93,7 +82,7 @@ class PostListFragment private constructor() : BaseFragment(), Scrollable {
         viewModel.status.observe(this, Observer {
             when (it) {
                 LoadStatus.LOADING -> {
-                    swipeRefresh.isRefreshing = true
+//                    swipeRefresh.isRefreshing = true
                 }
                 LoadStatus.ERROR -> {
                     swipeRefresh.isRefreshing = false
@@ -111,20 +100,7 @@ class PostListFragment private constructor() : BaseFragment(), Scrollable {
             if (it.isEmpty()) return@Observer
             adapter.submitList(it)
         })
-
-        findNavController().addOnDestinationChangedListener(listener)
     }
-
-    private val listener =
-        NavController.OnDestinationChangedListener { controller, destination, arguments ->
-            viewModel.saveLastPosition(manager.getLastPosition())
-        }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        findNavController().removeOnDestinationChangedListener(listener)
-    }
-
 
     override fun scrollToTop() {
         if (recyclerView.layoutManager is LinearLayoutManager) {
@@ -169,8 +145,7 @@ class PostListFragment private constructor() : BaseFragment(), Scrollable {
     }
 
     companion object {
-
-        private const val ARG_API_TYPE = "api_type"
+        const val ARG_API_TYPE = "api_type"
 
         fun newInstance(type: ApiType): PostListFragment {
             return PostListFragment().apply {

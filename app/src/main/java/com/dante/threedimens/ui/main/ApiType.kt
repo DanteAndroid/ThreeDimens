@@ -9,9 +9,7 @@ import com.dante.threedimens.net.API
  * @author Dante
  * 2019-08-23
  */
-class ApiType(val site: Site, val category: String = "") : Parcelable {
-    var path: String = ""
-
+class ApiType(val site: Site, val category: String = "", var path: String = "") : Parcelable {
     val type get() = site.name + category + path
 
     enum class Site(val baseUrl: String, val parser: IParser, val spanCount: Int = 2) {
@@ -19,11 +17,13 @@ class ApiType(val site: Site, val category: String = "") : Parcelable {
         MEIZITU(API.MZ_BASE, MztParser), YAKEXI(API.YAKEXI_BASE, MztParser),
         SEHUATANG(API.SHT_BASE, MztParser), WALLHAVEN(API.WALL_BASE, WallParser),
         YANDE(API.YANDE_BASE, YandeParser), SAFEBOORU(API.SAFEBOORU_BASE, SafeParser, 3),
-        DANBOORU(API.DANBOORU_BASE, DanParser, 3), `3DBOORU`(API.`3DBOORU_BASE`, `3DParser`, 3)
+        DANBOORU(API.DANBOORU_BASE, DanParser, 3), `3DBOORU`(API.`3DBOORU_BASE`, `3DParser`, 3),
+        MTL(API.MEITULU_BASE, MtlParser)
     }
 
     constructor(source: Parcel) : this(
         Site.values()[source.readInt()],
+        source.readString()!!,
         source.readString()!!
     )
 
@@ -32,10 +32,10 @@ class ApiType(val site: Site, val category: String = "") : Parcelable {
     override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
         writeInt(site.ordinal)
         writeString(category)
+        writeString(path)
     }
 
     companion object {
-
         val menuGank: Array<ApiType> = arrayOf(
             ApiType(Site.GANK),
             ApiType(Site.DOUBAN, API.CATE_DB_RANK),
@@ -46,13 +46,17 @@ class ApiType(val site: Site, val category: String = "") : Parcelable {
         )
 
         val menuMeizitu: Array<ApiType> = arrayOf(
+            ApiType(Site.MEIZITU, API.CATE_MZ_HOT),
             ApiType(Site.MEIZITU, API.CATE_MZ_INNOCENT),
-            ApiType(Site.MEIZITU, API.CATE_MZ_JAPAN),
             ApiType(Site.MEIZITU, API.CATE_MZ_SEXY),
-            ApiType(Site.MEIZITU, API.CATE_MZ_TAIWAN)
+            ApiType(Site.MTL, API.CATE_MTL_CHINESE),
+            ApiType(Site.MTL, API.CATE_MTL_MODEL),
+            ApiType(Site.MTL, API.CATE_MTL_BREAST),
+            ApiType(Site.MTL, API.CATE_MTL_COS)
         )
 
         val menuWallHaven: Array<ApiType> = arrayOf(
+            ApiType(Site.WALLHAVEN, API.CATE_WH_RANDOM),
             ApiType(Site.WALLHAVEN, API.CATE_WH_ANIME),
             ApiType(Site.WALLHAVEN, API.CATE_WH_FANTASY),
             ApiType(Site.WALLHAVEN, API.CATE_WH_GIRL),
@@ -65,14 +69,13 @@ class ApiType(val site: Site, val category: String = "") : Parcelable {
             ApiType(Site.SAFEBOORU),
             ApiType(Site.YANDE),
             ApiType(Site.DANBOORU),
+            ApiType(Site.DANBOORU, API.CATE_DAN_HOT),
             ApiType(Site.`3DBOORU`)
         )
 
         @JvmField
         val CREATOR: Parcelable.Creator<ApiType> = object : Parcelable.Creator<ApiType> {
-            override fun createFromParcel(source: Parcel): ApiType =
-                ApiType(source)
-
+            override fun createFromParcel(source: Parcel): ApiType = ApiType(source)
             override fun newArray(size: Int): Array<ApiType?> = arrayOfNulls(size)
         }
     }
