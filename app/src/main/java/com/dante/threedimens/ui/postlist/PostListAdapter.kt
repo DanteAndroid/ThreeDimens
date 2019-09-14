@@ -16,12 +16,15 @@ import com.dante.threedimens.utils.load
  * @author Dante
  * 2019-08-23
  */
-class PostListAdapter(val onClick: (Post, View, Int) -> Unit) :
+class PostListAdapter(val isForum: Boolean = false, val onClick: (Post, View, Int) -> Unit) :
     ListAdapter<Post, PostListAdapter.PictureHolder>(IMAGE_COMPARATOR) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PictureHolder {
         val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.post_list_item, parent, false)
+            LayoutInflater.from(parent.context).inflate(
+                if (isForum) R.layout.post_list_item_forum else
+                    R.layout.post_list_item, parent, false
+            )
         return PictureHolder(view)
     }
 
@@ -30,12 +33,12 @@ class PostListAdapter(val onClick: (Post, View, Int) -> Unit) :
     }
 
     inner class PictureHolder(view: View) : RecyclerView.ViewHolder(view) {
-        private val imageView = view.findViewById<ImageView>(R.id.image)
+        private val imageView: ImageView? = view.findViewById(R.id.image)
         private val textView = view.findViewById<TextView>(R.id.title)
         fun bind(post: Post) {
             textView.text = post.title
-            imageView.load(post.coverUrl, header = post.postUrl)
-            imageView.setOnClickListener { onClick(post, itemView, adapterPosition) }
+            imageView?.load(post.coverUrl, header = post.postUrl)
+            itemView.setOnClickListener { onClick(post, itemView, adapterPosition) }
         }
     }
 

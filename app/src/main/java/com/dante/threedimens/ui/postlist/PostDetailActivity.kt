@@ -4,6 +4,8 @@ import com.dante.base.base.BaseActivity
 import com.dante.threedimens.R
 import com.dante.threedimens.ui.main.ApiType
 import com.dante.threedimens.ui.picturelist.PictureListFragment
+import com.dante.threedimens.utils.ARG_API_TYPE
+import com.dante.threedimens.utils.ARG_TITLE
 
 class PostDetailActivity : BaseActivity() {
 
@@ -12,7 +14,9 @@ class PostDetailActivity : BaseActivity() {
     override fun enableBack(): Boolean = true
 
     override fun initView() {
-        val apiType = intent.getParcelableExtra(PostListFragment.ARG_API_TYPE) as ApiType
+        val apiType = intent.getParcelableExtra(ARG_API_TYPE) as ApiType
+        val title = intent.getStringExtra(ARG_TITLE)
+        supportActionBar?.title = title
         supportFragmentManager.beginTransaction()
             .replace(
                 R.id.container,

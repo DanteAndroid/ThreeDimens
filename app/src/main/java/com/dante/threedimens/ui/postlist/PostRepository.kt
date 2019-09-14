@@ -44,6 +44,9 @@ class PostRepository(private val apiType: ApiType, private val postDao: PostDao)
                 ApiType.Site.YAKEXI -> {
                     getPosts(apiType, NetManager.meiziApi.getPosts(apiType.category, page))
                 }
+                ApiType.Site.SEHUATANG -> {
+                    getPosts(apiType, NetManager.shtApi.getPosts(apiType.category, page))
+                }
                 else -> throw IllegalStateException("Not implemented: $apiType")
             }
         }

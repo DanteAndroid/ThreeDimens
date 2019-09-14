@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,9 +16,10 @@ import com.dante.base.base.BaseFragment
 import com.dante.base.base.LoadStatus
 import com.dante.threedimens.R
 import com.dante.threedimens.ui.main.ApiType
+import com.dante.threedimens.utils.ARG_API_TYPE
+import com.dante.threedimens.utils.ARG_TITLE
 import com.dante.threedimens.utils.InjectorUtils
 import com.dante.threedimens.utils.Scrollable
-import com.dante.threedimens.utils.getLastPosition
 import kotlinx.android.synthetic.main.fragment_picture_list.*
 import org.jetbrains.anko.design.snackbar
 
@@ -36,17 +38,23 @@ class PostListFragment private constructor() : BaseFragment(), Scrollable {
     }
     private lateinit var manager: GridLayoutManager
 
-    private val adapter = PostListAdapter { post, view, position ->
-        apiType.path = post.postUrl.removePrefix(apiType.site.baseUrl)
-        activity?.startActivity(Intent(context, PostDetailActivity::class.java).apply {
-            putExtra(ARG_API_TYPE, apiType)
-        })
+    private val isForum: Boolean
+        get() = apiType.site == ApiType.Site.SEHUATANG
+
+    private val adapter by lazy {
+        PostListAdapter(isForum) { post, view, position ->
+            apiType.path = post.postUrl.removePrefix(apiType.site.baseUrl)
+            activity?.startActivity(Intent(context, PostDetailActivity::class.java).apply {
+                putExtra(ARG_API_TYPE, apiType)
+                putExtra(ARG_TITLE, post.title)
+            })
 //        findNavController().navigate(
 //            R.id.action_postListFragment_to_pictureListFragment,
 //            bundleOf(
 //                ARG_API_TYPE to apiType
 //            )
 //        )
+        }
     }
 
     override fun onCreateView(
@@ -59,9 +67,16 @@ class PostListFragment private constructor() : BaseFragment(), Scrollable {
     override fun initView() {
         recyclerView.setHasFixedSize(true)
         recyclerView.adapter = adapter
-        manager = GridLayoutManager(context, apiType.site.spanCount)
+        if (isForum) {
+            recyclerView.addItemDecoration(
+                DividerItemDecoration(
+                    context,
+                    DividerItemDecoration.VERTICAL
+                )
+            )
+        }
+        manager = GridLayoutManager(context, if (isForum) 1 else apiType.site.spanCount)
         recyclerView.layoutManager = manager
-
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
@@ -76,7 +91,7 @@ class PostListFragment private constructor() : BaseFragment(), Scrollable {
             ContextCompat.getColor(context!!, R.color.colorAccent)
         )
         swipeRefresh.setOnRefreshListener {
-            viewModel.refreshPosts()
+            viewModel.refreshPosts(true)
         }
         viewModel.refreshPosts()
         viewModel.status.observe(this, Observer {
@@ -115,38 +130,36 @@ class PostListFragment private constructor() : BaseFragment(), Scrollable {
         }
     }
 
-    override fun onPause() {
-        super.onPause()
-        viewModel.saveLastPosition(manager.getLastPosition())
-    }
-
-    override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        super.onViewStateRestored(savedInstanceState)
-        if (savedInstanceState == null) {
-            restoreLastPosition()
-        }
-    }
-
-    private fun restoreLastPosition() {
-        val lastPosition = viewModel.getLastPosition()
-        if (lastPosition > 0) {
-            recyclerView.postDelayed({
-                if (lastPosition < manager.spanCount * 20) {
-                    manager.smoothScrollToPosition(
-                        recyclerView,
-                        RecyclerView.State(),
-                        lastPosition
-                    )
-                } else {
-                    manager.scrollToPosition(lastPosition)
-                }
-            }, 200)
-        }
-    }
+//    override fun onPause() {
+//        super.onPause()
+//        viewModel.saveLastPosition(manager.getLastPosition())
+//    }
+//
+//    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+//        super.onViewStateRestored(savedInstanceState)
+//        if (savedInstanceState == null) {
+//            restoreLastPosition()
+//        }
+//    }
+//
+//    private fun restoreLastPosition() {
+//        val lastPosition = viewModel.getLastPosition()
+//        if (lastPosition > 0) {
+//            recyclerView.postDelayed({
+//                if (lastPosition < manager.spanCount * 20) {
+//                    manager.smoothScrollToPosition(
+//                        recyclerView,
+//                        RecyclerView.State(),
+//                        lastPosition
+//                    )
+//                } else {
+//                    manager.scrollToPosition(lastPosition)
+//                }
+//            }, 200)
+//        }
+//    }
 
     companion object {
-        const val ARG_API_TYPE = "api_type"
-
         fun newInstance(type: ApiType): PostListFragment {
             return PostListFragment().apply {
                 arguments = Bundle().apply {

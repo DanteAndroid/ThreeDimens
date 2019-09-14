@@ -1,7 +1,6 @@
 package com.dante.threedimens.utils
 
 import android.graphics.Bitmap
-import android.text.format.DateUtils
 import android.widget.ImageView
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
@@ -39,16 +38,19 @@ fun ImageView.load(
     onLoadFailed: () -> Unit = {}
 ) {
 
+    if (url.isEmpty()) {
+        onLoadFailed()
+        return
+    }
+
     val requestOptions = RequestOptions()
         .dontTransform()
-        .placeholder(R.drawable.placeholder)
-//        .error(R.drawable.placeholder)
+//        .placeholder(R.drawable.placeholder)
+        .error(R.drawable.placeholder)
         .apply {
             if (animate) placeholder(R.drawable.loading_animation)
-            if (showOriginal) {
-                // 显示原图时提高一倍的超时
-                timeout((5 * DateUtils.SECOND_IN_MILLIS).toInt())
-            }
+            // 显示原图时提高一倍的超时
+            timeout(if (showOriginal) LOAD_ORIGINAL_TIMEOUT else LOAD_LIST_TIMEOUT)
         }
 
     fun getUrlWithHeader(url: String): GlideUrl {

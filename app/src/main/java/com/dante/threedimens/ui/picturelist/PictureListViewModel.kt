@@ -24,9 +24,11 @@ class PictureListViewModel(private val repository: ImageRepository) : BaseStatus
     val pagedImages: LiveData<PagedList<Image>> = repository.getPagedImages()
         .toLiveData(pageSize = PAGE_SIZE_FROM_DB, boundaryCallback = ImageBoundaryCallback(this))
 
-    fun refreshImages() {
+    fun refreshImages(deleteOld: Boolean = false) {
         viewModelScope.launch {
-            repository.deleteAll()
+            if (deleteOld) {
+                repository.deleteAll()
+            }
             fetchImages()
         }
     }
@@ -36,7 +38,10 @@ class PictureListViewModel(private val repository: ImageRepository) : BaseStatus
      * @return 无需加载则返回false
      */
     fun loadMoreImages(): Boolean {
-        if (repository.apiType.site == ApiType.Site.MEIZITU) {
+        val site = repository.apiType.site
+        if (site == ApiType.Site.MEIZITU ||
+            site == ApiType.Site.SEHUATANG
+        ) {
             // 妹子图不需要加载更多页因为已经解析完所有图片了
             return false
         }

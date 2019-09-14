@@ -23,7 +23,7 @@
     </string-array>
 
     <string-array name="meizi_titles">
-        <item name="mz_hot">☆️热子</item>
+        <item name="mz_hot">☆️热门</item>
         <item name="mz_qc">☆️清纯</item>
         <item name="mz_sexy">☆️性感</item>
         <item name="mtl_chinese">国产</item>
@@ -47,6 +47,14 @@
         <item name="booru_dan">Dan-全部</item>
         <item name="booru_dan">Dan-热门</item>
         <item name="booru_dan">真人</item>
+    </string-array>
+    <string-array name="sht_titles">
+        <item name="sht_chinese">华人</item>
+        <item name="sht_street">街拍</item>
+        <item name="sht_asia">亚洲</item>
+        <item name="sht_us">欧美</item>
+        <item name="sht_carton">卡通</item>
+        <item name="sht_discuss">综合讨论</item>
     </string-array>
 
     <string-array name="cache_strategy">

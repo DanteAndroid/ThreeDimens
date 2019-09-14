@@ -15,7 +15,7 @@ class ApiType(val site: Site, val category: String = "", var path: String = "") 
     enum class Site(val baseUrl: String, val parser: IParser, val spanCount: Int = 2) {
         GANK(API.GANK_BASE, GankParser), DOUBAN(API.DB_BASE, DoubanParser, 3),
         MEIZITU(API.MZ_BASE, MztParser), YAKEXI(API.YAKEXI_BASE, MztParser),
-        SEHUATANG(API.SHT_BASE, MztParser), WALLHAVEN(API.WALL_BASE, WallParser),
+        SEHUATANG(API.SHT_BASE, ShtParser), WALLHAVEN(API.WALL_BASE, WallParser),
         YANDE(API.YANDE_BASE, YandeParser), SAFEBOORU(API.SAFEBOORU_BASE, SafeParser, 3),
         DANBOORU(API.DANBOORU_BASE, DanParser, 3), `3DBOORU`(API.`3DBOORU_BASE`, `3DParser`, 3),
         MTL(API.MEITULU_BASE, MtlParser)
@@ -71,6 +71,15 @@ class ApiType(val site: Site, val category: String = "", var path: String = "") 
             ApiType(Site.DANBOORU),
             ApiType(Site.DANBOORU, API.CATE_DAN_HOT),
             ApiType(Site.`3DBOORU`)
+        )
+
+        val menuSehuatang: Array<ApiType> = arrayOf(
+            ApiType(Site.SEHUATANG, API.CATE_SHT_CHINESE),
+            ApiType(Site.SEHUATANG, API.CATE_SHT_STREET),
+            ApiType(Site.SEHUATANG, API.CATE_SHT_ASIA),
+            ApiType(Site.SEHUATANG, API.CATE_SHT_US),
+            ApiType(Site.SEHUATANG, API.CATE_SHT_CARTON),
+            ApiType(Site.SEHUATANG, API.CATE_SHT_DISCUSS)
         )
 
         @JvmField

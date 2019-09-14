@@ -8,6 +8,8 @@ import com.dante.threedimens.net.API
 import com.dante.threedimens.net.NetManager
 import com.dante.threedimens.net.WallApi
 import com.dante.threedimens.net.WallApi.Companion.AT_LEAST_RESOLUTION
+import com.dante.threedimens.net.WallApi.Companion.BETTER_RESOLUTION
+import com.dante.threedimens.net.WallApi.Companion.WALL_HAVEN_PORTRAIT_RATIOS
 import com.dante.threedimens.net.WallApi.Companion.WALL_HAVEN_RATIOS
 import com.dante.threedimens.ui.main.ApiType
 import com.dante.threedimens.utils.PAGE_SIZE_FROM_NET
@@ -43,8 +45,8 @@ class ImageRepository(val apiType: ApiType, private val imageDao: ImageDao) {
                         apiType,
                         NetManager.wallApi.getWalls(
                             type = if (isRandom) "" else apiType.category,
-                            ratios = WALL_HAVEN_RATIOS,
-                            atLeast = AT_LEAST_RESOLUTION,
+                            ratios = if (isRandom) WALL_HAVEN_PORTRAIT_RATIOS else WALL_HAVEN_RATIOS,
+                            atLeast = if (isRandom) BETTER_RESOLUTION else AT_LEAST_RESOLUTION,
                             page = if (isRandom) null else page,
                             sort = if (isRandom) WallApi.SORT_RANDOM else WallApi.SORT_RELEVANCE
                         )
@@ -68,8 +70,11 @@ class ImageRepository(val apiType: ApiType, private val imageDao: ImageDao) {
                 ApiType.Site.`3DBOORU` -> {
                     getImages(apiType, NetManager.`3dApi`.get3D(page))
                 }
-                ApiType.Site.YAKEXI -> {
-                    getImages(apiType, NetManager.meiziApi.getPictures(apiType.path, page))
+//                ApiType.Site.YAKEXI -> {
+//                    getImages(apiType, NetManager.meiziApi.getPictures(apiType.path, page))
+//                }
+                ApiType.Site.SEHUATANG -> {
+                    getImages(apiType, NetManager.shtApi.getPictures(apiType.path))
                 }
                 else -> throw IllegalStateException("${apiType.type} not implemented in ${javaClass.canonicalName}")
             }

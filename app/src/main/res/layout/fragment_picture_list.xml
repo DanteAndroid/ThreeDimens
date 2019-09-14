@@ -3,7 +3,6 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/dark_background"
         tools:context=".ui.picturelist.PictureListFragment">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -11,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.dante.threedimens.utils.widget.FlingRecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

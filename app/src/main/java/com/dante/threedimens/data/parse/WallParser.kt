@@ -27,6 +27,7 @@ object WallParser : IParser {
             try {
                 val img = element.selectFirst("img")
                 val url = img.attr("data-src")
+                if (url.isBlank()) continue
                 val originalUrl = getOriginalUrl(url)
                 val refer = element.selectFirst("a").attr("href")
                 images.add(

@@ -14,6 +14,7 @@ class ImageBoundaryCallback(private val viewModel: PictureListViewModel) :
     PagedList.BoundaryCallback<Image>() {
 
     private var refreshTimes = 0
+    private var loadMoreTimes = 0
 
     override fun onItemAtEndLoaded(itemAtEnd: Image) {
         super.onItemAtEndLoaded(itemAtEnd)
@@ -25,13 +26,13 @@ class ImageBoundaryCallback(private val viewModel: PictureListViewModel) :
         }
     }
 
-//    override fun onZeroItemsLoaded() {
-//        if (loadMoreTimes < LOAD_LIST_RETRY_TIMES) {
-//            Handler().postDelayed({
-//                viewModel.refreshImages()
-//                refreshTimes++
-//            }, DateUtils.SECOND_IN_MILLIS)
-//        }
-//    }
+    override fun onZeroItemsLoaded() {
+        if (loadMoreTimes < LOAD_LIST_RETRY_TIMES) {
+            Handler().postDelayed({
+                viewModel.refreshImages()
+                refreshTimes++
+            }, DateUtils.SECOND_IN_MILLIS)
+        }
+    }
 
 }

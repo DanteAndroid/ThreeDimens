@@ -25,6 +25,9 @@ const val PC_USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) Apple
 const val VIEW_POSITION = "position"
 const val VIEW_PAGE = "page"
 
+const val ARG_API_TYPE = "api_type"
+const val ARG_TITLE = "title"
+
 const val PAGE_SIZE_FROM_DB = 50
 const val PAGE_SIZE_FROM_NET = 20
 const val PAGE_SIZE_FROM_NET_LARGE = 40
@@ -32,5 +35,7 @@ const val PAGE_SIZE_FROM_NET_LARGE = 40
 const val LOAD_LIST_RETRY_TIMES = 3
 const val LOAD_PICTURE_RETRY_TIMES = 3
 
+const val LOAD_LIST_TIMEOUT = 5000
+const val LOAD_ORIGINAL_TIMEOUT = 10000
 
 

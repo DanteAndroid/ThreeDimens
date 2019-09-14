@@ -22,6 +22,11 @@
                 android:icon="@drawable/ic_eye"
                 android:title="@string/nav_booru" />
         <item
+                android:id="@+id/nav_sht"
+                android:icon="@drawable/ic_eye"
+                android:title="@string/nav_sht" />
+
+        <item
                 android:id="@+id/nav_favorite"
                 android:icon="@drawable/ic_favorite"
                 android:title="@string/favorite" />

@@ -24,7 +24,7 @@ class PictureViewerActivity(override val layoutResId: Int = R.layout.activity_vi
 
     companion object {
         private const val ARG_TYPE = "type"
-        private const val ARG_POSITION = "transPosition"
+        private const val ARG_TRANS_POSITION = "transPosition"
         private const val REQUEST_VIEW = 1
 
         fun startViewer(
@@ -37,7 +37,7 @@ class PictureViewerActivity(override val layoutResId: Int = R.layout.activity_vi
             val intent =
                 Intent(BaseApplication.instance(), PictureViewerActivity::class.java).apply {
                     putExtra(ARG_TYPE, type)
-                    putExtra(ARG_POSITION, position)
+                    putExtra(ARG_TRANS_POSITION, position)
                 }
             val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
                 activity, sharedView, url
@@ -56,7 +56,7 @@ class PictureViewerActivity(override val layoutResId: Int = R.layout.activity_vi
     private var hasInit: Boolean = false
     private lateinit var type: String
 
-    private val transPosition: Int by lazy { intent!!.getIntExtra(ARG_POSITION, 0) }
+    private val transPosition: Int by lazy { intent!!.getIntExtra(ARG_TRANS_POSITION, 0) }
     private var currentPosition: Int = 0
 
     val viewModel: PictureViwerViewModel by viewModels {

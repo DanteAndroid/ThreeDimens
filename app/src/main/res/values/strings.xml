@@ -118,5 +118,6 @@
     <string name="nav_booru">Booru图集</string>
     <string name="share">分享</string>
     <string name="download_start">开始下载……可在通知栏查看进度</string>
+    <string name="nav_sht">某论坛</string>
 
 </resources>

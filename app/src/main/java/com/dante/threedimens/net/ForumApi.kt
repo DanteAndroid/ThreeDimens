@@ -12,10 +12,10 @@ import retrofit2.http.Path
 interface ForumApi {
 
     //Post示例
-    @GET("{type}/page/{page}/")
+    @GET("forum-{type}-{page}.html")
     fun getPosts(@Path("type") type: String, @Path("page") page: Int): Call<ResponseBody>
 
-    @GET("/{post}/{page}")
-    fun getPictures(@Path("post") postUrl: String, @Path("page") page: Int): Call<ResponseBody>
+    @GET("/{post}")
+    fun getPictures(@Path("post") postUrl: String): Call<ResponseBody>
 
 }

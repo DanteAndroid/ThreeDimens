@@ -14,6 +14,7 @@ import retrofit2.http.Query
 interface WallApi {
     companion object {
         const val WALL_HAVEN_RATIOS = "9x16,1x1,10x16,3x2,9x18,4x3,5x4"
+        const val WALL_HAVEN_PORTRAIT_RATIOS = "9x16,1x1,10x16,9x18"
 
         const val AT_LEAST_RESOLUTION = "800x1000"
         const val BETTER_RESOLUTION = "1080x1920"

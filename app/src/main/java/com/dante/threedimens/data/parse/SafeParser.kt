@@ -26,19 +26,17 @@ object SafeParser : IParser {
                 val refer = API.SAFEBOORU_BASE + element.attr("href")
                 val a = element.selectFirst("img")
                 val thumbUrl = a?.selectFirst("img")?.attr("src")
+                if (thumbUrl.isNullOrBlank()) continue
                 val url = getOriginalUrl(thumbUrl)
-                thumbUrl?.let {
-                    images.add(
-                        Image(
-                            id = thumbUrl,
-                            url = thumbUrl,
-                            originalUrl = url,
-                            type = apiType.type,
-                            post = refer
-                        )
+                images.add(
+                    Image(
+                        id = thumbUrl,
+                        url = thumbUrl,
+                        originalUrl = url,
+                        type = apiType.type,
+                        post = refer
                     )
-                }
-
+                )
             } catch (e: IOException) {
                 e.printStackTrace()
             }

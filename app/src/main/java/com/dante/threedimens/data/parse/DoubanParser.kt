@@ -23,6 +23,7 @@ object DoubanParser : IParser {
             val elements = document.select("div[class=thumbnail] div[class=img_single] img")
             for (i in 0 until elements.size) {
                 val src = elements[i].attr("src").trim()
+                if (src.isBlank()) continue
                 images.add(Image(id = src, type = apiType.type, url = src))
             }
         } catch (e: IOException) {

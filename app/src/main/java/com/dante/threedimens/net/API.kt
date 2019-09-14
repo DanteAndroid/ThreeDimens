@@ -37,6 +37,15 @@ object API {
     // Dan booru
     const val CATE_DAN_HOT = "order:rank"
 
+    // SHT
+    const val CATE_SHT_CHINESE = "98"
+    const val CATE_SHT_STREET = "50"
+    const val CATE_SHT_ASIA = "48"
+    const val CATE_SHT_US = "49"
+    const val CATE_SHT_CARTON = "117"
+    const val CATE_SHT_DISCUSS = "95"
+
+
     //Base API
     const val GANK_BASE = "http://gank.io/api/"
     const val DB_BASE = "https://www.buxiuse.com/"
@@ -51,7 +60,7 @@ object API {
     //H API
     const val YAKEXI_BASE = "http://bww.yakexi.biz/pw/"
     const val H_MAIN = YAKEXI_BASE + "thread.php?fid="
-    const val SHT_BASE = ""
+    const val SHT_BASE = "https://www.sehuatang.net/"
 
 
 }

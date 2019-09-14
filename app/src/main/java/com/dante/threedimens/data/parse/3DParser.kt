@@ -26,8 +26,8 @@ object `3DParser` : IParser {
             try {
                 val refer = API.`3DBOORU_BASE` + element.selectFirst("a").attr("href")
                 val thumbUrl = element.selectFirst("img").attr("src")
+                if (thumbUrl.isNullOrBlank()) continue
                 val url = getOriginalUrl(thumbUrl)
-                println("${javaClass.name} ${elements.size}, $refer $thumbUrl, $url")
                 images.add(
                     Image(
                         id = thumbUrl,

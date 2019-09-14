@@ -16,6 +16,7 @@ import com.dante.base.base.LoadStatus
 import com.dante.threedimens.R
 import com.dante.threedimens.ui.detail.PictureViewerActivity
 import com.dante.threedimens.ui.main.ApiType
+import com.dante.threedimens.utils.ARG_API_TYPE
 import com.dante.threedimens.utils.InjectorUtils
 import com.dante.threedimens.utils.Scrollable
 import kotlinx.android.synthetic.main.fragment_picture_list.*
@@ -71,9 +72,8 @@ class PictureListFragment : BaseFragment(), Scrollable {
             ContextCompat.getColor(context!!, R.color.colorAccent)
         )
         swipeRefresh.setOnRefreshListener {
-            viewModel.refreshImages()
+            viewModel.refreshImages(true)
         }
-        viewModel.refreshImages()
         viewModel.status.observe(this, Observer {
             when (it) {
                 LoadStatus.LOADING -> {
@@ -144,7 +144,6 @@ class PictureListFragment : BaseFragment(), Scrollable {
     }
 
     companion object {
-        private const val ARG_API_TYPE = "api_type"
 
         fun newInstance(type: ApiType): PictureListFragment {
             return PictureListFragment().apply {

@@ -25,6 +25,7 @@ object MtlParser : IParser {
                 val img = aElement.selectFirst("img")
                 val title = img.attr("alt")
                 val src = img.attr("src")
+                if (src.isNullOrBlank()) continue
                 posts.add(Post(postUrl = link, type = apiType.type, coverUrl = src, title = title))
             } catch (e: IOException) {
                 e.printStackTrace()
@@ -40,7 +41,6 @@ object MtlParser : IParser {
             val pElements = document.select("div[class=c_l] p")
             val numberText = pElements[2].text().replace(Regex("\\D+"), "")
             val totalPage = numberText.toInt()
-            println("parseImage $numberText")
 
             val img = document.selectFirst("div[class=content] img")
             val src = img.attr("src")
@@ -48,7 +48,7 @@ object MtlParser : IParser {
                 val url = src.replace("1.", "$index.")
                 val refer = API.MZ_BASE + apiType.path
 //            image.setTotalPage(1)//无需loadmore
-                println("parseImage $url, $refer")
+                if (url.isBlank()) continue
                 images.add(Image(id = url, url = url, type = apiType.type, post = refer))
             }
         } catch (e: IOException) {

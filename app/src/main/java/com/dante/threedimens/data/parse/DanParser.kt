@@ -25,6 +25,7 @@ object DanParser : IParser {
             try {
                 val refer = API.DANBOORU_BASE + element.selectFirst("a").attr("href")
                 val thumbUrl = element.attr("data-preview-file-url")
+                if (thumbUrl.isNullOrBlank()) continue
                 val url = element.attr("data-file-url")
                 images.add(
                     Image(

@@ -26,6 +26,7 @@ object MztParser : IParser {
                 val img = aElement.selectFirst("img")
                 val title = img.attr("alt")
                 val src = img.attr("data-original")
+                if (src.isNullOrBlank()) continue
                 posts.add(Post(postUrl = link, type = apiType.type, coverUrl = src, title = title))
             } catch (e: IOException) {
                 e.printStackTrace()
@@ -40,7 +41,7 @@ object MztParser : IParser {
             val document = Jsoup.parse(data)
             val aElements = document.select("div[class=pagenavi] a")
             var totalPage = 1
-            if (aElements != null && aElements.size > 3) {
+            if (aElements.size > 3) {
                 val pageStr = aElements.get(aElements.size - 2).text()
                 if (!TextUtils.isEmpty(pageStr) && TextUtils.isDigitsOnly(pageStr)) {
                     totalPage = Integer.parseInt(pageStr)

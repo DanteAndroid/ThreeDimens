@@ -19,9 +19,11 @@ class PostListViewModel(private val repository: PostRepository) : BaseStatusVM()
 
     val posts: LiveData<List<Post>> = repository.getPosts()
 
-    fun refreshPosts() {
+    fun refreshPosts(deleteOld: Boolean = false) {
         viewModelScope.launch {
-            repository.deleteAll()
+            if (deleteOld) {
+                repository.deleteAll()
+            }
             fetchPosts()
         }
     }

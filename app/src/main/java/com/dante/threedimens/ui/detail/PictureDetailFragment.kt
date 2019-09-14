@@ -87,23 +87,28 @@ class PictureDetailFragment private constructor() : BaseFragment() {
                 if (showTransition)
                     listener(getDelayedTransitionListener())
             }
-        detailImage.load(
-            if (image.originalUrl.isEmpty()) image.url else image.originalUrl,
-            showOriginal = true,
-            thumbnail = thumbnail,
-            onResourceReady = {
-                setProgressIndicator(false)
-                onLoadSuccess(image)
-            },
-            onLoadFailed = {
-                if (retryTimes < LOAD_PICTURE_RETRY_TIMES) {
-                    retryTimes++
-                    viewModel.fetchRealUrl(image)
-                } else {
+        try {
+            detailImage.load(
+                if (image.originalUrl.isEmpty()) image.url else image.originalUrl,
+                showOriginal = true,
+                thumbnail = thumbnail,
+                onResourceReady = {
                     setProgressIndicator(false)
+                    onLoadSuccess(image)
+                },
+                onLoadFailed = {
+                    if (retryTimes < LOAD_PICTURE_RETRY_TIMES) {
+                        retryTimes++
+                        viewModel.fetchRealUrl(image)
+                    } else {
+                        setProgressIndicator(false)
+                    }
                 }
-            }
-        )
+            )
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
     }
 
     private fun onLoadSuccess(image: Image) {
