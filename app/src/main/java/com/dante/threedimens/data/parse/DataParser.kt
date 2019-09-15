@@ -14,21 +14,11 @@ import retrofit2.Call
 object DataParser {
 
     fun getImages(apiType: ApiType, call: Call<ResponseBody>): List<Image> {
-        try {
-            return apiType.site.parser.parseImages(apiType, call.execute().body()!!.string())
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-        return emptyList()
+        return apiType.site.parser.parseImages(apiType, call.execute().body()!!.string())
     }
 
     fun getPosts(apiType: ApiType, call: Call<ResponseBody>): List<Post> {
-        try {
-            return apiType.site.parser.parsePosts(apiType, call.execute().body()!!.string())
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-        return emptyList()
+        return apiType.site.parser.parsePosts(apiType, call.execute().body()!!.string())
     }
 
 }

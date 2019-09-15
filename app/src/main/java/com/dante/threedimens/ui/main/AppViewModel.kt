@@ -44,10 +44,14 @@ class AppViewModel(val context: Activity) : ViewModel() {
 
     fun check() {
         viewModelScope.launch {
-            val data = withContext(IO) {
-                NetManager.appApi.getAppInfo().execute().body()
+            try {
+                val data = withContext(IO) {
+                    NetManager.appApi.getAppInfo().execute().body()
+                }
+                startRoutine(data)
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
-            startRoutine(data)
         }
     }
 
@@ -109,7 +113,6 @@ class AppViewModel(val context: Activity) : ViewModel() {
             override fun onReceive(p0: Context?, intent: Intent?) {
                 val downloadId = intent?.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, 0)
                 if (id == downloadId) {
-                    println("DownloadManager success $id")
                     AppUtils.installApp(destFile)
                 }
             }

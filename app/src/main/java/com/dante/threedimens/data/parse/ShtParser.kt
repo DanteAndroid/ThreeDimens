@@ -41,7 +41,6 @@ object ShtParser : IParser {
 
             for (i in 0 until elements.size) {
                 val src = elements[i].attr("file")
-                println("sht ${elements[i].textNodes().size}")
                 if (src.isBlank()) continue
                 images.add(Image(id = src, type = apiType.type, url = src))
             }

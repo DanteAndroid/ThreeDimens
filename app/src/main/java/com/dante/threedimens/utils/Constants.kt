@@ -24,18 +24,20 @@ const val PC_USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) Apple
 
 const val VIEW_POSITION = "position"
 const val VIEW_PAGE = "page"
-
 const val ARG_API_TYPE = "api_type"
 const val ARG_TITLE = "title"
 
+// 每次加载数量
 const val PAGE_SIZE_FROM_DB = 50
 const val PAGE_SIZE_FROM_NET = 20
 const val PAGE_SIZE_FROM_NET_LARGE = 40
-
+// 加载重试次数
 const val LOAD_LIST_RETRY_TIMES = 3
 const val LOAD_PICTURE_RETRY_TIMES = 3
-
+// 加载图片超时
 const val LOAD_LIST_TIMEOUT = 5000
 const val LOAD_ORIGINAL_TIMEOUT = 10000
 
+// 延迟隐藏加载提示
+const val HIDE_LOAD_HINT_DELAY = 150L
 

@@ -40,15 +40,14 @@ class ImageRepository(val apiType: ApiType, private val imageDao: ImageDao) {
                 }
                 ApiType.Site.WALLHAVEN -> {
                     val isRandom = apiType.category == API.CATE_WH_RANDOM
-
                     getImages(
                         apiType,
                         NetManager.wallApi.getWalls(
                             type = if (isRandom) "" else apiType.category,
                             ratios = if (isRandom) WALL_HAVEN_PORTRAIT_RATIOS else WALL_HAVEN_RATIOS,
                             atLeast = if (isRandom) BETTER_RESOLUTION else AT_LEAST_RESOLUTION,
-                            page = if (isRandom) null else page,
-                            sort = if (isRandom) WallApi.SORT_RANDOM else WallApi.SORT_RELEVANCE
+                            page = null,
+                            sort = if (isRandom) WallApi.SORT_RANDOM else WallApi.SORT_RANDOM
                         )
                     )
                 }
@@ -90,7 +89,6 @@ class ImageRepository(val apiType: ApiType, private val imageDao: ImageDao) {
 
     suspend fun deleteAll() {
         withContext(IO) {
-            println("deleteAll ${apiType.type}")
             imageDao.deleteAll(apiType.type)
         }
     }

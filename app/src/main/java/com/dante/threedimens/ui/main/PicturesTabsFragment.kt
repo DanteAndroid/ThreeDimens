@@ -56,7 +56,7 @@ abstract class PicturesTabsFragment : BaseFragment() {
 
 
     private fun displayFixTabs(): Boolean {
-        if (ScreenUtils.isLandscape() || getApiTypeArray().size <= 5) {
+        if (ScreenUtils.isLandscape() || getApiTypeArray().size <= 4) {
             return true
         }
         return false

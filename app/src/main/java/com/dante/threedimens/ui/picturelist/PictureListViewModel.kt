@@ -13,6 +13,8 @@ import com.dante.threedimens.utils.PAGE_SIZE_FROM_DB
 import com.dante.threedimens.utils.VIEW_PAGE
 import com.dante.threedimens.utils.VIEW_POSITION
 import kotlinx.coroutines.launch
+import java.net.SocketException
+import java.net.SocketTimeoutException
 
 /**
  * 维护每个 tab 下的页面及其数据
@@ -62,11 +64,18 @@ class PictureListViewModel(private val repository: ImageRepository) : BaseStatus
             setStatus(LoadStatus.LOADING)
             val result = repository.fetchImages(pageNum)
             repository.insert(result)
-            setStatus(LoadStatus.DONE)
+            setStatus(LoadStatus.SUCCESS)
             return true
         } catch (e: Exception) {
             e.printStackTrace()
-            setStatus(LoadStatus.ERROR)
+            when (e) {
+                is SocketException, is SocketTimeoutException -> {
+                    setStatus(LoadStatus.NET_ERROR)
+                }
+                else -> {
+                    setStatus(LoadStatus.FAIL)
+                }
+            }
         }
         return false
     }

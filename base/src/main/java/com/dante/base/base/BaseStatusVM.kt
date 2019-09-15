@@ -11,7 +11,7 @@ import kotlinx.coroutines.cancel
  * @author Dante
  * 2019-08-23
  */
-enum class LoadStatus { LOADING, ERROR, DONE }
+enum class LoadStatus { LOADING, FAIL, SUCCESS, NET_ERROR }
 
 abstract class BaseStatusVM : ViewModel() {
 

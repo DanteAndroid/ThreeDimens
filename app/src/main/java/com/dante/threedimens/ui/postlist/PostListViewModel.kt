@@ -9,6 +9,8 @@ import com.dante.threedimens.data.Post
 import com.dante.threedimens.utils.VIEW_PAGE
 import com.dante.threedimens.utils.VIEW_POSITION
 import kotlinx.coroutines.launch
+import java.net.SocketException
+import java.net.SocketTimeoutException
 
 /**
  * 维护每个 tab 下的页面及其数据
@@ -30,22 +32,31 @@ class PostListViewModel(private val repository: PostRepository) : BaseStatusVM()
 
     fun loadMorePosts() {
         viewModelScope.launch {
-            fetchPosts(++page)
+            if (fetchPosts(page + 1)) {
+                page++
+            }
         }
     }
 
-    private suspend fun fetchPosts(pageNum: Int = 1) {
+    private suspend fun fetchPosts(pageNum: Int = 1): Boolean {
         try {
             setStatus(LoadStatus.LOADING)
             val result = repository.fetchPosts(pageNum)
             repository.insert(result)
-            setStatus(LoadStatus.DONE)
-
+            setStatus(LoadStatus.SUCCESS)
+            return true
         } catch (e: Exception) {
             e.printStackTrace()
-            setStatus(LoadStatus.ERROR)
-            page--
+            when (e) {
+                is SocketException, is SocketTimeoutException -> {
+                    setStatus(LoadStatus.NET_ERROR)
+                }
+                else -> {
+                    setStatus(LoadStatus.FAIL)
+                }
+            }
         }
+        return false
     }
 
     fun saveLastPosition(lastPosition: Int) {

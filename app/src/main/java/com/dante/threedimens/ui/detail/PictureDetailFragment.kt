@@ -10,6 +10,7 @@ import android.transition.TransitionSet
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.core.view.ViewCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
@@ -34,6 +35,7 @@ class PictureDetailFragment private constructor() : BaseFragment() {
     }
 
     private lateinit var viewModel: PictureViwerViewModel
+    private lateinit var detailImage: ImageView
     private var retryTimes: Int = 0
 
     override fun onCreateView(
@@ -44,9 +46,10 @@ class PictureDetailFragment private constructor() : BaseFragment() {
     }
 
     override fun initView() {
+        detailImage = view!!.findViewById(R.id.detailImage)
         viewModel = (activity as PictureViewerActivity).viewModel
         if (detailImage is TouchImageView) {
-            detailImage?.setMaxZoomRatio(2.0f)
+            (detailImage as TouchImageView).setMaxZoomRatio(2.0f)
         }
         viewModel.getImage(id).observe(this, Observer { image ->
             ViewCompat.setTransitionName(detailImage, image.url)
@@ -64,6 +67,7 @@ class PictureDetailFragment private constructor() : BaseFragment() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             load(image, true)
             val transitionSet = TransitionSet()
+//                .addTransition(ChangeTransform())
                 .addTransition(ChangeImageTransform())
                 .addTransition(ChangeBounds())
             activity?.window?.sharedElementEnterTransition = transitionSet
@@ -112,7 +116,7 @@ class PictureDetailFragment private constructor() : BaseFragment() {
     }
 
     private fun onLoadSuccess(image: Image) {
-        detailImage?.isZoomEnabled = true
+        (detailImage as? TouchImageView)?.isZoomEnabled = true
         detailImage.setOnLongClickListener {
             it.context.apply {
                 val items = listOf(
@@ -166,9 +170,12 @@ class PictureDetailFragment private constructor() : BaseFragment() {
     }
 
     fun restoreImage() {
-        if (detailImage?.isZoomed == true) {
-            (detailImage as TouchImageView).setZoom(1.0f)
+        if (detailImage is TouchImageView) {
+            if ((detailImage as TouchImageView).isZoomed) {
+                (detailImage as TouchImageView).setZoom(1.0f)
+            }
         }
+
     }
 
     companion object {

@@ -65,7 +65,6 @@ class PostRepository(private val apiType: ApiType, private val postDao: PostDao)
     }
 
     suspend fun deleteAll() {
-        println("deleteall posts")
         withContext(IO) {
             postDao.deleteAll(apiType.type)
         }

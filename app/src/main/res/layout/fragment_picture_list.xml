@@ -6,19 +6,28 @@
         tools:context=".ui.picturelist.PictureListFragment">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipeRefresh"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+            android:id="@+id/swipeRefresh"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingStart="4dp"
-            android:paddingTop="4dp"
-            android:paddingEnd="4dp"
-            android:scrollbars="vertical"
-            tools:listitem="@layout/picture_list_item" />
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingStart="4dp"
+                android:paddingTop="4dp"
+                android:paddingEnd="4dp"
+                android:scrollbars="vertical"
+                tools:listitem="@layout/picture_list_item" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <ImageView
+            android:id="@+id/loadHint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:minHeight="52dp"
+            android:src="@drawable/loading_animation"
+            tools:ignore="ContentDescription" />
 
 </FrameLayout>

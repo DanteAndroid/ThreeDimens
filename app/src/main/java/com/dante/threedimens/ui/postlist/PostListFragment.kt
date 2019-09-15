@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -16,12 +18,9 @@ import com.dante.base.base.BaseFragment
 import com.dante.base.base.LoadStatus
 import com.dante.threedimens.R
 import com.dante.threedimens.ui.main.ApiType
-import com.dante.threedimens.utils.ARG_API_TYPE
-import com.dante.threedimens.utils.ARG_TITLE
-import com.dante.threedimens.utils.InjectorUtils
-import com.dante.threedimens.utils.Scrollable
+import com.dante.threedimens.utils.*
 import kotlinx.android.synthetic.main.fragment_picture_list.*
-import org.jetbrains.anko.design.snackbar
+import org.jetbrains.anko.design.longSnackbar
 
 /**
  * A placeholder fragment containing a simple view.
@@ -99,11 +98,17 @@ class PostListFragment private constructor() : BaseFragment(), Scrollable {
                 LoadStatus.LOADING -> {
 //                    swipeRefresh.isRefreshing = true
                 }
-                LoadStatus.ERROR -> {
+                LoadStatus.FAIL -> {
+                    setLoadingIndicator(false)
                     swipeRefresh.isRefreshing = false
-                    recyclerView.snackbar(R.string.load_fail)
+                    recyclerView.longSnackbar(R.string.load_fail)
                 }
-                LoadStatus.DONE -> {
+                LoadStatus.NET_ERROR -> {
+                    swipeRefresh.isRefreshing = false
+                    setLoadingIndicator(true, R.drawable.ic_connection_error)
+                }
+                LoadStatus.SUCCESS -> {
+                    setLoadingIndicator(false)
                     swipeRefresh.isRefreshing = false
                 }
                 else -> {
@@ -112,9 +117,30 @@ class PostListFragment private constructor() : BaseFragment(), Scrollable {
             }
         })
         viewModel.posts.observe(this, Observer {
-            if (it.isEmpty()) return@Observer
-            adapter.submitList(it)
+            if (it.isEmpty()) {
+                setLoadingIndicator(true, R.drawable.loading_animation)
+            } else {
+                setLoadingIndicator(false)
+                adapter.submitList(it)
+            }
         })
+    }
+
+    private fun setLoadingIndicator(show: Boolean, @DrawableRes drawable: Int = 0) {
+        if (show) {
+            val position =
+                manager.findFirstCompletelyVisibleItemPosition()
+            if (position < 0) {
+                loadHint.isVisible = true
+                loadHint.setImageResource(drawable)
+            }
+        } else {
+            if (loadHint.isVisible) {
+                loadHint.postDelayed({
+                    loadHint.isVisible = false
+                }, HIDE_LOAD_HINT_DELAY)
+            }
+        }
     }
 
     override fun scrollToTop() {

@@ -3,12 +3,12 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/nav_graph"
-        app:startDestination="@id/nav_main">
+        app:startDestination="@id/nav_wall">
 
     <fragment
-            android:id="@+id/nav_main"
+            android:id="@+id/nav_gank"
             android:name="com.dante.threedimens.ui.main.MainTabsFragment"
-            android:label="@string/nav_main" />
+            android:label="@string/nav_gank" />
     <fragment
             android:id="@+id/nav_meizi"
             android:name="com.dante.threedimens.ui.main.MeiziTabsFragment"
