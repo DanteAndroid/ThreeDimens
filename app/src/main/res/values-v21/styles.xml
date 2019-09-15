@@ -18,7 +18,7 @@
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
-    <style name="ViewerTheme" parent="AppTheme.NoActionBar">
+    <style name="ViewerTheme" parent="AppTheme.NoActionBar.TransStatus">
         <item name="android:windowBackground">@color/dark_background</item>
         <!--<item name="android:windowDrawsSystemBarBackgrounds">true</item>-->
         <!--        <item name="android:windowTranslucentStatus">true</item>-->
