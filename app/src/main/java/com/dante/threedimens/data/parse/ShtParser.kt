@@ -32,7 +32,6 @@ object ShtParser : IParser {
         return posts
     }
 
-
     override fun parseImages(apiType: ApiType, data: String): List<Image> {
         val images = arrayListOf<Image>()
         try {
