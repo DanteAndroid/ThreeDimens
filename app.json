@@ -2,8 +2,8 @@
   "lastest_version": "0.1",
   "lastest_version_code": 1,
   "forceUpdate": false,
-  "announcement": "提示：\n\n本版本更新了几个重要的自定义设置，请到设置里查看",
-  "message": " - 修复隐藏图区不能显示的问题\n - 新的自定义设置",
+  "announcement": "提示：\n\n点击标签可以跳转到顶部",
+  "message": " - 重写五次元妹子\n - 全新的图区",
   "apk_name": "app-debug.apk",
   "vip": [
     "67B6DF845280BEFA66729AAE3760D0CA",
