@@ -36,6 +36,11 @@ class ApiType(val site: Site, val category: String = "", var path: String = "") 
     }
 
     companion object {
+        /**
+         * 图片页无需加载更多
+         */
+        val noLoadMoreSite: Array<Site> = arrayOf(Site.MTL, Site.MEIZITU, Site.SEHUATANG)
+
         val menuGank: Array<ApiType> = arrayOf(
             ApiType(Site.GANK),
             ApiType(Site.DOUBAN, API.CATE_DB_RANK),

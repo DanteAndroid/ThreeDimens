@@ -14,7 +14,7 @@ class App : BaseApplication() {
 
     override fun onCreate() {
         super.onCreate()
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         Utils.init(this)
         Bugtags.start("0d6e2cc47a7db77bbde298fff0ff02df", this, Bugtags.BTGInvocationEventNone)
         ANRWatchDog().start()

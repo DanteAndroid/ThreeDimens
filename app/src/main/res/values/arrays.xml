@@ -14,7 +14,7 @@
     </string-array>
 
     <string-array name="main_titles">
-        <item name="gank">△Gank</item>
+        <item name="gank">Gank</item>
         <item name="db_rank">热门美女</item>
         <item name="db_breast">波涛胸涌</item>
         <item name="db_butt">悬崖翘臂</item>
@@ -23,9 +23,9 @@
     </string-array>
 
     <string-array name="meizi_titles">
-        <item name="mz_hot">☆️热门</item>
-        <item name="mz_qc">☆️清纯</item>
-        <item name="mz_sexy">☆️性感</item>
+        <item name="mz_hot">️热门</item>
+        <item name="mz_qc">清纯</item>
+        <item name="mz_sexy">️性感</item>
         <item name="mtl_chinese">国产</item>
         <item name="mtl_model">模特</item>
         <item name="mtl_breast">美胸</item>

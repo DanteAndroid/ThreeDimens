@@ -46,7 +46,7 @@ object MtlParser : IParser {
             val src = img.attr("src")
             for (index in 1 until totalPage + 1) {
                 val url = src.replace("1.", "$index.")
-                val refer = API.MZ_BASE + apiType.path
+                val refer = API.MEITULU_BASE + apiType.path
 //            image.setTotalPage(1)//无需loadmore
                 if (url.isBlank()) continue
                 images.add(Image(id = url, url = url, type = apiType.type, post = refer))

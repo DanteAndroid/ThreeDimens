@@ -8,7 +8,7 @@ import com.blankj.utilcode.util.SPUtils
 import com.dante.base.base.BaseStatusVM
 import com.dante.base.base.LoadStatus
 import com.dante.threedimens.data.Image
-import com.dante.threedimens.ui.main.ApiType
+import com.dante.threedimens.ui.main.ApiType.Companion.noLoadMoreSite
 import com.dante.threedimens.utils.PAGE_SIZE_FROM_DB
 import com.dante.threedimens.utils.VIEW_PAGE
 import com.dante.threedimens.utils.VIEW_POSITION
@@ -40,11 +40,8 @@ class PictureListViewModel(private val repository: ImageRepository) : BaseStatus
      * @return 无需加载则返回false
      */
     fun loadMoreImages(): Boolean {
-        val site = repository.apiType.site
-        if (site == ApiType.Site.MEIZITU ||
-            site == ApiType.Site.SEHUATANG
-        ) {
-            // 妹子图不需要加载更多页因为已经解析完所有图片了
+        if (repository.apiType.site in noLoadMoreSite) {
+            // 不需要加载更多页因为已经解析完所有图片了
             return false
         }
         viewModelScope.launch {

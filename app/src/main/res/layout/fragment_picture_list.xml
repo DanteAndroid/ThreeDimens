@@ -24,10 +24,9 @@
     <ImageView
             android:id="@+id/loadHint"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="120dp"
             android:layout_gravity="center"
-            android:minHeight="52dp"
-            android:src="@drawable/loading_animation"
+            android:visibility="gone"
             tools:ignore="ContentDescription" />
 
 </FrameLayout>
