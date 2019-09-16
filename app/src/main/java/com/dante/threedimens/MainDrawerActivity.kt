@@ -5,6 +5,7 @@ import android.os.Handler
 import android.text.format.DateUtils
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
@@ -17,6 +18,7 @@ import androidx.navigation.ui.onNavDestinationSelected
 import androidx.navigation.ui.setupWithNavController
 import com.dante.threedimens.ui.main.AppViewModel
 import com.dante.threedimens.utils.InjectorUtils
+import com.dante.threedimens.utils.SecretModeHelper
 import com.dante.threedimens.utils.Share
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main_drawer.*
@@ -38,8 +40,14 @@ class MainDrawerActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
         setSupportActionBar(toolbar)
         actionBar?.setHomeButtonEnabled(true)
         actionBar?.setDisplayHomeAsUpEnabled(true)
+        initSecretMode()
         setupDrawer()
         checkUpdate()
+    }
+
+    private fun initSecretMode() {
+        val headView = nav_view.getHeaderView(0).findViewById<View>(R.id.headView)
+        SecretModeHelper.attachSecretModeClick(headView)
     }
 
     private fun checkUpdate() {
@@ -49,11 +57,13 @@ class MainDrawerActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
     private fun setupDrawer() {
         controller = findNavController(R.id.navHostFragment)
         appBarConfiguration = AppBarConfiguration(
-//            setOf(R.id.nav_main, R.id.nav_meizi, R.id.nav_wall, R.id.nav_favorite),
+//            setOf(R.id.nav_gank, R.id.nav_meizi, R.id.nav_wall, R.id.nav_favorite),
             nav_view.menu,
             drawer_layout
         )
         toolbar.setupWithNavController(controller, appBarConfiguration)
+        nav_view.menu.clear()
+        nav_view.inflateMenu(if (SecretModeHelper.isSecretMode()) R.menu.main_drawer else R.menu.safe_menu)
         nav_view.setupWithNavController(controller)
         nav_view.setNavigationItemSelectedListener(this)
     }
@@ -94,9 +104,9 @@ class MainDrawerActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-//            R.id.nav_booru, R.id.nav_favorite -> {
-//                nav_view.snackbar(R.string.column_not_available)
-//            }
+            R.id.nav_booru, R.id.nav_favorite, R.id.nav_sht -> {
+                nav_view.snackbar(R.string.column_not_available)
+            }
             R.id.nav_share -> {
                 Share.shareText(this, getString(R.string.share_app_description))
             }

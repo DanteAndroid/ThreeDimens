@@ -45,8 +45,13 @@ class PictureListAdapter(
         private val imageView = view.findViewById<ImageView>(R.id.image)
         fun bind(image: Image) {
             setIndexText()
-            imageView.load(image.url, header = image.post)
-            imageView.setOnClickListener { onClick(image, itemView, adapterPosition) }
+            imageView.setOnClickListener(null)
+            imageView.load(image.url, header = image.post, onResourceReady = {
+                imageView.setOnClickListener { onClick(image, itemView, adapterPosition) }
+            }, onLoadFailed = {
+                imageView.setOnClickListener { onClick(image, itemView, adapterPosition) }
+            })
+
         }
 
 

@@ -24,7 +24,8 @@ object YandeParser : IParser {
             try {
                 val a = element.selectFirst("a[class=thumb]")
                 val original = element.selectFirst("a[class=directlink largeimg]")
-                val url = original.attr("href")
+                val url = original?.attr("href")
+                if (url == null || url.isBlank()) continue
                 val refer = a.attr("href")
                 val thumbUrl = a.selectFirst("img").attr("src")
                 images.add(
