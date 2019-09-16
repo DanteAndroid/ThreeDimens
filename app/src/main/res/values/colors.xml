@@ -13,4 +13,6 @@
     <color name="dark_transparent">#80313131</color>
     <color name="light_transparent">#33FFFFFF</color>
 
+    <color name="ic_launcher_background">#A69196</color>
+
 </resources>

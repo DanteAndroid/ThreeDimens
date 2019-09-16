@@ -24,6 +24,7 @@ import com.dante.threedimens.utils.InjectorUtils
 import com.dante.threedimens.utils.Scrollable
 import kotlinx.android.synthetic.main.fragment_picture_list.*
 import org.jetbrains.anko.design.longSnackbar
+import org.jetbrains.anko.design.snackbar
 
 /**
  * A placeholder fragment containing a simple view.
@@ -39,7 +40,11 @@ class PictureListFragment : BaseFragment(), Scrollable {
     }
 
     private val adapter by lazy {
-        PictureListAdapter { image, view, position ->
+        PictureListAdapter(apiType) { image, view, position ->
+            if (swipeRefresh.isRefreshing) {
+                swipeRefresh.snackbar(R.string.is_loading)
+                return@PictureListAdapter
+            }
             PictureViewerActivity.startViewer(activity!!, view, image.url, image.type, position)
         }
     }

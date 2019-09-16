@@ -67,7 +67,6 @@ class PictureDetailFragment private constructor() : BaseFragment() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             load(image, true)
             val transitionSet = TransitionSet()
-//                .addTransition(ChangeTransform())
                 .addTransition(ChangeImageTransform())
                 .addTransition(ChangeBounds())
             activity?.window?.sharedElementEnterTransition = transitionSet
@@ -125,7 +124,7 @@ class PictureDetailFragment private constructor() : BaseFragment() {
                 )
                 selector(items = items) { _, i ->
                     when (i) {
-                        0 -> downloadPicture(image)
+                        0 -> downloadPicture(image, showHint = true)
                         1 -> sharePicture(image)
                     }
                 }
@@ -134,7 +133,7 @@ class PictureDetailFragment private constructor() : BaseFragment() {
         }
     }
 
-    private fun downloadPicture(image: Image) {
+    private fun downloadPicture(image: Image, showHint: Boolean = false) {
         val file = doAsyncResult {
             GlideApp.with(this@PictureDetailFragment)
                 .download(if (image.originalUrl.isEmpty()) image.url else image.originalUrl)
@@ -143,7 +142,9 @@ class PictureDetailFragment private constructor() : BaseFragment() {
         }.get()
         val result = saveImage(image, file)
         if (result) {
-            detailImage.snackbar(R.string.save_img_success)
+            if (showHint) {
+                detailImage.snackbar(R.string.save_img_success)
+            }
         } else {
             file.delete()
         }
