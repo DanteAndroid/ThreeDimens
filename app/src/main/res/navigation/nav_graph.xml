@@ -3,7 +3,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/nav_graph"
-        app:startDestination="@id/nav_wall">
+    app:startDestination="@id/nav_gank">
 
     <fragment
             android:id="@+id/nav_gank"
@@ -23,15 +23,15 @@
             android:name="com.dante.threedimens.ui.main.WallTabsFragment"
             android:label="@string/nav_wall" />
 
-    <fragment
-            android:id="@+id/nav_booru"
-            android:name="com.dante.threedimens.ui.main.BooruTabsFragment"
-            android:label="@string/nav_booru" />
+    <!--    <fragment-->
+    <!--            android:id="@+id/nav_booru"-->
+    <!--            android:name="com.dante.threedimens.ui.main.BooruTabsFragment"-->
+    <!--            android:label="@string/nav_booru" />-->
 
-    <fragment
-            android:id="@+id/nav_sht"
-            android:name="com.dante.threedimens.ui.main.ShtTabsFragment"
-            android:label="@string/nav_sht" />
+    <!--    <fragment-->
+    <!--            android:id="@+id/nav_sht"-->
+    <!--            android:name="com.dante.threedimens.ui.main.ShtTabsFragment"-->
+    <!--            android:label="@string/nav_sht" />-->
 
     <fragment
             android:id="@+id/pictureListFragment"

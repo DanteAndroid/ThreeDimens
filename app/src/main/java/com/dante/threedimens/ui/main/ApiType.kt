@@ -4,6 +4,7 @@ import android.os.Parcel
 import android.os.Parcelable
 import com.dante.threedimens.data.parse.*
 import com.dante.threedimens.net.API
+import com.dante.threedimens.utils.SecretModeHelper
 
 /**
  * @author Dante
@@ -41,14 +42,19 @@ class ApiType(val site: Site, val category: String = "", var path: String = "") 
          */
         val noLoadMoreSite: Array<Site> = arrayOf(Site.MTL, Site.MEIZITU, Site.SEHUATANG)
 
-        val menuGank: Array<ApiType> = arrayOf(
-            ApiType(Site.GANK),
-            ApiType(Site.DOUBAN, API.CATE_DB_RANK),
-            ApiType(Site.DOUBAN, API.CATE_DB_BREAST),
-            ApiType(Site.DOUBAN, API.CATE_DB_BUTT),
-            ApiType(Site.DOUBAN, API.CATE_DB_LEG),
-            ApiType(Site.DOUBAN, API.CATE_DB_SILK)
-        )
+        val menuGank: Array<ApiType> =
+            if (SecretModeHelper.isSecretMode()) {
+                arrayOf(
+                    ApiType(Site.GANK),
+                    ApiType(Site.DOUBAN, API.CATE_DB_RANK),
+                    ApiType(Site.DOUBAN, API.CATE_DB_BREAST),
+                    ApiType(Site.DOUBAN, API.CATE_DB_BUTT),
+                    ApiType(Site.DOUBAN, API.CATE_DB_LEG),
+                    ApiType(Site.DOUBAN, API.CATE_DB_SILK)
+                )
+            } else {
+                arrayOf(ApiType(Site.GANK))
+            }
 
         val menuMeizitu: Array<ApiType> = arrayOf(
             ApiType(Site.MEIZITU, API.CATE_MZ_HOT),

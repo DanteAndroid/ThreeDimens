@@ -126,7 +126,7 @@ class PictureListFragment : BaseFragment(), Scrollable {
         } else {
             if (loadHint.isVisible) {
                 loadHint.postDelayed({
-                    loadHint.isVisible = false
+                    loadHint?.isVisible = false
                 }, HIDE_LOAD_HINT_DELAY)
             }
         }

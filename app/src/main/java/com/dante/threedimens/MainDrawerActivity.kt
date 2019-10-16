@@ -56,6 +56,9 @@ class MainDrawerActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
 
     private fun setupDrawer() {
         controller = findNavController(R.id.navHostFragment)
+        controller.graph.startDestination =
+            if (SecretModeHelper.isSecretMode()) R.id.nav_wall else R.id.nav_gank
+
         appBarConfiguration = AppBarConfiguration(
 //            setOf(R.id.nav_gank, R.id.nav_meizi, R.id.nav_wall, R.id.nav_favorite),
             nav_view.menu,
@@ -66,6 +69,7 @@ class MainDrawerActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
         nav_view.inflateMenu(if (SecretModeHelper.isSecretMode()) R.menu.main_drawer else R.menu.safe_menu)
         nav_view.setupWithNavController(controller)
         nav_view.setNavigationItemSelectedListener(this)
+
     }
 
 
