@@ -17,6 +17,7 @@ import androidx.lifecycle.Observer
 import com.dante.base.base.BaseFragment
 import com.dante.threedimens.R
 import com.dante.threedimens.data.Image
+import com.dante.threedimens.ui.main.ApiType
 import com.dante.threedimens.utils.*
 import com.dante.threedimens.utils.widget.GlideApp
 import com.ortiz.touchview.TouchImageView
@@ -27,6 +28,7 @@ import org.jetbrains.anko.selector
 
 class PictureDetailFragment private constructor() : BaseFragment() {
 
+    var dontShowTransition: Boolean = false
     private val id: String by lazy {
         arguments!!.getString(ARG_ID)!!
     }
@@ -115,6 +117,9 @@ class PictureDetailFragment private constructor() : BaseFragment() {
     }
 
     private fun onLoadSuccess(image: Image) {
+        // 壁纸加载大图后不需要显示 transition（因为和缩略图比例不同）
+        dontShowTransition = image.type.contains(ApiType.Site.WALLHAVEN.name)
+
         (detailImage as? TouchImageView)?.isZoomEnabled = true
         detailImage.setOnLongClickListener {
             it.context.apply {

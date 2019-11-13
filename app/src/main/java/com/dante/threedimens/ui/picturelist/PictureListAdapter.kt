@@ -28,7 +28,7 @@ class PictureListAdapter(
         } else {
             when (type.site) {
                 ApiType.Site.WALLHAVEN -> R.layout.picture_list_item_fix_small
-                ApiType.Site.MEIZITU, ApiType.Site.MTL -> R.layout.picture_list_item_fix_big
+//                ApiType.Site.MEIZITU, ApiType.Site.MTL -> R.layout.picture_list_item_fix_big
                 else -> R.layout.picture_list_item
             }
         }

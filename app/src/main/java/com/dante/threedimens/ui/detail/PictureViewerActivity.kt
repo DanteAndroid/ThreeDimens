@@ -95,16 +95,21 @@ class PictureViewerActivity(override val layoutResId: Int = R.layout.activity_vi
 
     override fun onBackPressed() {
         adapter.currentFragment?.restoreImage()
-        super.onBackPressed()
-    }
-
-
-    override fun supportFinishAfterTransition() {
-        if (transPosition == currentPosition) {
+        if (shouldShowTransition()) {
             super.supportFinishAfterTransition()
         } else {
             finish()
         }
+    }
+
+
+    private fun shouldShowTransition(): Boolean {
+        adapter.currentFragment?.let {
+            if (transPosition == currentPosition && !it.dontShowTransition) {
+                return true
+            }
+        }
+        return false
     }
 
     inner class DetailPagerAdapter(

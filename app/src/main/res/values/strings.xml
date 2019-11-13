@@ -67,7 +67,7 @@
     <string name="deep_clean">深度清理</string>
     <string name="app_info">应用信息</string>
     <string name="nav_a_zone">二次元图区</string>
-    <string name="nav_gank">Gank 妹子</string>
+    <string name="nav_gank">豆瓣妹子</string>
     <string name="favorite">我的收藏</string>
     <string name="images_empty">啊哦，没有内容，赶快去收藏吧~</string>
     <string name="set_like_download">收藏时保存图片</string>
@@ -115,7 +115,7 @@
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="nav_wall">壁纸天地</string>
-    <string name="nav_booru">Booru图集</string>
+    <string name="nav_booru">二次元图集</string>
     <string name="share">分享</string>
     <string name="download_start">开始下载……可在通知栏查看进度</string>
     <string name="nav_sht">某论坛</string>

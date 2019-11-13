@@ -16,7 +16,10 @@ import com.dante.threedimens.utils.load
  * @author Dante
  * 2019-08-23
  */
-class PostListAdapter(val isForum: Boolean = false, val onClick: (Post, View, Int) -> Unit) :
+class PostListAdapter(
+    private val isForum: Boolean = false,
+    val onClick: (Post, View, Int) -> Unit
+) :
     ListAdapter<Post, PostListAdapter.PictureHolder>(IMAGE_COMPARATOR) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PictureHolder {

@@ -11,7 +11,6 @@ import retrofit2.http.Path
  */
 interface ForumApi {
 
-    //Post示例
     @GET("forum-{type}-{page}.html")
     fun getPosts(@Path("type") type: String, @Path("page") page: Int): Call<ResponseBody>
 

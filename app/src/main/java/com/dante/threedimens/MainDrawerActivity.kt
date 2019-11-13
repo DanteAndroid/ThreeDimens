@@ -108,8 +108,11 @@ class MainDrawerActivity : AppCompatActivity(), NavigationView.OnNavigationItemS
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.nav_booru, R.id.nav_favorite, R.id.nav_sht -> {
+            R.id.nav_favorite -> {
                 nav_view.snackbar(R.string.column_not_available)
+            }
+            R.id.nav_booru, R.id.nav_sht -> {
+//                nav_view.snackbar(R.string.column_not_available)
             }
             R.id.nav_share -> {
                 Share.shareText(this, getString(R.string.share_app_description))

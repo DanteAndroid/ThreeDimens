@@ -1,13 +1,10 @@
 package com.dante.threedimens.data.parse
 
-import androidx.annotation.WorkerThread
 import com.dante.threedimens.data.Image
 import com.dante.threedimens.data.Post
 import com.dante.threedimens.ui.main.ApiType
-import com.dante.threedimens.utils.AppUtil
 import org.jsoup.Jsoup
 import java.io.IOException
-import javax.net.ssl.SSLContext
 
 /**
  * @author Dante
@@ -50,14 +47,6 @@ object WallParser : IParser {
         val id = thumbUrl.substringAfterLast("/").substringBefore(".")
         val tail = thumbUrl.substringAfterLast("small").replace(id, "wallhaven-$id")
         return "https://w.wallhaven.cc/full$tail"
-    }
-
-    @WorkerThread
-    fun parseOriginalUrl(refer: String): String {
-        val sslContext = SSLContext.getInstance("SSL")
-        sslContext.init(null, arrayOf(AppUtil.createUnsafeTrustManager()), null)
-        return Jsoup.connect(refer).sslSocketFactory(sslContext.socketFactory).get()
-            .selectFirst("main[id=main] img").attr("src")
     }
 
 }
