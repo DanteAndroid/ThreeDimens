@@ -1,6 +1,7 @@
 package com.dante.threedimens.utils
 
 import android.os.Handler
+import android.os.Looper
 import android.text.format.DateUtils
 import android.view.View
 import com.blankj.utilcode.util.SPUtils
@@ -38,7 +39,10 @@ object SecretModeHelper {
                 lastTime = System.currentTimeMillis()
                 times++
             } else {
-                Handler().postDelayed({ times = 0 }, DateUtils.SECOND_IN_MILLIS)
+                Handler(Looper.getMainLooper()).postDelayed({
+                    times = 0
+                    lastTime = 0L
+                }, DateUtils.SECOND_IN_MILLIS)
             }
         }
     }

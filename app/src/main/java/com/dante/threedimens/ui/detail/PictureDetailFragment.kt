@@ -12,8 +12,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.core.view.ViewCompat
-import androidx.core.view.isVisible
-import androidx.lifecycle.Observer
 import com.dante.base.base.BaseFragment
 import com.dante.threedimens.R
 import com.dante.threedimens.data.Image
@@ -30,10 +28,10 @@ class PictureDetailFragment private constructor() : BaseFragment() {
 
     var dontShowTransition: Boolean = false
     private val id: String by lazy {
-        arguments!!.getString(ARG_ID)!!
+        requireArguments().getString(ARG_ID)!!
     }
     private val showTransition: Boolean by lazy {
-        arguments!!.getBoolean(ARG_TRANSITION, false)
+        requireArguments().getBoolean(ARG_TRANSITION, false)
     }
 
     private lateinit var viewModel: PictureViwerViewModel
@@ -48,12 +46,12 @@ class PictureDetailFragment private constructor() : BaseFragment() {
     }
 
     override fun initView() {
-        detailImage = view!!.findViewById(R.id.detailImage)
+        detailImage = requireView().findViewById(R.id.detailImage)
         viewModel = (activity as PictureViewerActivity).viewModel
         if (detailImage is TouchImageView) {
             (detailImage as TouchImageView).setMaxZoomRatio(2.0f)
         }
-        viewModel.getImage(id).observe(this, Observer { image ->
+        viewModel.getImage(id).observe(this, { image ->
             ViewCompat.setTransitionName(detailImage, image.url)
             detailImage.setOnClickListener { UiUtil.toggleSystemUI(it) }
             if (showTransition) {
@@ -168,10 +166,10 @@ class PictureDetailFragment private constructor() : BaseFragment() {
     }
 
     private fun setProgressIndicator(show: Boolean) {
-        progress?.isVisible = show
-        if (!show) {
-            // 修复切后台回来又显示 progress 的问题
-            frameLayout?.removeView(progress)
+        if (show) {
+            progress?.show()
+        } else {
+            progress?.hide()
         }
     }
 

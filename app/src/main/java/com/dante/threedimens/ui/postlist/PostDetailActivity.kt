@@ -16,7 +16,7 @@ class PostDetailActivity : BaseActivity() {
     override fun enableBack(): Boolean = true
 
     override fun initView() {
-        val apiType = intent.getParcelableExtra(ARG_API_TYPE) as ApiType
+        val apiType = intent.getParcelableExtra<ApiType>(ARG_API_TYPE)!!
         val title = intent.getStringExtra(ARG_TITLE)
         val fragment = PictureListFragment.newInstance(apiType)
         setSupportActionBar(toolbar)
