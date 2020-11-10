@@ -10,7 +10,6 @@ import androidx.core.app.ActivityOptionsCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
-import androidx.lifecycle.Observer
 import androidx.viewpager.widget.ViewPager
 import com.dante.base.base.BaseActivity
 import com.dante.base.base.BaseApplication
@@ -73,7 +72,7 @@ class PictureViewerActivity(override val layoutResId: Int = R.layout.activity_vi
 
         adapter = DetailPagerAdapter(fragmentManager = supportFragmentManager)
 
-        viewModel.getImages().observe(this, Observer {
+        viewModel.getImages().observe(this, {
             adapter.setNewData(it)
             initViewPager(adapter)
         })
